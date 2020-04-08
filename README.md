@@ -1,6 +1,6 @@
 # MILG0IR HOME IS UNRELEASED. please ignore for now.
 
-DO NOT DOWNLOAD. GET THE SIMPLE INSTALLER [HERE](https://github.com/MILG0IR/MILG0IR-home/raw/master/install.php).
+<!-- DO NOT DOWNLOAD. GET THE SIMPLE INSTALLER [HERE](https://github.com/MILG0IR/MILG0IR-home/raw/master/install.php). -->
 
 # Welcome to MILG0IR home!
 
