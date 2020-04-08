@@ -3,7 +3,6 @@
 <!-- DO NOT DOWNLOAD. GET THE SIMPLE INSTALLER [HERE](https://github.com/MILG0IR/MILG0IR-home/raw/master/install.php). -->
 
 # Welcome to MILG0IR home!
-
 Hi! Here at MILG0IR we are working to create the best media organizer around! With a simple and easy to use user interface it is unbeatable!
 
 
@@ -27,5 +26,6 @@ Along with the following PHP extentions
  - PHP72-reflection
  - PHP72-xml
  - PHP72-zip
+ 
 ## How to create a web server
 If you do not have a webserver then please follow one of theese guides to create a new one
