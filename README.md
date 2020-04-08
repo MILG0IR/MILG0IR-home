@@ -19,13 +19,14 @@ Along with the following PHP extentions
  - PHP72-hash
  - PHP72-json
  - PHP72-libxml
- - PHP72-mysqli
- - PHP72-mysqlnd
+ - PHP72-MySQLi
+ - PHP72-MySQLnd
  - PHP72-pcre
- - PHP72-phash
- - PHP72-reflection
+ - PHP72-pHash
+ - PHP72-Reflection
  - PHP72-xml
  - PHP72-zip
+ - PHP72-OpenSSL
  
 ## How to create a web server
 If you do not have a webserver then please follow one of theese guides to create a new one
