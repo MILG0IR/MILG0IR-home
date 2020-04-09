@@ -1,5 +1,5 @@
-	<?	// DATABASE DATA
-?><?	// DIRECTORIES
+  <?php	// DATABASE DATA
+?><?php	// DIRECTORIES
 	# find root
 		$toroot = "";
 		$i = count(explode('/',$_SERVER['DOCUMENT_URI'])) -2;
@@ -23,12 +23,12 @@
 		
 		"error"			=>	$toroot."error/",				// Relative path to `error` file
 	);
-?><?	// FILES
+?><?php	// FILES
 	$mg_file = array(
 		"name"		=> $_SERVER['DOCUMENT_URI'],
 		"location"	=> $_SERVER['SCRIPT_FILENAME']
 	);
-?><?	// LOCAL USERDATA
+?><?php	// LOCAL USERDATA
 	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
 	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
