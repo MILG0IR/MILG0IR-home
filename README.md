@@ -29,4 +29,4 @@ Along with the following PHP extentions
  - PHP72-OpenSSL
  
 ## How to create a web server
-If you do not have a webserver then please follow one of theese guides to create a new one
+If you do not have a webserver then please follow one of these guides to create a new one
