@@ -2,7 +2,7 @@
 # MILG0IR HOME IS UNRELEASED.
 DO NOT USE. We are working towards getting this project up and running but currently it is unreleased. Please be patient and it will be released as soon as we can!
 #
-DO NOT DOWNLOAD. Follow our simple installation tutorial[HERE](#installation).
+DO NOT DOWNLOAD. Follow our simple installation tutorial [HERE](#installation).
 # Welcome to MILG0IR home!
 Hi! Here at MILG0IR we are working to create the best media organizer around! With a simple and easy to use user interface it is unbeatable!
 
