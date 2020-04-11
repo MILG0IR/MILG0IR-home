@@ -8,8 +8,14 @@ Hi! Here at MILG0IR we are working to create the best media organizer around! Wi
 
 ## installation
 To install MILG0IR home make sure you meet the requirements as stated below, then download out PHP file, place it onto your server and follow the instructions on screen! Installing could not be simpler. Use the commands below, within the website folder,  to get the install file!
-Wget: `wget https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php`
-cURL: `curl https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php > install.php`
+Wget:
+```sh
+wget https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php
+```
+cURL:
+```sh
+curl https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php > install.php
+```
 Once the file has been installed
 
 ### requirements
@@ -35,3 +41,10 @@ Along with the following PHP extentions
 
 ## How to create a web server
 If you do not have a webserver then please follow one of these guides to create a new one
+
+## Our branches
+We have many branched, Each listed below and each for a different purpose.
+| BRANCH          | PURPOSE |
+| --------------- | ------- |
+| master          | This branch is for the most stable of all of the branches and is the recomended one to download |
+| :x: instant :x: | :x: THIS BRANCH IS NOT RECCOMMENDED, In this branch you will see many updates, as each update is posted here as soon as it is done. We hold no liability if anything were to happen with this branch and we are not obliges to offer any support. :x:| 
