@@ -244,15 +244,10 @@
 						$query = mysqli_query($db_conx, $sql);
 						$row = mysqli_fetch_row($query);
 						$session_id = $row[0];
-
-						$_SESSION['userid'] = $user_id;
-						$_SESSION['sessionid'] = $session_id;
-						$_SESSION['username'] = $db_username;
-						$_SESSION['password'] = $db_pass_str;
-						#setcookie("user_id", $user_id, strtotime( '+30 days' ), "/", "", "", TRUE);
-						#setcookie("session_id", $user_id, strtotime( '+30 days' ), "/", "", "", TRUE);
-						#setcookie("username", $db_username, strtotime( '+30 days' ), "/", "", "", TRUE);
-						#setcookie("password", $db_pass_str, strtotime( '+30 days' ), "/", "", "", TRUE);
+						setcookie("user_id",	$user_id,		strtotime('+30 days'),	"/",	"",	"",	TRUE);
+						setcookie("session_id",	$user_id,		strtotime('+30 days'),	"/",	"",	"",	TRUE);
+						setcookie("username",	$db_username,	strtotime('+30 days'),	"/",	"",	"",	TRUE);
+						setcookie("password",	$db_pass_str,	strtotime('+30 days'),	"/",	"",	"",	TRUE);
 						exit("success");
 					}
 				}
@@ -261,20 +256,7 @@
 		}
 	// LOGOUT
 		elseif($api_type == "logout") {
-			session_start();
-			$_SESSION = array();
-			if(isset($_COOKIE["id"]) && isset($_COOKIE["user"]) && isset($_COOKIE["pass"])) {
-				setcookie("id", '', strtotime( '-5 days' ), '/');
-				setcookie("user", '', strtotime( '-5 days' ), '/');
-				setcookie("pass", '', strtotime( '-5 days' ), '/');
-			}
-			session_destroy();
-			if(isset($_SESSION['username'])){
-				header("location: message.php?msg=Error:_Logout_Failed");
-			} else {
-				header("location: http://www.yoursite.com");
-				exit();
-			}
+			
 		}
 	// RESET PASSWORD
 		# T.B.D

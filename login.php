@@ -1,9 +1,9 @@
 <?php
 	include_once("./variables.php");
-#	if($user_ok == true){
-#		header("location: ".$mg_dir['root']."home.php");
-#		exit();
-#	}
+	if($user_ok) {
+		header("location: ".$mg_dir['root']."home.php");
+		exit();
+	}
 ?><?php
 
 ?>
