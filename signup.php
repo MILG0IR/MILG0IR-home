@@ -11,7 +11,7 @@
 	<html>
 		<head>
 			<meta charset="UTF-8">
-			<title>Login</title>
+			<title>Sign Up</title>
 			<link rel="icon" href="favicon.ico" type="image/x-icon">
 			<? include_once($mg_dir['js']."ajax.js.php");		?>
 			<? include_once($mg_dir['js']."autoscroll.js.php");	?>
@@ -23,7 +23,7 @@
 			<div class="preloader">
 			</div>
 			<div class="content">
-				<?include_once($mg_dir['forms']."login.php")?>
+				<?include_once($mg_dir['forms']."signup.php")?>
 			</div>
 		</body>
 	</html>

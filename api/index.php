@@ -197,70 +197,62 @@
 			}
 	// LOGIN
 		elseif($api_type == "login") {
+			$success = NULL;
 			if($email == "") {
 				exit("ERR-LIN-2");
 			} else{
 				$e = mysqli_real_escape_string($db_conx, $email);;
 				$p = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
-				$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
-				#--------------------------------#
-				$sql = "SELECT count(*) FROM `users` WHERE `email`='$e' AND `enabled`='1'";
+				$sql = "SELECT count(*) FROM `users` WHERE `email`='$e' AND `enabled`='1' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$row = mysqli_fetch_array($query);
 				$total = $row[0];
-				if(!$total > 0) {
+				if($total > 0) {
+					// USER ENTERED THEIR EMAIL
+					$success = "email";
+				} else {
 					// NO ACCOUNT EXISTS WITH THAT EMAIL ADDRESS. TRYING USERNAME
-					$sql = "SELECT count(*) FROM `users` WHERE `username`='$e' AND `enabled`='1'";
+					$sql = "SELECT count(*) FROM `users` WHERE `username`='$e' AND `enabled`='1' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$row = mysqli_fetch_array($query);
 					$total = $row[0];
-					if(!$total > 0) {
-						// NO ACCOUNT EXISTS WITH THAT USERNAME.
-						exit("ERR-LIN-4");
+					if($total > 0) {
+						// USER ENTERED THEIR USERNAME
+						$success = "username";
 					} else {
-						$sql = "SELECT `uid`, `password` FROM `users` WHERE `username`='$e' AND `enabled`='1' LIMIT 1";
-						$query = mysqli_query($db_conx, $sql);
-						$row = mysqli_fetch_row($query);
-						$db_id = $row[0];
-						$db_pass_str = $row[1];
-						$db_username = $e;
-						#--------------------------------#
-						if($p != $db_pass_str){
-							echo $p;
-							exit("ERR-LIN-5");
-						} else {
-							$_SESSION['userid'] = $db_id;
-							$_SESSION['username'] = $db_username;
-							$_SESSION['password'] = $db_pass_str;
-							setcookie("id", $db_id, strtotime( '+30 days' ), "/", "", "", TRUE);
-							setcookie("user", $db_username, strtotime( '+30 days' ), "/", "", "", TRUE);
-							setcookie("pass", $db_pass_str, strtotime( '+30 days' ), "/", "", "", TRUE); 
-							$sql = "UPDATE `user_sessions` SET ip='$ip', lastlogin=now() WHERE username='$db_username' LIMIT 1";
-							$query = mysqli_query($db_conx, $sql);
-							echo $db_username;
-							exit("success");
-						}
+						// NO ACCOUNT EXISTS WITH THAT EMAIL OR USERNAME
+						exit("ERR-LIN-4");
 					}
-				} else {
-					$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `email`='$e' AND `enabled`='1' LIMIT 1";
+				}
+				#--------------------------------#
+				if(isset($success)) { // LOG THE USER INTO THEIR ACCOUNT
+					$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `$success`='$e' AND `enabled`='1' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$row = mysqli_fetch_row($query);
-					$db_id = $row[0];
+					$user_id = $row[0];
 					$db_username = $row[1];
 					$db_pass_str = $row[2];
 					#--------------------------------#
 					if($p != $db_pass_str){
 						exit("ERR-LIN-5");
 					} else {
-						$_SESSION['userid'] = $db_id;
+						// create the session in the database
+						$sql = "INSERT INTO `user_sessions` (`uid`, `ip_address`, `start_time`, `active`) VALUES ('$user_id', '$ip', now(), '1')";
+						$query = mysqli_query($db_conx, $sql);
+						// get the sessionm ID
+						$sql = "SELECT `session_id` FROM `user_sessions` WHERE `uid`='$user_id' AND `ip_address`='$ip' AND `active`='1' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$row = mysqli_fetch_row($query);
+						$session_id = $row[0];
+
+						$_SESSION['userid'] = $user_id;
+						$_SESSION['sessionid'] = $session_id;
 						$_SESSION['username'] = $db_username;
 						$_SESSION['password'] = $db_pass_str;
-						setcookie("id", $db_id, strtotime( '+30 days' ), "/", "", "", TRUE);
-						setcookie("user", $db_username, strtotime( '+30 days' ), "/", "", "", TRUE);
-						setcookie("pass", $db_pass_str, strtotime( '+30 days' ), "/", "", "", TRUE); 
-						$sql = "UPDATE `user_sessions` SET ip='$ip', lastlogin=now() WHERE username='$db_username' LIMIT 1";
-						$query = mysqli_query($db_conx, $sql);
-						echo $db_username;
+						#setcookie("user_id", $user_id, strtotime( '+30 days' ), "/", "", "", TRUE);
+						#setcookie("session_id", $user_id, strtotime( '+30 days' ), "/", "", "", TRUE);
+						#setcookie("username", $db_username, strtotime( '+30 days' ), "/", "", "", TRUE);
+						#setcookie("password", $db_pass_str, strtotime( '+30 days' ), "/", "", "", TRUE);
 						exit("success");
 					}
 				}
