@@ -1,28 +1,28 @@
 <?php
 	// SET THE VARIABLES IF AVAILABLE
 		include_once("../db/db_conx.php");
-		if(isset($GET['#']) || isset($_POST['#'])) {							# API type
+		if(isset($GET['#']) || isset($_POST['#'])) {					# API type
 			if(isset($_GET['#'])) {
 				$api_type = $_GET['#'];
 			} else {
 				$api_type = $_POST['#'];
 			}
 		} else {$api_type = NULL;}
-		if(isset($GET['e']) || isset($_POST['e'])) {						# E-Mail address
+		if(isset($GET['e']) || isset($_POST['e'])) {					# E-Mail address
 			if(isset($_GET['e'])) {
 				$email = $_GET['e'];
 			} else {
 				$email = $_POST['e'];
 			}
 		} else {$email = NULL;}
-		if(isset($GET['u']) || isset($_POST['u'])) {						# username
+		if(isset($GET['u']) || isset($_POST['u'])) {					# username
 			if(isset($_GET['u'])) {
 				preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
 			} else {
 				preg_replace('#[^a-z0-9]#i', '', $_POST['u']);
 			}
 		} else {$username = NULL;}
-		if(isset($GET['p']) || isset($_POST['p'])) {						# Password
+		if(isset($GET['p']) || isset($_POST['p'])) {					# Password
 			if(isset($_GET['p'])) {
 				$password = $_GET['p'];
 			} else {
@@ -43,7 +43,7 @@
 				$surname = $_POST['sn'];
 			}
 		} else {$surname = NULL;}
-		if(isset($GET['mob']) || isset($_POST['mob'])) {					# Mobile #
+		if(isset($GET['mob']) || isset($_POST['mob'])) {				# Mobile #
 			if(isset($_GET['mob'])) {
 				$mobile = $_GET['mob'];
 			} else {
@@ -64,21 +64,21 @@
 				$banner = $_POST['img_banner'];
 			}
 		} else {$banner = NULL;}
-		if(isset($GET['uid']) || isset($_POST['uid'])) {					# User ID
+		if(isset($GET['uid']) || isset($_POST['uid'])) {				# User ID
 			if(isset($_GET['uid'])) {
 				$uid = $_GET['uid'];
 			} else {
 				$uid = $_POST['uid'];
 			}
 		} else {$uid = NULL;}
-		if(isset($GET['msg']) || isset($_POST['msg'])) {					# message
+		if(isset($GET['msg']) || isset($_POST['msg'])) {				# message
 			if(isset($_GET['msg'])) {
 				$message = $_GET['msg'];
 			} else {
 				$message = $_POST['msg'];
 			}
 		} else {$message = NULL;}
-		if(isset($GET['uri']) || isset($_POST['uri'])) {					# Web URI
+		if(isset($GET['uri']) || isset($_POST['uri'])) {				# Web URI
 			if(isset($_GET['uri'])) {
 				$uri = $_GET['uri'];
 			} else {
@@ -258,6 +258,10 @@
 		elseif($api_type == "logout") {
 			// SEARCH FOR AND REMOVE THE COOKIES
 				if(isset($_COOKIE["user_id"]) && isset($_COOKIE["session_id"]) && isset($_COOKIE["username"]) && isset($_COOKIE["password"])) {
+					unset($_COOKIE['user_id']);
+					unset($_COOKIE['session_id']);
+					unset($_COOKIE['username']);
+					unset($_COOKIE['password']);
 					setcookie("user_id",	'',	strtotime('-5 days'),	'/');
 					setcookie("session_id",	'',	strtotime('-5 days'),	'/');
 					setcookie("username",	'',	strtotime('-5 days'),	'/');

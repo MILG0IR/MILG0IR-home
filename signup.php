@@ -1,11 +1,9 @@
 <?php
 	include_once("./variables.php");
-#	if($user_ok == true){
-#		header("location: ".$mg_dir['root']."home.php");
-#		exit();
-#	}
-?><?php
-
+	if($user_ok){
+		header("location: ".$mg_dir['root']."home.php");
+		exit();
+	}
 ?>
 <!DOCTYPE html>
 	<html>
@@ -21,9 +19,12 @@
 		</head>
 		<body>
 			<div class="preloader">
+				<?	include_once($mg_dir['templates']."preloader.php")	?>
 			</div>
 			<div class="content">
+				<?include_once($mg_dir['templates']."header.php")?>
 				<?include_once($mg_dir['forms']."signup.php")?>
+				<?include_once($mg_dir['templates']."footer.php")?>
 			</div>
 		</body>
 	</html>

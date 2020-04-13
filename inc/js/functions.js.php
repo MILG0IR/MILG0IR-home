@@ -79,7 +79,7 @@
 			if(ajaxReturn(ajax) == true) {
 				var response = ajax.responseText;
 				if(response.includes("success")){
-					window.location = "<?echo$mg_dir['root']?>home.php";
+					window.location = "<?echo$mg_dir['root']?>login.php";
 				} else {
 					checkresponse(response);
 				}

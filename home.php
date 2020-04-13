@@ -15,11 +15,11 @@
 		</head>
 		<body>
 			<div class="preloader">
-				<?	include_once($mg_dir['template']."preloader.php")	?>
+				<?	include_once($mg_dir['templates']."preloader.php")	?>
 			</div>
 			<div class="content">
-				<?	include_once($mg_dir['template']."sidebar.php")	?>
-				<?	include_once($mg_dir['template']."header.php")	?>
+				<?	include_once($mg_dir['templates']."sidebar.php")	?>
+				<?	include_once($mg_dir['templates']."header.php")	?>
 			</div>
 		</body>
 	</html>
