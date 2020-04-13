@@ -44,85 +44,93 @@
 </style>
 <style>
 	body {
-		background: #020304; }
-	body > div.header > h1 {
+		height: 100%;
+		background-color: #f3f3f3; }
+	body .navbar {
 		position: fixed;
-		left: 40px;
-		z-index: 6;
-		font-size: 20px;
-		font-weight: 900;
-		font-family: sans-serif;
-		text-transform: uppercase; }
-	body > div.header > h1 > span {
-		text-transform: none;
-		opacity: .5;
-		font-weight: 300;
-		font-size: 12px; }
-	body > div.header > input + label {
-		position: fixed;
-		top: 15px;
-		right: 40px;
-		height: 20px;
-		width: 15px;
-		z-index: 5; }
-	body > div.header > input + label span {
-		position: absolute;
 		width: 100%;
-		height: 2px;
-		top: 50%;
-		margin-top: -1px;
-		left: 0;
-		display: block;
-		background: #020304;
-		transition: .5s; }
-	body > div.header > input + label span:first-child {
-		top: 3px; }
-	body > div.header > input + label span:last-child {
-		top: 16px; }
-	body > div.header > label:hover {
-		cursor: pointer; }
-	body > div.header > input:checked + label span {
-		opacity: 0;
-		top: 50%; }
-	body > div.header > input:checked + label span:first-child {
-		opacity: 1;
-		transform: rotate(405deg); }
-	body > div.header > input:checked + label span:last-child {
-		opacity: 1;
-		transform: rotate(-405deg); }
-	body > div.header > input ~ nav {
-		background: white;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 0;
+		border-radius: 0;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+		z-index: 999; }
+	body .navbar .menu-toggle {
+		line-height: 0; }
+	body .navbar .menu-toggle .menu-toggle-icon {
+		font-size: 1.5rem;
+		line-height: 1.5rem;
+		padding: 1rem;
+		border-right: 1px solid lightgray; }
+	body .navbar .navbar-brand {
+		text-align: center;
+		width: 8.5rem;
+		font-size: 1rem;
+		line-height: 1.5rem;
+		padding: 1rem;
+		border-right: 1px solid lightgray;
+		font-weight: 400; }
+	body .navbar .navbar-brand span {
+		font-weight: 800; }
+	body .container-fluid {
+		height: 100vh; }
+	body .container-fluid .fixed-nav {
+		height: 100vh; }
+	body .container-fluid .fixed-nav .fixed-nav-inner {
+		display: inline-flex;
+		flex-direction: column;
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100%;
-		height: 50px;
-		z-index: 3;
-		transition: .5s;
-		transition-delay: .5s;
-		overflow: hidden; }
-	body > div.header > input ~ nav > ul {
-		text-align: center;
-		position: absolute;
-		top: 35%;
-		left: 20%;
-		right: 20%; }
-	body > div.header > input ~ nav > ul > li {
+		bottom: 0;
+		background-color: #f9f9f9;
+		border-right: 1px solid lightgray;
+		flex: 1;
+		z-index: 99; }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul {
+		list-style-type: none;
+		padding: 0; }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul a {
+		display: flex;
+		align-items: center; }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul a:before {
+		content: "";
 		opacity: 0;
-		transition: .5s;
-		transition-delay: 0s; }
-	body > div.header > input ~ nav > ul > li > a {
-		text-decoration: none;
-		text-transform: uppercase;
-		color: #020304;
-		font-weight: 700;
-		font-family: sans-serif;
-		display: block;
-		padding: 30px; }
-	body > div.header > input:checked ~ nav {
-		height: 100%;
-		transition-delay: 0s; }
-	body > div.header > input:checked ~ nav > ul > li {
+		width: 0.175rem;
+		visibility: hidden;
+		position: absolute;
+		background: #0275d8;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: auto; }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul a:hover {
+		background-color: #f3f3f3;
+		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(0, 0, 0, 0.04), inset 0 2px 1px -1px rgba(0, 0, 0, 0.02); }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul a:hover:before {
 		opacity: 1;
-		transition-delay: .5s; }
+		visibility: visible; }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul a li {
+		padding: 0.25rem 1rem; }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul a li i {
+		font-size: 1.5rem;
+		line-height: 3rem; }
+	body .container-fluid .fixed-nav .fixed-nav-inner ul a li:nth-child(2n) {
+		font-size: 1rem;
+		padding: 0;
+		margin-left: 0;
+		letter-spacing: 0.05rem;
+		width: 0px;
+		text-align: left;
+		opacity: 0;
+		transition: 0.25s ease-in-out width, 0.25s linear transform;
+		transform: translateX(2rem); }
+	body .container-fluid .fixed-nav .fixed-nav-inner.open-nav li:nth-child(2n) {
+		margin: 0;
+		padding: 0.25rem 1rem;
+		letter-spacing: 0.025rem;
+		width: 8.5rem;
+		opacity: 1;
+		transform: translateX(0.75rem); }
 </style>
