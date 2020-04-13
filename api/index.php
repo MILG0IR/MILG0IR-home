@@ -1,91 +1,104 @@
 <?php
 	// SET THE VARIABLES IF AVAILABLE
 		include_once("../db/db_conx.php");
-		if(isset($GET['#']) || isset($_POST['#'])) {								# API type
+		if(isset($GET['#']) || isset($_POST['#'])) {							# API type
 			if(isset($_GET['#'])) {
 				$api_type = $_GET['#'];
 			} else {
 				$api_type = $_POST['#'];
 			}
-		} elseif(isset($GET['e']) || isset($_POST['e'])) {						# E-Mail address
+		} else {$api_type = NULL;}
+		if(isset($GET['e']) || isset($_POST['e'])) {						# E-Mail address
 			if(isset($_GET['e'])) {
-				$email = mysqli_real_escape_string($db_conx, $_GET['e']);;
+				$email = $_GET['e'];
 			} else {
-				$email = mysqli_real_escape_string($db_conx, $_POST['e']);;
+				$email = $_POST['e'];
 			}
-		} elseif(isset($GET['u']) || isset($_POST['u'])) {						# username
+		} else {$email = NULL;}
+		if(isset($GET['u']) || isset($_POST['u'])) {						# username
 			if(isset($_GET['u'])) {
 				preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
 			} else {
 				preg_replace('#[^a-z0-9]#i', '', $_POST['u']);
 			}
-		} elseif(isset($GET['p']) || isset($_POST['p'])) {						# Password
+		} else {$username = NULL;}
+		if(isset($GET['p']) || isset($_POST['p'])) {						# Password
 			if(isset($_GET['p'])) {
 				$password = $_GET['p'];
 			} else {
 				$password = $_POST['p'];
 			}
-		} elseif(isset($GET['fn']) || isset($_POST['fn'])) {					# Firstname
+		} else {$password = NULL;}
+		if(isset($GET['fn']) || isset($_POST['fn'])) {					# Firstname
 			if(isset($_GET['fn'])) {
 				$firstname = $_GET['fn'];
 			} else {
 				$firstname = $_POST['fn'];
 			}
-		} elseif(isset($GET['sn']) || isset($_POST['sn'])) {					# Surname
+		} else {$firstname = NULL;}
+		if(isset($GET['sn']) || isset($_POST['sn'])) {					# Surname
 			if(isset($_GET['sn'])) {
 				$surname = $_GET['sn'];
 			} else {
 				$surname = $_POST['sn'];
 			}
-		} elseif(isset($GET['mob']) || isset($_POST['mob'])) {					# Mobile #
+		} else {$surname = NULL;}
+		if(isset($GET['mob']) || isset($_POST['mob'])) {					# Mobile #
 			if(isset($_GET['mob'])) {
 				$mobile = $_GET['mob'];
 			} else {
 				$mobile = $_POST['mob'];
 			}
-		} elseif(isset($GET['img_avatar']) || isset($_POST['img_avatar'])) {	# Avatar Base64
+		} else {$mobile = NULL;}
+		if(isset($GET['img_avatar']) || isset($_POST['img_avatar'])) {	# Avatar Base64
 			if(isset($_GET['img_avatar'])) {
 				$avatar = $_GET['img_avatar'];
 			} else {
 				$avatar = $_POST['img_avatar'];
 			}
-		} elseif(isset($GET['img_banner']) || isset($_POST['img_banner'])) {	# Banner Base64
+		} else {$avatar = NULL;}
+		if(isset($GET['img_banner']) || isset($_POST['img_banner'])) {	# Banner Base64
 			if(isset($_GET['img_banner'])) {
 				$banner = $_GET['img_banner'];
 			} else {
 				$banner = $_POST['img_banner'];
 			}
-		} elseif(isset($GET['uid']) || isset($_POST['uid'])) {					# User ID
+		} else {$banner = NULL;}
+		if(isset($GET['uid']) || isset($_POST['uid'])) {					# User ID
 			if(isset($_GET['uid'])) {
 				$uid = $_GET['uid'];
 			} else {
 				$uid = $_POST['uid'];
 			}
-		} elseif(isset($GET['msg']) || isset($_POST['msg'])) {					# message
+		} else {$uid = NULL;}
+		if(isset($GET['msg']) || isset($_POST['msg'])) {					# message
 			if(isset($_GET['msg'])) {
 				$message = $_GET['msg'];
 			} else {
 				$message = $_POST['msg'];
 			}
-		} elseif(isset($GET['uri']) || isset($_POST['uri'])) {					# Web URI
+		} else {$message = NULL;}
+		if(isset($GET['uri']) || isset($_POST['uri'])) {					# Web URI
 			if(isset($_GET['uri'])) {
 				$uri = $_GET['uri'];
 			} else {
 				$uri = $_POST['uri'];
 			}
-		} elseif(isset($GET['device']) || isset($_POST['device'])) {			# device
+		} else {$uri = NULL;}
+		if(isset($GET['device']) || isset($_POST['device'])) {			# device
 			if(isset($_GET['device'])) {
 				$device = $_GET['device'];
 			} else {
 				$device = $_POST['device'];
 			}
-		} elseif(isset($GET['branch']) || isset($_POST['branch'])) {			# branch
+		} else {$device = NULL;}
+		if(isset($GET['branch']) || isset($_POST['branch'])) {			# branch
 			if(isset($_GET['branch'])) {
 				$branch = $_GET['branch'];
 			} else {
 				$branch = $_POST['branch'];
 			}
-		}
+		} else {$branch = NULL;}
 	//
 	// GET ERROR CODE INFO
 		if($api_type == "search_code") {
@@ -141,25 +154,23 @@
 				$query = mysqli_query($db_conx, $sql); 
 				$e_check = mysqli_num_rows($query);
 
-				if($u == "" || $e == "" || $p == "" || $g == "" || $c == ""){
+				if($u == "" || $e == "" || $p == ""){
 					echo "The form submission is missing values.";
 					exit();
-				} else if ($u_check > 0){ 
+				} elseif($u_check > 0){ 
 					echo "The username you entered is alreay taken";
 					exit();
-				} else if ($e_check > 0){ 
+				} elseif($e_check > 0){ 
 					echo "That email address is already in use in the system";
 					exit();
-				} else if (strlen($u) < 3 || strlen($u) > 16) {
+				} elseif(strlen($u) < 3 || strlen($u) > 16) {
 					echo "Username must be between 3 and 16 characters";
 					exit(); 
-				} else if (is_numeric($u[0])) {
+				} elseif(is_numeric($u[0])) {
 					echo 'Username cannot begin with a number';
 					exit();
 				} else {
-					$cryptpass = crypt($p);
-					include_once ("php_includes/randStrGen.php");
-					$p_hash = randStrGen(20)."$cryptpass".randStrGen(20);
+					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 
 					$sql = "INSERT INTO `users` (username, email, password, gender, country, ip, signup, lastlogin, notescheck)       
 							VALUES('$u','$e','$p_hash','$g','$c','$ip',now(),now(),now())";
@@ -186,24 +197,58 @@
 			}
 	// LOGIN
 		elseif($api_type == "login") {
-			if(isset($username) && isset($password)){
-				$e = $email;
-				$p = $password;
+			if($email == "") {
+				exit("ERR-LIN-2");
+			} else{
+				$e = mysqli_real_escape_string($db_conx, $email);;
+				$p = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 				$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
-				if($e == "" && $p == ""){
-					exit("ERR-LIN-1");
-				} elseif($e == "") {
-					exit("ERR-LIN-2");
-				} elseif($p == "") {
-					exit("ERR-LIN-3");
+				#--------------------------------#
+				$sql = "SELECT count(*) FROM `users` WHERE `email`='$e' AND `enabled`='1'";
+				$query = mysqli_query($db_conx, $sql);
+				$row = mysqli_fetch_array($query);
+				$total = $row[0];
+				if(!$total > 0) {
+					// NO ACCOUNT EXISTS WITH THAT EMAIL ADDRESS. TRYING USERNAME
+					$sql = "SELECT count(*) FROM `users` WHERE `username`='$e' AND `enabled`='1'";
+					$query = mysqli_query($db_conx, $sql);
+					$row = mysqli_fetch_array($query);
+					$total = $row[0];
+					if(!$total > 0) {
+						// NO ACCOUNT EXISTS WITH THAT USERNAME.
+						exit("ERR-LIN-4");
+					} else {
+						$sql = "SELECT `uid`, `password` FROM `users` WHERE `username`='$e' AND `enabled`='1' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$row = mysqli_fetch_row($query);
+						$db_id = $row[0];
+						$db_pass_str = $row[1];
+						$db_username = $e;
+						#--------------------------------#
+						if($p != $db_pass_str){
+							echo $p;
+							exit("ERR-LIN-5");
+						} else {
+							$_SESSION['userid'] = $db_id;
+							$_SESSION['username'] = $db_username;
+							$_SESSION['password'] = $db_pass_str;
+							setcookie("id", $db_id, strtotime( '+30 days' ), "/", "", "", TRUE);
+							setcookie("user", $db_username, strtotime( '+30 days' ), "/", "", "", TRUE);
+							setcookie("pass", $db_pass_str, strtotime( '+30 days' ), "/", "", "", TRUE); 
+							$sql = "UPDATE `user_sessions` SET ip='$ip', lastlogin=now() WHERE username='$db_username' LIMIT 1";
+							$query = mysqli_query($db_conx, $sql);
+							echo $db_username;
+							exit("success");
+						}
+					}
 				} else {
-					$p = hash($mg_security['hash'], $mg_security['salt'].$pass.$mg_security['salt']);
-					$sql = "SELECT id, username, password FROM users WHERE email='$e' AND activated='1' LIMIT 1";
+					$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `email`='$e' AND `enabled`='1' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$row = mysqli_fetch_row($query);
 					$db_id = $row[0];
 					$db_username = $row[1];
 					$db_pass_str = $row[2];
+					#--------------------------------#
 					if($p != $db_pass_str){
 						exit("ERR-LIN-5");
 					} else {
@@ -213,14 +258,14 @@
 						setcookie("id", $db_id, strtotime( '+30 days' ), "/", "", "", TRUE);
 						setcookie("user", $db_username, strtotime( '+30 days' ), "/", "", "", TRUE);
 						setcookie("pass", $db_pass_str, strtotime( '+30 days' ), "/", "", "", TRUE); 
-						$sql = "UPDATE users SET ip='$ip', lastlogin=now() WHERE username='$db_username' LIMIT 1";
+						$sql = "UPDATE `user_sessions` SET ip='$ip', lastlogin=now() WHERE username='$db_username' LIMIT 1";
 						$query = mysqli_query($db_conx, $sql);
 						echo $db_username;
 						exit("success");
 					}
 				}
-				exit("ERR-LIN-OTHER");
 			}
+			exit("ERR-LIN-OTHER");
 		}
 	// LOGOUT
 		elseif($api_type == "logout") {
