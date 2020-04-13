@@ -19,11 +19,11 @@
 			"pages"			=>	$toroot."pages/",				// Relative path to `pages` dir
 			"userdata"		=>	$toroot."userdata/",			// Relative path to `userdata` dir
 
+			"js"			=>	$toroot."inc/js/",				// Relative path to `js` dir
+			"css"			=>	$toroot."inc/css/",				// Relative path to `css` dir
 			"forms"			=>	$toroot."inc/forms/",			// Relative path to `forms` dir
-			"templates"		=>	$toroot."inc/templates/",		// Relative path to `templates` dir
 			"fonts"			=>	$toroot."inc/fonts/",			// Relative path to `fonts` dir
-			"js"			=>	$toroot."inc/js/",				// Relative path to `forms` dir
-			"css"			=>	$toroot."inc/css/",				// Relative path to `forms` dir
+			"templates"		=>	$toroot."inc/templates/",		// Relative path to `templates` dir
 			
 			"error"			=>	$toroot."error/",				// Relative path to `error` file
 		);
