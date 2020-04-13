@@ -73,4 +73,18 @@
 		}
 		ajax.send("#=login&e="+e+"&p="+p);
 	}
+	function logout() {
+		var ajax = ajaxObj("POST", "api/index.php");
+		ajax.onreadystatechange = function() {
+			if(ajaxReturn(ajax) == true) {
+				var response = ajax.responseText;
+				if(response.includes("success")){
+					window.location = "<?echo$mg_dir['root']?>home.php";
+				} else {
+					checkresponse(response);
+				}
+			}
+		}
+		ajax.send("#=logout");
+	}
 </script>

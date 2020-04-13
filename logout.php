@@ -1,15 +1,9 @@
-<?php
-	include_once("./variables.php");
-	if($user_ok) {
-		header("location: ".$mg_dir['root']."home.php");
-		exit();
-	}
-?>
+
 <!DOCTYPE html>
 	<html>
 		<head>
 			<meta charset="UTF-8">
-			<title>Login</title>
+			<title>Logout</title>
 			<link rel="icon" href="favicon.ico" type="image/x-icon">
 			<? include_once($mg_dir['js']."ajax.js.php");		?>
 			<? include_once($mg_dir['js']."autoscroll.js.php");	?>
@@ -17,12 +11,12 @@
 			<? include_once($mg_dir['js']."functions.js.php");	?>
 			<? include_once($mg_dir['css']."style.css.php");	?>
 		</head>
-		<body>
+		<body OnLoad="logout()">
 			<div class="preloader">
 				<?	include_once($mg_dir['template']."preloader.php")	?>
 			</div>
 			<div class="content">
-				<?include_once($mg_dir['forms']."login.php")?>
+				<?	include_once($mg_dir['template']."logout.php")	?>
 			</div>
 		</body>
 	</html>

@@ -256,7 +256,34 @@
 		}
 	// LOGOUT
 		elseif($api_type == "logout") {
-			
+			// SEARCH FOR AND REMOVE THE COOKIES
+				if(isset($_COOKIE["user_id"]) && isset($_COOKIE["session_id"]) && isset($_COOKIE["username"]) && isset($_COOKIE["password"])) {
+					setcookie("user_id",	'',	strtotime('-5 days'),	'/');
+					setcookie("session_id",	'',	strtotime('-5 days'),	'/');
+					setcookie("username",	'',	strtotime('-5 days'),	'/');
+					setcookie("password",	'',	strtotime('-5 days'),	'/');
+					// confirm the cookies have been deleted
+					if(isset($_COOKIE["user_id"]) && isset($_COOKIE["session_id"]) && isset($_COOKIE["username"]) && isset($_COOKIE["password"])) {
+						exit('ERR-LOU-1');
+					}
+				}
+			// SEARCH FOR AND END THE SESSION
+				$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`='1' LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$numrows = mysqli_num_rows($query);
+				if($numrows > 0){
+					$row = mysqli_fetch_row($query);
+					$sql = "UPDATE `user_sessions` SET `end_time`=now(), `active`='0' WHERE `session_id`='$row[0]'";
+					$query = mysqli_query($db_conx, $sql);
+					// confirm the session has been deleted
+					$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`='1' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$numrows = mysqli_num_rows($query);
+					if($numrows > 0){
+						exit('ERR-LOU-2');
+					}
+				}
+			exit('success');
 		}
 	// RESET PASSWORD
 		# T.B.D

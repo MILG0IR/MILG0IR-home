@@ -14,10 +14,11 @@
 			$cookies_exist = false;
 			$session_exists = false;
 		// CHECK IF THE COOKIES EXIST AND ARE VALID.
-			if(isset($_COOKIE["id"]) && isset($_COOKIE["user"]) && isset($_COOKIE["pass"])){
-				$log_id = preg_replace('#[^0-9]#', '', $_COOKIE['id']);
-				$log_username = preg_replace('#[^a-z0-9]#i', '', $_COOKIE['user']);
-				$log_password = preg_replace('#[^a-z0-9]#i', '', $_COOKIE['pass']);
+			if(isset($_COOKIE["user_id"]) && isset($_COOKIE["session_id"]) && isset($_COOKIE["username"]) && isset($_COOKIE["password"])) {
+				$log_id			= preg_replace('#[^0-9]#', '', $_COOKIE['user_id']);
+				$log_session	= preg_replace('#[^0-9]#', '', $_COOKIE['session_id']);
+				$log_username	= preg_replace('#[^a-z0-9]#i', '', $_COOKIE['username']);
+				$log_password	= preg_replace('#[^a-z0-9]#i', '', $_COOKIE['password']);
 
 				$sql = "SELECT `uid` FROM `users` WHERE `uid`='$log_id' AND `username`='$log_username' AND `password`='$log_password' AND `enabled`='1' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
@@ -36,7 +37,7 @@
 		// EVALUATE WHETHER THE USER IS LOGGED IN
 			if($cookies_exist && $session_exists) {
 				$user_ok = true;
-			} elseif(isset($_COOKIE["id"]) && isset($_COOKIE["user"]) && isset($_COOKIE["pass"])) {
+			} elseif(isset($_COOKIE["user_id"]) && isset($_COOKIE["session_id"]) && isset($_COOKIE["username"]) && isset($_COOKIE["password"])) {
 				setcookie("user_id",	'',	strtotime('-5 days'),	'/');
 				setcookie("session_id",	'',	strtotime('-5 days'),	'/');
 				setcookie("username",	'',	strtotime('-5 days'),	'/');
