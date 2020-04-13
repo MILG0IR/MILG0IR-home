@@ -1,5 +1,7 @@
 <?php
-	// DEFAULT
+	// DEFAULT INCLUDES
+		include_once('./db/db_conx.php');
+	// DIRECTORIES
 		# find root
 			$toroot = "";
 			$i = count(explode('/',$_SERVER['DOCUMENT_URI'])) -2;
@@ -7,10 +9,6 @@
 				$toroot .= "../";
 				$i--;
 			}
-		$mg = array(
-			"db"			=>	$toroot."db/db_conx.php"	// Relative path to `db_conx`
-		);
-	// DIRECTORIES
 		$mg_dir = array(
 			"root"			=>	$toroot,						// Relative path to `root` dir
 			"api"			=>	$toroot."api/",					// Relative path to `API` dir
@@ -24,6 +22,8 @@
 			"forms"			=>	$toroot."inc/forms/",			// Relative path to `forms` dir
 			"templates"		=>	$toroot."inc/templates/",		// Relative path to `templates` dir
 			"fonts"			=>	$toroot."inc/fonts/",			// Relative path to `fonts` dir
+			"js"			=>	$toroot."inc/js/",				// Relative path to `forms` dir
+			"css"			=>	$toroot."inc/css/",				// Relative path to `forms` dir
 			
 			"error"			=>	$toroot."error/",				// Relative path to `error` file
 		);
