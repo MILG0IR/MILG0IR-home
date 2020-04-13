@@ -1,5 +1,5 @@
 <?php
-	// DIRECTORIES
+	// DEFAULT
 		# find root
 			$toroot = "";
 			$i = count(explode('/',$_SERVER['DOCUMENT_URI'])) -2;
@@ -7,6 +7,10 @@
 				$toroot .= "../";
 				$i--;
 			}
+		$mg = array(
+			"db"			=>	$toroot."db/db_conx.php"	// Relative path to `db_conx`
+		);
+	// DIRECTORIES
 		$mg_dir = array(
 			"root"			=>	$toroot,						// Relative path to `root` dir
 			"api"			=>	$toroot."api/",					// Relative path to `API` dir
