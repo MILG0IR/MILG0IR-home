@@ -10,11 +10,11 @@ Hi! Here at MILG0IR we are working to create the best media organizer around! Wi
 To install MILG0IR home make sure you meet the requirements as stated below, then download out PHP file, place it onto your server and follow the instructions on screen! Installing could not be simpler. Use the commands below, within the website folder,  to get the install file!
 Wget:
 ```sh
-wget https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php
+wget https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-web/master/install.php
 ```
 cURL:
 ```sh
-curl https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php > install.php
+curl https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-web/master/install.php > install.php
 ```
 Once the file has been installed
 
