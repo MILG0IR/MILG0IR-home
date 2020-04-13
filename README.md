@@ -38,6 +38,7 @@ Along with the following PHP extentions
 - PHP72-xml
 - PHP72-zip
 - PHP72-OpenSSL
+- PHP72-Session
 
 ## How to create a web server
 If you do not have a webserver then please follow one of these guides to create a new one

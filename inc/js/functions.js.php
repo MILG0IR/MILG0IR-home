@@ -17,7 +17,7 @@
 	}
 	function checkusername() {
 		var u = _("username").value;
-		var ajax = ajaxObj("POST", "signup.php");
+		var ajax = ajaxObj("POST", "api/index.php");
 		ajax.onreadystatechange = function() {
 			if(ajaxReturn(ajax) == true) {
 				_("unamestatus").innerHTML = ajax.responseText;
@@ -33,7 +33,7 @@
 		var c = _("country").value;
 		var g = _("gender").value;
 		var status = _("status");
-		var ajax = ajaxObj("POST", "signup.php");
+		var ajax = ajaxObj("POST", "api/index.php");
 		ajax.onreadystatechange = function() {
 			if(ajaxReturn(ajax) == true) {
 				if(ajax.responseText != "signup_success"){
@@ -50,7 +50,7 @@
 	function login() {
 		var e = _("email").value;
 		var p = _("password").value;
-		var ajax = ajaxObj("POST", "login.php");
+		var ajax = ajaxObj("POST", "api/index.php");
 		ajax.onreadystatechange = function() {
 			if(ajaxReturn(ajax) == true) {
 				if(ajax.responseText == "login_failed"){
