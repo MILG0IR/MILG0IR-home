@@ -11,11 +11,8 @@
 			<meta charset="UTF-8">
 			<title>Sign Up</title>
 			<link rel="icon" href="favicon.ico" type="image/x-icon">
-			<? include_once($mg_dir['js']."ajax.js.php");		?>
-			<? include_once($mg_dir['js']."autoscroll.js.php");	?>
-			<? include_once($mg_dir['js']."fade-slide.js.php");	?>
-			<? include_once($mg_dir['js']."functions.js.php");	?>
-			<? include_once($mg_dir['css']."style.css.php");	?>
+			<? include_once($mg_dir['js']."js.php");	?>
+			<? include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body>
 			<div class="preloader">
