@@ -7,16 +7,23 @@
 <!DOCTYPE html>
 	<html>
 		<head>
-			<? include_once($mg_dir['js']."js.php");	?>
+			<meta charset="UTF-8">
+			<title>Homepage</title>
+			<link rel="icon" href="favicon.ico" type="image/x-icon">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<? include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body>
+			<!-- PRELOADER -->
 			<div class="preloader">
-				<?	include_once($mg_dir['templates']."preloader.php")	?>
+				<?	include_once($mg_dir['templates']."preloader.php")		?>
 			</div>
-			<?	include_once($mg_dir['templates']."header.php")		?>
-			<?	include_once($mg_dir['templates']."sidebar.php")	?>
+			<!-- HEADER -->
+			<?	include_once($mg_dir['templates']."header-navigation.php")	?>
+			<!-- CONTEN -->
 			<div class="content">
 			</div>
+			<!-- JS -->
+			<? include_once($mg_dir['js']."js.php"); ?>
 		</body>
 	</html>

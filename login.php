@@ -10,18 +10,21 @@
 		<head>
 			<meta charset="UTF-8">
 			<title>Login</title>
-			<link rel="icon" href="favicon.ico" type="image/x-icon">
-			<? include_once($mg_dir['js']."js.php");	?>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<? include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body>
-			<div class="preloader">
-				<?	include_once($mg_dir['templates']."preloader.php")	?>
-			</div>
-			<?include_once($mg_dir['templates']."header-minimal.php")?>
-			<div class="content">
-				<?include_once($mg_dir['forms']."login.php")?>
-			</div>
-			<?include_once($mg_dir['templates']."footer.php")?>
+			<!-- PRELOADER -->
+				<div class="preloader">
+					<? include_once($mg_dir['templates']."preloader.php") ?>
+				</div>
+			<!-- HEADER -->
+				<? include_once($mg_dir['templates']."header-minimal.php") ?>
+			<!-- CONTENT -->
+				<div class="content">
+					<?include_once($mg_dir['forms']."login.php")?>
+				</div>
+			<!-- JS -->
+			<? include_once($mg_dir['js']."js.php"); ?>
 		</body>
 	</html>
