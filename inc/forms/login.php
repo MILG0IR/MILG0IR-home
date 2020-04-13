@@ -1,3 +1,4 @@
+<h3>Log In Here</h3>
 <form id="loginform" onsubmit="return false;">
     <div>Email Address:</div>
     <input type="text" id="email" onfocus="emptyElement('status')" maxlength="88">

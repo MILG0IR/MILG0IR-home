@@ -5,4 +5,5 @@
             echo mysqli_connect_error();
             exit();
         }
+    include_once("db_vars.php");
 ?>

@@ -23,7 +23,7 @@
 			"css"			=>	$toroot."inc/css/",				// Relative path to `css` dir
 			"forms"			=>	$toroot."inc/forms/",			// Relative path to `forms` dir
 			"fonts"			=>	$toroot."inc/fonts/",			// Relative path to `fonts` dir
-			"templates"		=>	$toroot."inc/templates/",		// Relative path to `templates` dir
+			"templates"		=>	$toroot."inc/page_templates/",		// Relative path to `templates` dir
 			
 			"error"			=>	$toroot."error/",				// Relative path to `error` file
 		);
@@ -40,4 +40,9 @@
 		} else {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
+	// ENCRYPTION SETTINGS
+		$mg_security = array(
+			"hash"	=>	"sha512",
+			"salt"	=>	"hVxAuijVqBRC7HtaOq4Bb5QbF2pZ9dETjqEUIt7jzhejRRuLjQJ3w5rDsRYTEjyf4TY2S9naLea5wUCHOMqpkAP9HCq9cGt7OwD3uvAuFvndoH9QibYyZL3wbfI6kplA"
+		)
 ?>

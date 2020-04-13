@@ -14,5 +14,9 @@
 			<? include_once($mg_dir['css']."style.css.php");	?>
 		</head>
 		<body>
+			<div class="preloader">
+			</div>
+			<div class="content">
+			</div>
 		</body>
 	</html>

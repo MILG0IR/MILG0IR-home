@@ -20,9 +20,10 @@
 			<? include_once($mg_dir['css']."style.css.php");	?>
 		</head>
 		<body>
-			<div id="pageMiddle">
-				<h3>Log In Here</h3>
-				<?include_once($mg_dir['forms'])?>
+			<div class="preloader">
+			</div>
+			<div class="content">
+				<?include_once($mg_dir['forms']."login.php")?>
 			</div>
 		</body>
 	</html>

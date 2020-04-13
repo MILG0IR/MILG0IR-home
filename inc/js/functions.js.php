@@ -23,7 +23,17 @@
 				_("unamestatus").innerHTML = ajax.responseText;
 			}
 		}
-		ajax.send("=check_username&u="+u);
+		ajax.send("#=check_username&u="+u);
+	}
+	function checkresponse() {
+		var u = _("username").value;
+		var ajax = ajaxObj("POST", "api/index.php");
+		ajax.onreadystatechange = function() {
+			if(ajaxReturn(ajax) == true) {
+				_("unamestatus").innerHTML = ajax.responseText;
+			}
+		}
+		ajax.send("#=search_code&u="+u);
 	}
 	function signup() {
 		var u = _("username").value;
@@ -45,7 +55,7 @@
 				}
 			}
 		}
-		ajax.send("=signup&u="+u+"&e="+e+"&p="+p1+"&c="+c+"&g="+g);
+		ajax.send("#=signup&u="+u+"&e="+e+"&p="+p1+"&c="+c+"&g="+g);
 	}
 	function login() {
 		var e = _("email").value;
@@ -53,14 +63,14 @@
 		var ajax = ajaxObj("POST", "api/index.php");
 		ajax.onreadystatechange = function() {
 			if(ajaxReturn(ajax) == true) {
-				if(ajax.responseText == "login_failed"){
-					_("status").innerHTML = "Login unsuccessful, please try again.";
-					_("loginbtn").style.display = "block";
+				var response = ajax.responseText;
+				if(response.includes("success")){
+					window.location = "<?echo$mg_dir['root']?>home.php";
 				} else {
-					window.location = "user.php?u="+ajax.responseText;
+					checkresponse(response);
 				}
 			}
 		}
-		ajax.send("=login&e="+email+"&p="+password);
+		ajax.send("#=login&e="+e+"&p="+p);
 	}
 </script>
