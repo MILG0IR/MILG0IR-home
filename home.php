@@ -14,9 +14,9 @@
 			<div class="preloader">
 				<?	include_once($mg_dir['templates']."preloader.php")	?>
 			</div>
+			<?	include_once($mg_dir['templates']."header.php")		?>
+			<?	include_once($mg_dir['templates']."sidebar.php")	?>
 			<div class="content">
-				<?	include_once($mg_dir['templates']."sidebar.php")	?>
-				<?	include_once($mg_dir['templates']."header.php")	?>
 			</div>
 		</body>
 	</html>

@@ -15,9 +15,6 @@
 			<? include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body OnLoad="logout()">
-			<div class="preloader">
-				<?	include_once($mg_dir['templates']."preloader.php")	?>
-			</div>
 			<div class="content">
 				<?	include_once($mg_dir['templates']."logout.php")	?>
 			</div>
