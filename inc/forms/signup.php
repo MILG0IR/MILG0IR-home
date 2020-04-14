@@ -9,10 +9,10 @@
         <input id="email" type="text" onfocus="emptyElement('status')" onkeyup="restrict('email')" maxlength="88" autocomplete="email">
 
     <div>Create Password:</div>
-        <input id="pass1" type="password" onfocus="emptyElement('status')" maxlength="16" autocomplete="new-password">
+        <input id="pass1" type="password" onfocus="emptyElement('status')" maxlength="32" autocomplete="new-password">
 
     <div>Confirm Password:</div>
-        <input id="pass2" type="password" onfocus="emptyElement('status')" maxlength="16" autocomplete="new-password">
+        <input id="pass2" type="password" onfocus="emptyElement('status')" maxlength="32" autocomplete="new-password">
 
     <br /><br />
 	<button class="button-primary" id="loginbtn" onclick="login()">Signup</button>
