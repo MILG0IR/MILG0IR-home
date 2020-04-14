@@ -1,4 +1,4 @@
-<script NAME="Preloader">
+<script name="PRELOADER">
 	$(document).ready(function() {
 		preloaderFadeOutTime = 500;
 		function hidePreloader() {
@@ -8,7 +8,7 @@
 		hidePreloader();
 	});
 </script>
-<script NAME="burger">
+<script name="BURGER">
 	$(document).ready(function () {
 		$('[data-toggle="offcanvas"]').click(function () {
 			$('.fixed-nav-inner').toggleClass('open-nav')

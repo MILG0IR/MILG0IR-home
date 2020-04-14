@@ -3,7 +3,7 @@
 	<a href="#" id="menu-toggle" class="menu-toggle waves-light" data-toggle="offcanvas">
 		<i class="material-icons menu-toggle-icon">menu</i>
 	</a>
-	<a class="navbar-brand waves-light" href="#">
+	<a class="navbar-brand waves-light" href="<?echo$mg_dir['root']?>home.php">
 		<span>MILG0IR</span> home
 	</a>
 	<a href="logout.php" id="logout" class="navbar-logout waves-light" data-toggle="offcanvas">

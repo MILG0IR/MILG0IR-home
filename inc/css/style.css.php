@@ -2,6 +2,25 @@
 	body {
 		height: 100%;
 		background-color: #EEEFFF; }
+	.btn-primary {
+		background-color: #82bce3;
+		background: #82bce3;
+		color: #333; }
+	.btn-primary:hover,
+	.btn-primary:active {
+		background-color: #2980b9;
+		background: #2980b9;
+		color: #FFF; }
+
+	.btn-secondary {
+		background-color: #D9D9D9;
+		background: #D9D9D9;
+		color: #333; }
+	.btn-secondary:hover,
+	.btn-secondary:active {
+		background-color: #A2A2A2;
+		background: #A2A2A2;
+		color: #FFF; }
 </style>
 <style name="PRELOADER">
 	body > .preloader {
@@ -150,5 +169,25 @@
 <style name="CONTAINER">
 	body > .content {
 		position: absolute;
+		height: 100%;
+		width: 100%;
 		top: 56px; }
+</style>
+<style name="forms">
+	body > .content > form {
+		display: inline-block; }
+	body > .content > form > button {
+		text-decoration: none;
+		display: inline-block;
+		text-align: center;
+		border-radius: 2px;
+		cursor: pointer;
+		font-size: 16px;
+		border: none;
+		padding: 1vh;
+		width: 49%; }
+	body > .content > form > input,
+	body > .content > form > input:focus,
+	body > .content > form > input:after {
+		width: 35vh; }
 </style>

@@ -1,113 +1,124 @@
 <?php
 	// SET THE VARIABLES IF AVAILABLE
 		include_once("../db/db_conx.php");
-		if(isset($GET['#']) || isset($_POST['#'])) {					# API type
+		//																# Variable			|	Description
+		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+		if(isset($_GET['#']) || isset($_POST['#'])) {					# $api_type			|	API type
 			if(isset($_GET['#'])) {
 				$api_type = $_GET['#'];
 			} else {
 				$api_type = $_POST['#'];
 			}
-		} else {$api_type = NULL;}
-		if(isset($GET['e']) || isset($_POST['e'])) {					# E-Mail address
+		} else {$api_type = NULL;}										#					|
+		if(isset($_GET['e']) || isset($_POST['e'])) {					# $email			|	E-Mail address
 			if(isset($_GET['e'])) {
 				$email = $_GET['e'];
 			} else {
 				$email = $_POST['e'];
 			}
-		} else {$email = NULL;}
-		if(isset($GET['u']) || isset($_POST['u'])) {					# username
+		} else {$email = NULL;}											#					|
+		if(isset($_GET['u']) || isset($_POST['u'])) {					# $username			|	username
 			if(isset($_GET['u'])) {
-				preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
+				$username = $_GET['u'];
 			} else {
-				preg_replace('#[^a-z0-9]#i', '', $_POST['u']);
+				$username = $_POST['u'];
 			}
-		} else {$username = NULL;}
-		if(isset($GET['p']) || isset($_POST['p'])) {					# Password
+		} else {$username = NULL;}										#					|
+		if(isset($_GET['p']) || isset($_POST['p'])) {					# $password			|	Password
 			if(isset($_GET['p'])) {
 				$password = $_GET['p'];
 			} else {
 				$password = $_POST['p'];
 			}
-		} else {$password = NULL;}
-		if(isset($GET['fn']) || isset($_POST['fn'])) {					# Firstname
+		} else {$password = NULL;}										#					|
+		if(isset($_GET['fn']) || isset($_POST['fn'])) {					# $firstname		|	Firstname
 			if(isset($_GET['fn'])) {
 				$firstname = $_GET['fn'];
 			} else {
 				$firstname = $_POST['fn'];
 			}
-		} else {$firstname = NULL;}
-		if(isset($GET['sn']) || isset($_POST['sn'])) {					# Surname
+		} else {$firstname = NULL;}										#					|
+		if(isset($_GET['sn']) || isset($_POST['sn'])) {					# $surname			|	Surname
 			if(isset($_GET['sn'])) {
 				$surname = $_GET['sn'];
 			} else {
 				$surname = $_POST['sn'];
 			}
-		} else {$surname = NULL;}
-		if(isset($GET['mob']) || isset($_POST['mob'])) {				# Mobile #
+		} else {$surname = NULL;}										#					|
+		if(isset($_GET['mob']) || isset($_POST['mob'])) {				# $mobile			|	Mobile #
 			if(isset($_GET['mob'])) {
 				$mobile = $_GET['mob'];
 			} else {
 				$mobile = $_POST['mob'];
 			}
-		} else {$mobile = NULL;}
-		if(isset($GET['img_avatar']) || isset($_POST['img_avatar'])) {	# Avatar Base64
+		} else {$mobile = NULL;}										#					|
+		if(isset($_GET['img_avatar']) || isset($_POST['img_avatar'])) {	# $avatar			|	Avatar Base64
 			if(isset($_GET['img_avatar'])) {
 				$avatar = $_GET['img_avatar'];
 			} else {
 				$avatar = $_POST['img_avatar'];
 			}
-		} else {$avatar = NULL;}
-		if(isset($GET['img_banner']) || isset($_POST['img_banner'])) {	# Banner Base64
+		} else {$avatar = NULL;}										#					|
+		if(isset($_GET['img_banner']) || isset($_POST['img_banner'])) {	# $banner			|	Banner Base64
 			if(isset($_GET['img_banner'])) {
 				$banner = $_GET['img_banner'];
 			} else {
 				$banner = $_POST['img_banner'];
 			}
-		} else {$banner = NULL;}
-		if(isset($GET['uid']) || isset($_POST['uid'])) {				# User ID
+		} else {$banner = NULL;}										#					|
+		if(isset($_GET['uid']) || isset($_POST['uid'])) {				# $uid				|	User ID
 			if(isset($_GET['uid'])) {
 				$uid = $_GET['uid'];
 			} else {
 				$uid = $_POST['uid'];
 			}
-		} else {$uid = NULL;}
-		if(isset($GET['msg']) || isset($_POST['msg'])) {				# message
+		} else {$uid = NULL;}											#					|
+		if(isset($_GET['msg']) || isset($_POST['msg'])) {				# $msg				|	Message
 			if(isset($_GET['msg'])) {
 				$message = $_GET['msg'];
 			} else {
 				$message = $_POST['msg'];
 			}
-		} else {$message = NULL;}
-		if(isset($GET['uri']) || isset($_POST['uri'])) {				# Web URI
+		} else {$message = NULL;}										#					|
+		if(isset($_GET['uri']) || isset($_POST['uri'])) {				# $uri				|	Web URI
 			if(isset($_GET['uri'])) {
 				$uri = $_GET['uri'];
 			} else {
 				$uri = $_POST['uri'];
 			}
-		} else {$uri = NULL;}
-		if(isset($GET['device']) || isset($_POST['device'])) {			# device
+		} else {$uri = NULL;}											#					|
+		if(isset($_GET['device']) || isset($_POST['device'])) {			# $device			|	Device
 			if(isset($_GET['device'])) {
 				$device = $_GET['device'];
 			} else {
 				$device = $_POST['device'];
 			}
-		} else {$device = NULL;}
-		if(isset($GET['branch']) || isset($_POST['branch'])) {			# branch
+		} else {$device = NULL;}										#					|
+		if(isset($_GET['branch']) || isset($_POST['branch'])) {			# $branch			|	Branch
 			if(isset($_GET['branch'])) {
 				$branch = $_GET['branch'];
 			} else {
 				$branch = $_POST['branch'];
 			}
-		} else {$branch = NULL;}
+		} else {$branch = NULL;}										#					|
+		if(isset($_GET['code']) || isset($_POST['code'])) {				# $code				|	Response code
+			if(isset($_GET['code'])) {
+				$code = $_GET['code'];
+			} else {
+				$code = $_POST['code'];
+			}
+		} else {$code = NULL;}
 	//
-	// GET ERROR CODE INFO
+	// GET ERROR CODE INFO					T.B.D
 		if($api_type == "search_code") {
-
+			$sql = "SELECT `reason`, `user_error` FROM users WHERE `code`='$u' LIMIT 1";
+			$query = mysqli_query($db_conx, $sql); 
+			$u_check = mysqli_num_rows($query);
 		}
     // CHECK USERNAME AVAILABILITY
 		elseif($api_type == "check_username"){
 			if(isset($username)){
-				$sql = "SELECT `id` FROM `users` WHERE `username`='$username' LIMIT 1";
+				$sql = "SELECT `uid` FROM `users` WHERE `username`='$username' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql); 
 				$uname_check = mysqli_num_rows($query);
 				if (strlen($username) < 3 || strlen($username) > 16) {
@@ -123,7 +134,7 @@
 				}
 			}
 		}
-    // CHECK EMAIL AVAILABILITY
+    // CHECK EMAIL AVAILABILITY				T.B.D
 		elseif($api_type == "check_email"){
 			if(isset($email)){
 				$sql = "SELECT `id` FROM `users` WHERE `email`='$email' LIMIT 1";
@@ -139,7 +150,7 @@
 				}
 			}
 		}
-	// CREATE ACCOUNT
+	// CREATE ACCOUNT						T.B.D
 		elseif($api_type == "signup") {
 				$e = $email;
 				$u = $username;
@@ -289,23 +300,23 @@
 				}
 			exit('success');
 		}
-	// RESET PASSWORD
-		# T.B.D
-	// UPDATE AVATAR
-		# T.B.D
-	// UPDATE BANNER
-		# T.B.D
-	// GET USERDATA
-		# T.B.D
-	// UPDATE USERDATA
-		# T.B.D
-	// CHECK FOR MESSAGES
-		# T.B.D
-	// SEND MESSAGE
-		# T.B.D
-	// GET LATEST VERSION
-		# T.B.D
-	// UPDATE
-		# T.B.D
+	// RESET PASSWORD						T.B.D
+		#
+	// UPDATE AVATAR						T.B.D
+		#
+	// UPDATE BANNER						T.B.D
+		#
+	// GET USERDATA							T.B.D
+		#
+	// UPDATE USERDATA						T.B.D
+		#
+	// CHECK FOR MESSAGES					T.B.D
+		#
+	// SEND MESSAGE							T.B.D
+		#
+	// GET LATEST VERSION					T.B.D
+		#
+	// UPDATE								T.B.D
+		#
 	//
 ?>
