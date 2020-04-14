@@ -34,20 +34,19 @@
 		var ajax = ajaxObj("POST", "api/index.php");
 		ajax.onreadystatechange = function() {
 			if(ajaxReturn(ajax) == true) {
-				_("unamestatus").innerHTML = ajax.responseText;
+				status.innerHTML = checkresponse(ajax.responseText);
 			}
 		}
 		ajax.send("#=check_username&u="+u);
 	}
-	function checkresponse() {
-		var u = _("username").value;
+	function checkresponse(code) {
 		var ajax = ajaxObj("POST", "api/index.php");
 		ajax.onreadystatechange = function() {
 			if(ajaxReturn(ajax) == true) {
-				_("unamestatus").innerHTML = ajax.responseText;
+				return(ajax.responseText);
 			}
 		}
-		ajax.send("#=search_code&u="+u);
+		ajax.send("#=search_code&code="+code);
 	}
 	function signup() {
 		var u = _("username").value;

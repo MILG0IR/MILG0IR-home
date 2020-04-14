@@ -111,9 +111,12 @@
 	//
 	// GET ERROR CODE INFO					T.B.D
 		if($api_type == "search_code") {
-			$sql = "SELECT `reason`, `user_error` FROM users WHERE `code`='$u' LIMIT 1";
-			$query = mysqli_query($db_conx, $sql); 
-			$u_check = mysqli_num_rows($query);
+			if(isset($code)) {
+				$sql = "SELECT `code`, `reason`, `user_error` FROM `var_response_codes` WHERE `code`='INF-UNC-1' LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$row = mysqli_fetch_row($query);
+				exit(json_encode($row));
+			}
 		}
     // CHECK USERNAME AVAILABILITY
 		elseif($api_type == "check_username"){
