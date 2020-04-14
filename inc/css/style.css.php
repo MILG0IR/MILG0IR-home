@@ -2,22 +2,22 @@
 	body {
 		height: 100%;
 		background-color: #EEEFFF; }
-	.btn-primary {
+	.button-primary {
 		background-color: #82bce3;
 		background: #82bce3;
 		color: #333; }
-	.btn-primary:hover,
+	.button-primary:hover,
 	.btn-primary:active {
 		background-color: #2980b9;
 		background: #2980b9;
 		color: #FFF; }
 
-	.btn-secondary {
+	.button-secondary {
 		background-color: #D9D9D9;
 		background: #D9D9D9;
 		color: #333; }
-	.btn-secondary:hover,
-	.btn-secondary:active {
+	.button-secondary:hover,
+	.button-secondary:active {
 		background-color: #A2A2A2;
 		background: #A2A2A2;
 		color: #FFF; }
