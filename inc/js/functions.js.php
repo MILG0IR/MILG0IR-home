@@ -1,7 +1,7 @@
 <script name="FUNCTIONS">
-	function ajaxObj( meth, url ) {
+	function ajaxObj( meth, url, async = true) {
 		var x = new XMLHttpRequest();
-		x.open( meth, url, true );
+		x.open( meth, url, async );
 		x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		return x;
 	}
@@ -29,26 +29,35 @@
 	function emptyElement(x) {
 		_(x).innerHTML = "";
 	}
-	function checkusername() {
+	function checkusername(x) {
 		var u = _("username").value;
-		var ajax = ajaxObj("POST", "api/index.php");
-		ajax.onreadystatechange = function() {
-			if(ajaxReturn(ajax) == true) {
-				status.innerHTML = checkresponse(ajax.responseText);
-			}
-		}
-		ajax.send("#=check_username&u="+u);
+		var output = _("unamestatus");
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=check_username&u='+u,
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			var responseCode	= checkresponse(data);
+			console.log("1-1: " + data);
+			console.log("1-2: " + responseCode);
+		});
 	}
 	function checkresponse(code) {
-		var ajax = ajaxObj("POST", "api/index.php");
-		ajax.onreadystatechange = function() {
-			if(ajaxReturn(ajax) == true) {
-				return(ajax.responseText);
-			}
-		}
-		ajax.send("#=search_code&code="+code);
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=search_code&code='+code,
+			async: false,
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			var JSONarray	= JSON.parse(data);
+			console.log("2-1: " + data)
+			console.log("2-2: " + JSONarray)
+			return JSONarray;
+		});
 	}
-	function signup() {
+	function signup() {			//T.B.D - change to updated AJAX
 		var u = _("username").value;
 		var e = _("email").value;
 		var p1 = _("pass1").value;
@@ -73,31 +82,31 @@
 	function login() {
 		var e = _("email").value;
 		var p = _("password").value;
-		var ajax = ajaxObj("POST", "api/index.php");
-		ajax.onreadystatechange = function() {
-			if(ajaxReturn(ajax) == true) {
-				var response = ajax.responseText;
-				if(response.includes("success")){
-					window.location = "<?echo$mg_dir['root']?>home.php";
-				} else {
-					checkresponse(response);
-				}
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=login&e='+e+'&p='+p,
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			if(data.includes("success")){
+				window.location = "<?echo$mg_dir['root']?>home.php";
+			} else {
+				checkresponse(data);
 			}
-		}
-		ajax.send("#=login&e="+e+"&p="+p);
+		});
 	}
 	function logout() {
-		var ajax = ajaxObj("POST", "api/index.php");
-		ajax.onreadystatechange = function() {
-			if(ajaxReturn(ajax) == true) {
-				var response = ajax.responseText;
-				if(response.includes("success")){
-					window.location = "<?echo$mg_dir['root']?>login.php";
-				} else {
-					checkresponse(response);
-				}
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=logout',
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			if(data.includes("success")){
+				window.location = "<?echo$mg_dir['root']?>login.php";
+			} else {
+				checkresponse(data);
 			}
-		}
-		ajax.send("#=logout");
+		});
 	}
 </script>

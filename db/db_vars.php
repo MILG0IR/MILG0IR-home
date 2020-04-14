@@ -63,11 +63,14 @@
 	// SET THE BRANDING VARIABLES FROM THE DB
 		$sql="SELECT * FROM `var_branding`";
 		$result = mysqli_query($db_conx, $sql);
-		$mg_img = array();
+		$mg_branding = array();
 		while ($row = mysqli_fetch_array($result)) {
-			$mg_img[$row['name']] = array( 
+			$mg_branding[$row['name']] = array( 
+				'id'			=> $row['id'],
 				'value'			=> $row['value'],
-				'description'	=> $row['description']
+				'description'	=> $row['description'],
+				'updated'		=> $row['updated']
 			);
 		};
+	//
 ?>
