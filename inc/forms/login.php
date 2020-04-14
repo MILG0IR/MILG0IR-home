@@ -9,5 +9,5 @@
     <br /><br />
     <button id="loginbtn" onclick="login()">Log In</button> 
     <p id="status"></p>
-    <a href="#">Forgot Your Password?</a>
+    <a href="<?echo$mg_dir['root']?>forgot_password.php">Forgot Your Password?</a>
 </form>

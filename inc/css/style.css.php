@@ -1,9 +1,15 @@
-<style>
+<style name="DEFAULT">
+	body > div.content {
+		position: absolute;
+		top: 56px; }
+</style>
+<style name="PRELOADER">
 	.preloader {
 		position: fixed;
 		width: 100%;
 		height: 100%;
-		background: #2980b9; }
+		background: #2980b9;
+		z-index: 1000; }
 	.preloader > .spinner {
 		position: absolute;
 		top: calc(50% - 20px);
@@ -42,10 +48,10 @@
 		100% { transform: scaleY(0.4); }
 		020% { transform: scaleY(1.0); } }
 </style>
-<style>
+<style name="NAVBAR & HEADER">
 	body {
 		height: 100%;
-		background-color: #f3f3f3; }
+		background-color: #EEEFFF; }
 	body .navbar {
 		position: fixed;
 		width: 100%;

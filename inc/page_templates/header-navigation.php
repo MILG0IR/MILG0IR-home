@@ -3,7 +3,7 @@
 	<a href="#" id="menu-toggle" class="waves-light menu-toggle" data-toggle="offcanvas">
 	<i class="material-icons menu-toggle-icon">menu</i>
 	</a>
-	<a class="navbar-brand waves-light" href="#">Bootstrap<span>4</span></a>
+	<a class="navbar-brand waves-light" href="#"><span>MILG0IR</span> home</a>
 </nav>
 <div class="container-fluid">
 	<div class="fixed-nav">
