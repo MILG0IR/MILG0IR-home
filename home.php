@@ -20,7 +20,7 @@
 			</div>
 			<!-- HEADER -->
 			<?	include_once($mg_dir['templates']."header-navigation.php")	?>
-			<!-- CONTEN -->
+			<!-- CONTENT -->
 			<div class="content">
 			</div>
 			<!-- JS -->

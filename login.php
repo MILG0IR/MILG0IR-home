@@ -25,6 +25,6 @@
 					<?include_once($mg_dir['forms']."login.php")?>
 				</div>
 			<!-- JS -->
-			<? include_once($mg_dir['js']."js.php"); ?>
+				<? include_once($mg_dir['js']."js.php"); ?>
 		</body>
 	</html>

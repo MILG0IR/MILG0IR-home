@@ -1,9 +1,14 @@
 
 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-	<a href="#" id="menu-toggle" class="waves-light menu-toggle" data-toggle="offcanvas">
-	<i class="material-icons menu-toggle-icon">menu</i>
+	<a href="#" id="menu-toggle" class="menu-toggle waves-light" data-toggle="offcanvas">
+		<i class="material-icons menu-toggle-icon">menu</i>
 	</a>
-	<a class="navbar-brand waves-light" href="#"><span>MILG0IR</span> home</a>
+	<a class="navbar-brand waves-light" href="#">
+		<span>MILG0IR</span> home
+	</a>
+	<a href="logout.php" id="logout" class="navbar-logout waves-light" data-toggle="offcanvas">
+		<i class="material-icons menu-toggle-icon">exit_to_app</i>
+	</a>
 </nav>
 <div class="container-fluid">
 	<div class="fixed-nav">

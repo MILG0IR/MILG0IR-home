@@ -1,16 +1,16 @@
 <style name="DEFAULT">
-	body > div.content {
-		position: absolute;
-		top: 56px; }
+	body {
+		height: 100%;
+		background-color: #EEEFFF; }
 </style>
 <style name="PRELOADER">
-	.preloader {
+	body > .preloader {
 		position: fixed;
 		width: 100%;
 		height: 100%;
 		background: #2980b9;
 		z-index: 1000; }
-	.preloader > .spinner {
+	body > .preloader > .spinner {
 		position: absolute;
 		top: calc(50% - 20px);
 		left: calc(50% - 25px);
@@ -18,23 +18,23 @@
 		height: 40px;
 		text-align: center;
 		font-size: 10px; }
-	.preloader > .spinner > div {
+	body > .preloader > .spinner > div {
 		background-color: #333;
 		height: 100%;
 		width: 6px;
 		display: inline-block;
 		-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
 				animation: sk-stretchdelay 1.2s infinite ease-in-out; }
-	.preloader > .spinner > .rect2 {
+	body > .preloader > .spinner > .rect2 {
 		-webkit-animation-delay: -1.1s;
 				animation-delay: -1.1s; }
-	.preloader > .spinner > .rect3 {
+	body > .preloader > .spinner > .rect3 {
 		-webkit-animation-delay: -1.0s;
 				animation-delay: -1.0s; }
-	.preloader > .spinner > .rect4 {
+	body > .preloader > .spinner > .rect4 {
 		-webkit-animation-delay: -0.9s;
 				animation-delay: -0.9s; }
-	.preloader > .spinner > .rect5 {
+	body > .preloader > .spinner > .rect5 {
 		-webkit-animation-delay: -0.8s;
 				animation-delay: -0.8s; }
 	@-webkit-keyframes sk-stretchdelay {
@@ -49,10 +49,7 @@
 		020% { transform: scaleY(1.0); } }
 </style>
 <style name="NAVBAR & HEADER">
-	body {
-		height: 100%;
-		background-color: #EEEFFF; }
-	body .navbar {
+	body > .navbar {
 		position: fixed;
 		width: 100%;
 		display: flex;
@@ -61,29 +58,39 @@
 		padding: 0;
 		border-radius: 0;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
-		z-index: 999; }
-	body .navbar .menu-toggle {
+		z-index: 999;
+		max-height: 56px; }
+	body > .navbar > .menu-toggle {
 		line-height: 0; }
-	body .navbar .menu-toggle .menu-toggle-icon {
+	body > .navbar > .menu-toggle > .menu-toggle-icon {
 		font-size: 1.5rem;
 		line-height: 1.5rem;
 		padding: 1rem;
 		border-right: 1px solid lightgray; }
-	body .navbar .navbar-brand {
+	body > .navbar > .navbar-brand {
 		text-align: center;
 		width: 8.5rem;
 		font-size: 1rem;
 		line-height: 1.5rem;
 		padding: 1rem;
 		border-right: 1px solid lightgray;
-		font-weight: 400; }
-	body .navbar .navbar-brand span {
+		font-weight: 400;
+		max-width: 136px;
+		max-height: 56px; }
+	body > .navbar > .navbar-brand > span {
 		font-weight: 800; }
-	body .container-fluid {
+	body > .navbar > .navbar-logout {
+		position: fixed;
+		right: 0px;
+		font-size: 1.5rem;
+		line-height: 1.5rem;
+		padding: 1rem;
+		border-left: 1px solid lightgray; }
+	body > .container-fluid {
 		height: 100vh; }
-	body .container-fluid .fixed-nav {
+	body > .container-fluid > .fixed-nav {
 		height: 100vh; }
-	body .container-fluid .fixed-nav .fixed-nav-inner {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner {
 		display: inline-flex;
 		flex-direction: column;
 		position: fixed;
@@ -94,13 +101,13 @@
 		border-right: 1px solid lightgray;
 		flex: 1;
 		z-index: 99; }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul {
 		list-style-type: none;
 		padding: 0; }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul a {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a {
 		display: flex;
 		align-items: center; }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul a:before {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:before {
 		content: "";
 		opacity: 0;
 		width: 0.175rem;
@@ -111,18 +118,18 @@
 		left: 0;
 		bottom: 0;
 		right: auto; }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul a:hover {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover {
 		background-color: #f3f3f3;
 		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(0, 0, 0, 0.04), inset 0 2px 1px -1px rgba(0, 0, 0, 0.02); }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul a:hover:before {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover:before {
 		opacity: 1;
 		visibility: visible; }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul a li {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li {
 		padding: 0.25rem 1rem; }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul a li i {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li > i {
 		font-size: 1.5rem;
 		line-height: 3rem; }
-	body .container-fluid .fixed-nav .fixed-nav-inner ul a li:nth-child(2n) {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li:nth-child(2n) {
 		font-size: 1rem;
 		padding: 0;
 		margin-left: 0;
@@ -132,11 +139,16 @@
 		opacity: 0;
 		transition: 0.25s ease-in-out width, 0.25s linear transform;
 		transform: translateX(2rem); }
-	body .container-fluid .fixed-nav .fixed-nav-inner.open-nav li:nth-child(2n) {
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner.open-nav > ul > a > li:nth-child(2n) {
 		margin: 0;
 		padding: 0.25rem 1rem;
 		letter-spacing: 0.025rem;
 		width: 8.5rem;
 		opacity: 1;
 		transform: translateX(0.75rem); }
+</style>
+<style name="CONTAINER">
+	body > .content {
+		position: absolute;
+		top: 56px; }
 </style>
