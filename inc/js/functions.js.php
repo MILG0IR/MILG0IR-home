@@ -30,32 +30,28 @@
 		_(x).innerHTML = "";
 	}
 	function checkusername(x) {
-		var u = _("username").value;
-		var output = _("unamestatus");
+		var u		= _("username").value;
+		var status	= _("unamestatus");
 		$.ajax({
 			url: 'api/index.php',
 			data: '#=check_username&u='+u,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
-			var responseCode	= checkresponse(data);
-			console.log("1-1: " + data);
-			console.log("1-2: " + responseCode);
+			checkresponse().done(function(codeARRAY) {
+				var codeJSON = jQuery.parseJSON(codeARRAY);
+				status.innerHTML = '<span class="bubble success">' + codeJSON[2] + '</span>'
+			});
 		});
 	}
 	function checkresponse(code) {
-		$.ajax({
+		var output = $.ajax({
 			url: 'api/index.php',
 			data: '#=search_code&code='+code,
-			async: false,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
-		}).done(function(data) {
-			var JSONarray	= JSON.parse(data);
-			console.log("2-1: " + data)
-			console.log("2-2: " + JSONarray)
-			return JSONarray;
-		});
+		})
+		return output;
 	}
 	function signup() {			//T.B.D - change to updated AJAX
 		var u = _("username").value;
