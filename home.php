@@ -9,7 +9,7 @@
 		<head>
 			<meta charset="UTF-8">
 			<title>Homepage</title>
-			<link rel="icon" href="favicon.ico" type="image/x-icon">
+			<link rel="icon" href="<?echo$mg_img['favicon']?>" type="image/x-icon">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<? include_once($mg_dir['css']."css.php");	?>
 		</head>

@@ -183,11 +183,12 @@
 		border-radius: 2px;
 		cursor: pointer;
 		font-size: 16px;
+		padding: 0.5rem;
+		margin-left: 1%;
 		border: none;
-		padding: 1vh;
-		width: 49%; }
+		width: 48%; }
 	body > .content > form > input,
 	body > .content > form > input:focus,
 	body > .content > form > input:after {
-		width: 35vh; }
+		width: 25rem; }
 </style>

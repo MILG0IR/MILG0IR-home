@@ -49,5 +49,25 @@
 		$mg_security = array(
 			"hash"	=>	"sha512",
 			"salt"	=>	"hVxAuijVqBRC7HtaOq4Bb5QbF2pZ9dETjqEUIt7jzhejRRuLjQJ3w5rDsRYTEjyf4TY2S9naLea5wUCHOMqpkAP9HCq9cGt7OwD3uvAuFvndoH9QibYyZL3wbfI6kplA"
-		)
+		);
+	// SET THE IMAGE VARIABLES FROM THE DB
+		$sql="SELECT * FROM `var_images`";
+		$result = mysqli_query($db_conx, $sql);
+		$mg_img = array();
+		while ($row = mysqli_fetch_array($result)) {
+			$mg_img[$row['image_category']][$row['image_name']] = array( 
+				'image'			=> $row['image_base64'],
+				'description'	=> $row['image_description']
+			);
+		};
+	// SET THE BRANDING VARIABLES FROM THE DB
+		$sql="SELECT * FROM `var_branding`";
+		$result = mysqli_query($db_conx, $sql);
+		$mg_img = array();
+		while ($row = mysqli_fetch_array($result)) {
+			$mg_img[$row['name']] = array( 
+				'value'			=> $row['value'],
+				'description'	=> $row['description']
+			);
+		};
 ?>
