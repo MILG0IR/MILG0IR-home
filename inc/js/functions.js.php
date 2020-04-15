@@ -29,7 +29,7 @@
 	function emptyElement(x) {
 		_(x).innerHTML = "";
 	}
-	function checkusername(x) {
+	function checkusername() {
 		var u		= _("username").value;
 		var status	= _("unamestatus");
 		$.ajax({
@@ -40,7 +40,13 @@
 		}).done(function(data) {
 			checkresponse().done(function(codeARRAY) {
 				var codeJSON = jQuery.parseJSON(codeARRAY);
-				status.innerHTML = '<span class="bubble success">' + codeJSON[2] + '</span>'
+				if(data == "INF-UNC-1") {
+					status.innerHTML = '<span class="bubble success">' + codeJSON[2] + '</span>';
+				} else if(data == "INF-UNC-2") {
+					status.innerHTML = '<span class="bubble info">' + codeJSON[2] + '</span>';
+				} else {
+					status.innerHTML = '<span class="bubble error">' + codeJSON[2] + '</span>';
+				}
 			});
 		});
 	}
@@ -50,7 +56,9 @@
 			data: '#=search_code&code='+code,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
-		})
+		}).done(function(data) {
+			return jQuery.parseJSON(data);
+		});
 		return output;
 	}
 	function signup() {			//T.B.D - change to updated AJAX
