@@ -197,7 +197,7 @@
 						$query = mysqli_query($db_conx, $sql); 
 						$uid = mysqli_insert_id($db_conx);
 					// CRATE ROW IN `user_prefs` TABLE
-						$sql = "INSERT INTO `user_prefs` (`uid`)       
+						$sql = "INSERT INTO `user_preferences` (`uid`)       
 								VALUES('$uid')";
 						$query = mysqli_query($db_conx, $sql); 
 						$uid = mysqli_insert_id($db_conx);
