@@ -125,9 +125,12 @@
 			type: 'POST',
 		}).done(function(data) {
 			if(data.includes("success")){
-				
+				status.innerHTML = "An email has been sent! Dont forget to check your junk."
 			} else {
-				checkresponse(data);
+				checkresponse(data).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					status.innerHTML = '<span class="bubble error">' + codeJSON[2] + '</span>';
+				});
 			}
 		});
 	}

@@ -9,8 +9,7 @@
 	<input onfocus="emptyElement('status')" type="text" id="email" placeholder="Email address:" autocomplete="username">
 	</br>
 	</br>
-	<button class="button-secondary" id="" onclick="redirect('<?echo$mg_dir['root']?>login.php')">Go to login</button>
-	<button class="button-primary" id="resetpassbtn" onclick="forgotpassword()">Submit</button>
+	<button class="button-secondary" onclick="redirect('<?echo$mg_dir['root']?>login.php')">Go to login</button>
+	<button class="button-primary" onclick="forgotpassword()">Submit</button>
 	<p id="status"></p>
-	<a href="<?echo$mg_dir['root']?>forgot_password.php">Forgot Your Password?</a>
 </form>

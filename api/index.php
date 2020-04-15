@@ -314,11 +314,12 @@
 					$query = mysqli_query($db_conx, $sql);
 					$numrows = mysqli_num_rows($query);
 					if($numrows > 0){
-						// USER EXISTS AND EMAIL WILL BE SENT
+						// User exists and the email will be sent
+						exit('success');
 					} else {
-						// USER DOES NOT EXIST, EMAIL WILL NOT BE SENMT
+						// User does not exist and the email will not be sent
+						exit('ERR-PWR-1');
 					}
-				exit('success');
 			}
 		}
 	// UPDATE AVATAR						T.B.D
