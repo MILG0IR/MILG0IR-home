@@ -16,7 +16,7 @@
         <input id="pass2" type="password" onfocus="emptyElement('status')" maxlength="32" autocomplete="new-password">
 
     <br /><br />
-	<button class="button-primary" id="loginbtn" onclick="login()">Signup</button>
+	<button class="button-primary" id="loginbtn" onclick="signup()">Signup</button>
 	<button class="button-secondary" id="" onclick="redirect('<?echo$mg_dir['root']?>login.php')">Go to login</button>
     <span id="status"></span>
 </form>

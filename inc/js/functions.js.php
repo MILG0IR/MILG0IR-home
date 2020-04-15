@@ -83,52 +83,28 @@
 		return output;
 	}
 	function signup() {			//T.B.D - change to updated AJAX
-		var e = _("email").value;
-		var p = _("password").value;
-		$.ajax({
-			url: 'api/index.php',
-			data: '#=login&e='+e+'&p='+p,
-			contentType: 'application/x-www-form-urlencoded',
-			type: 'POST',
-		}).done(function(data) {
-			if(data.includes("success")){
-				window.location = "<?echo$mg_dir['root']?>home.php";
-			} else {
-				checkresponse(data);
-			}
-		});
-
 		var u = _("username").value;
 		var e = _("email").value;
 		var p1 = _("pass1").value;
 		var p2 = _("pass2").value;
-		$.ajax({
-			url: 'api/index.php',
-			data: '#=signup&e='+e+'&p='+p,
-			contentType: 'application/x-www-form-urlencoded',
-			type: 'POST',
-		}).done(function(data) {
-			if(data.includes("success")){
-				window.location = "<?echo$mg_dir['root']?>login.php";
-			} else {
-				checkresponse(data);
-			}
-		});
-
-		var status = _("status");
-		var ajax = ajaxObj("POST", "api/index.php");
-		ajax.onreadystatechange = function() {
-			if(ajaxReturn(ajax) == true) {
-				if(ajax.responseText != "signup_success"){
-					status.innerHTML = ajax.responseText;
-					_("signupbtn").style.display = "block";
+		var status = _("status").value;
+		if(p1 == p2) {
+			$.ajax({
+				url: 'api/index.php',
+				data: '#=signup&u='+u+'&e='+e+'&p='+p1,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data.includes("success")){
+					window.location = "<?echo$mg_dir['root']?>login.php";
 				} else {
-					window.scrollTo(0,0);
-					_("signupform").innerHTML = "OK "+u+", check your email inbox and junk mail box at <u>"+e+"</u> in a moment to complete the sign up process by activating your account. You will not be able to do anything on the site until you successfully activate your account.";
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						Status.innerHTML = '<span class="bubble success">' + codeJSON[2] + '</span>';
+					});
 				}
-			}
+			});
 		}
-		ajax.send("#=signup&u="+u+"&e="+e+"&p="+p1+"&c="+c+"&g="+g);
 	}
 	function login() {
 		var e = _("email").value;

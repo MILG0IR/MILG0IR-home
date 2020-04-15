@@ -182,12 +182,12 @@
 					exit("ERR-SUP-5");
 				} else {
 					// CRATE ROW IN `users` TABLE
-						$sql = "INSERT INTO `users` (`username`, `email`, `password`, signup)       
-								VALUES('$u','$e','$p_hash','$g','$c','$ip',now(),now(),now())";
+						$sql = "INSERT INTO `users` (`username`, `email`, `password`)       
+								VALUES('$u', '$e', '$p_hash')";
 						$query = mysqli_query($db_conx, $sql); 
 						$uid = mysqli_insert_id($db_conx);
 					// GET THE USER'S UID
-						$sql = "SELECT `uid` FROM `users` WHERE `username`='$u', `email`='$e', `password`='$p_hash' LIMIT 1";
+						$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' AND `email`='$e' AND `password`='$p_hash' LIMIT 1";
 						$query = mysqli_query($db_conx, $sql); 
 						$row = mysqli_fetch_row($query);
 						$uid = $row[0];
