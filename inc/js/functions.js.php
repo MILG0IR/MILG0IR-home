@@ -31,18 +31,39 @@
 	}
 	function checkusername() {
 		var u		= _("username").value;
-		var status	= _("unamestatus");
+		var status	= _("usernamestatus");
 		$.ajax({
 			url: 'api/index.php',
 			data: '#=check_username&u='+u,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
-			checkresponse().done(function(codeARRAY) {
+			checkresponse(data).done(function(codeARRAY) {
 				var codeJSON = jQuery.parseJSON(codeARRAY);
 				if(data == "INF-UNC-1") {
 					status.innerHTML = '<span class="bubble success">' + codeJSON[2] + '</span>';
 				} else if(data == "INF-UNC-2") {
+					status.innerHTML = '<span class="bubble info">' + codeJSON[2] + '</span>';
+				} else {
+					status.innerHTML = '<span class="bubble error">' + codeJSON[2] + '</span>';
+				}
+			});
+		});
+	}
+	function checkemail() {
+		var e		= _("email").value;
+		var status	= _("emailstatus");
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=check_email&e='+e,
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			checkresponse(data).done(function(codeARRAY) {
+				var codeJSON = jQuery.parseJSON(codeARRAY);
+				if(data == "INF-EMC-1") {
+					status.innerHTML = '<span class="bubble success">' + codeJSON[2] + '</span>';
+				} else if(data == "INF-EMC-2") {
 					status.innerHTML = '<span class="bubble info">' + codeJSON[2] + '</span>';
 				} else {
 					status.innerHTML = '<span class="bubble error">' + codeJSON[2] + '</span>';

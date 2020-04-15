@@ -113,7 +113,7 @@
 	// GET ERROR CODE INFO
 		if($api_type == "search_code") {
 			if(isset($code)) {
-				$sql = "SELECT `code`, `reason`, `user_error` FROM `var_response_codes` WHERE `code`='INF-UNC-1' LIMIT 1";
+				$sql = "SELECT `code`, `reason`, `user_error` FROM `var_response_codes` WHERE `code`='$code' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$row = mysqli_fetch_row($query);
 				exit(json_encode($row));
@@ -141,13 +141,13 @@
     // CHECK EMAIL AVAILABILITY				T.B.D
 		elseif($api_type == "check_email"){
 			if(isset($email)){
-				$sql = "SELECT `id` FROM `users` WHERE `email`='$email' LIMIT 1";
+				$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql); 
-				$uname_check = mysqli_num_rows($query);
-				if (is_numeric($username[0])) {
-					exit('ERR-EMC-2');
+				$email_check = mysqli_num_rows($query);
+				if (is_numeric($email[0])) {
+					exit('ERR-EMC-1');
 				}
-				if ($uname_check < 1) {
+				if ($email_check < 1) {
 					exit('INF-EMC-1');
 				} else {
 					exit('INF-EMC-0');

@@ -3,10 +3,11 @@
 
     <div>Username: </div>
         <input id="username" type="text" onblur="checkusername()" onkeyup="restrict('username')" maxlength="16" autocomplete="username">
-        <span id="unamestatus"></span>
+        <span id="usernamestatus"></span>
 
     <div>Email Address:</div>
-        <input id="email" type="text" onfocus="emptyElement('status')" onkeyup="restrict('email')" maxlength="88" autocomplete="email">
+        <input id="email" type="text" onblur="checkemail()" onfocus="emptyElement('status')" onkeyup="restrict('email')" maxlength="88" autocomplete="email">
+        <span id="emailstatus"></span>
 
     <div>Create Password:</div>
         <input id="pass1" type="password" onfocus="emptyElement('status')" maxlength="32" autocomplete="new-password">
