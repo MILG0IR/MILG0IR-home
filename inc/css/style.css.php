@@ -22,13 +22,11 @@
 	button {
 		text-decoration: none;
 		text-align: center;
-		border-radius: 2px;
+		border-radius: 3px;
 		cursor: pointer;
 		font-size: 16px;
 		padding: 0.5rem;
 		border: none; }
-	input, input:focus, input:after {
-		width: 25rem; }
 </style>
 <style name="PRELOADER">
 	body > .preloader {
@@ -114,10 +112,6 @@
 		line-height: 1.5rem;
 		padding: 1rem;
 		border-left: 1px solid lightgray; }
-	body > .container-fluid {
-		/*height: 100vh;*/ }
-	body > .container-fluid > .fixed-nav {
-		/*height: 100vh;*/ }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner {
 		display: inline-flex;
 		flex-direction: column;
@@ -178,27 +172,32 @@
 <style name="CONTAINER">
 	body > .content {
 		position: absolute;
-		height: auto;
+		height: calc(100% - 56px);
 		width: 100%;
-		top: 56px;
-		margin: 0 auto; }
+		top: 56px; }
 </style>
 <style name="LOGIN & SIGNUP">
 	body > .content > form {
+				transform: translate(-50%, -50%);
+			 -o-transform: translate(-50%, -50%);
+		   -moz-transform: translate(-50%, -50%);
+		-webkit-transform: translate(-50%, -50%);
+		box-shadow: black 0px 0px 15px;
+		position: absolute;
+		border-radius: 3px;
+		background: white;
 		display: table;
 		margin: 0 auto;
-		top: 100px;
-		position: relative;
-		background: white;
-		border-radius: 2px;
 		padding: 3rem;
-		box-shadow: black 0px 0px 15px;
-		width: 408px; }
+		width: 408px;
+		left: 50%;
+		top: 50%; }
 	body > .content > form > button {
 		display: inline-block;
 		margin-left: 1%;
 		width: 48%; }
 	body > .content > form > img {
-		max-height: 150px;
-		margin-bottom: 1rem; }
+		margin-bottom: 1rem;
+		border-radius: 3px;
+		max-height: 150px; }
 </style>

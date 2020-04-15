@@ -306,8 +306,21 @@
 				}
 			exit('success');
 		}
-	// RESET PASSWORD						T.B.D
-		#
+	// RESET PASSWORD
+		elseif($api_type == "forgot_password") {
+			if(isset($email)) {
+				// SEARCH FOR the user - if user exists send the email.
+					$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$numrows = mysqli_num_rows($query);
+					if($numrows > 0){
+						// USER EXISTS AND EMAIL WILL BE SENT
+					} else {
+						// USER DOES NOT EXIST, EMAIL WILL NOT BE SENMT
+					}
+				exit('success');
+			}
+		}
 	// UPDATE AVATAR						T.B.D
 		#
 	// UPDATE BANNER						T.B.D

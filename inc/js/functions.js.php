@@ -1,15 +1,4 @@
 <script name="FUNCTIONS">
-	function ajaxObj( meth, url, async = true) {
-		var x = new XMLHttpRequest();
-		x.open( meth, url, async );
-		x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		return x;
-	}
-	function ajaxReturn(x) {
-		if(x.readyState == 4 && x.status == 200){
-			return true;	
-		}
-	}
 	function _(x) {
 		return document.getElementById(x);
 	}
@@ -82,7 +71,7 @@
 		});
 		return output;
 	}
-	function signup() {			//T.B.D - change to updated AJAX
+	function signup() {
 		var u = _("username").value;
 		var e = _("email").value;
 		var p1 = _("pass1").value;
@@ -100,15 +89,16 @@
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
-						Status.innerHTML = '<span class="bubble success">' + codeJSON[2] + '</span>';
+						status.innerHTML = '<span class="bubble error">' + codeJSON[2] + '</span>';
 					});
 				}
 			});
 		}
 	}
-	function login() {
+	function login() {		// T.B.D - Display the error code ~ if any
 		var e = _("email").value;
 		var p = _("password").value;
+		var status = _("status").value;
 		$.ajax({
 			url: 'api/index.php',
 			data: '#=login&e='+e+'&p='+p,
@@ -117,6 +107,25 @@
 		}).done(function(data) {
 			if(data.includes("success")){
 				window.location = "<?echo$mg_dir['root']?>home.php";
+			} else {
+				checkresponse(data).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					status.innerHTML = '<span class="bubble error">' + codeJSON[2] + '</span>';
+				});
+			}
+		});
+	}
+	function forgotpassword() {	// T.B.D
+		var e = _("email").value;
+		var status = _("status").value;
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=forgot_password&e='+e,
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			if(data.includes("success")){
+				
 			} else {
 				checkresponse(data);
 			}
