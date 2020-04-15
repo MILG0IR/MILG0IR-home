@@ -83,12 +83,38 @@
 		return output;
 	}
 	function signup() {			//T.B.D - change to updated AJAX
+		var e = _("email").value;
+		var p = _("password").value;
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=login&e='+e+'&p='+p,
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			if(data.includes("success")){
+				window.location = "<?echo$mg_dir['root']?>home.php";
+			} else {
+				checkresponse(data);
+			}
+		});
+
 		var u = _("username").value;
 		var e = _("email").value;
 		var p1 = _("pass1").value;
 		var p2 = _("pass2").value;
-		var c = _("country").value;
-		var g = _("gender").value;
+		$.ajax({
+			url: 'api/index.php',
+			data: '#=signup&e='+e+'&p='+p,
+			contentType: 'application/x-www-form-urlencoded',
+			type: 'POST',
+		}).done(function(data) {
+			if(data.includes("success")){
+				window.location = "<?echo$mg_dir['root']?>login.php";
+			} else {
+				checkresponse(data);
+			}
+		});
+
 		var status = _("status");
 		var ajax = ajaxObj("POST", "api/index.php");
 		ajax.onreadystatechange = function() {

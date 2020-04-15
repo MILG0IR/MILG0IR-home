@@ -156,66 +156,66 @@
 		}
 	// CREATE ACCOUNT						T.B.D
 		elseif($api_type == "signup") {
-				$e = $email;
-				$u = $username;
-				$p = $password;
-				$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
-
-				$sql = "SELECT id FROM users WHERE username='$u' LIMIT 1";
-				$query = mysqli_query($db_conx, $sql); 
-				$u_check = mysqli_num_rows($query);
-
-				$sql = "SELECT id FROM users WHERE email='$e' LIMIT 1";
-				$query = mysqli_query($db_conx, $sql); 
-				$e_check = mysqli_num_rows($query);
-
-				if($u == "" || $e == "" || $p == ""){
-					echo "The form submission is missing values.";
-					exit();
-				} elseif($u_check > 0){ 
-					echo "The username you entered is alreay taken";
-					exit();
-				} elseif($e_check > 0){ 
-					echo "That email address is already in use in the system";
-					exit();
-				} elseif(strlen($u) < 3 || strlen($u) > 16) {
-					echo "Username must be between 3 and 16 characters";
-					exit(); 
-				} elseif(is_numeric($u[0])) {
-					echo 'Username cannot begin with a number';
-					exit();
-				} else {
+			if(!isset($username) || !isset($email) || !isset($password)) {
+				exit("ERR-SUP-1");
+			} else {
+				// SET THE VARIABLES
+					$e = $email;
+					$u = $username;
+					$p = $password;
 					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
-
-					$sql = "INSERT INTO `users` (username, email, password, gender, country, ip, signup, lastlogin, notescheck)       
-							VALUES('$u','$e','$p_hash','$g','$c','$ip',now(),now(),now())";
+				// CHECK FOR EXISTING USERNAME
+					$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql); 
-					$uid = mysqli_insert_id($db_conx);
-
-					$sql = "INSERT INTO `user_data` (username, email, password, gender, country, ip, signup, lastlogin, notescheck)       
-							VALUES('$u','$e','$p_hash','$g','$c','$ip',now(),now(),now())";
+					$u_check = mysqli_num_rows($query);
+				// CHECK FOR EXISTING EMAIL ADDRESS
+					$sql = "SELECT `uid` FROM `users` WHERE `email`='$e' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql); 
-					$uid = mysqli_insert_id($db_conx);
+					$e_check = mysqli_num_rows($query);
+				if($u_check > 0){ 
+					exit("ERR-SUP-2");
+				} elseif($e_check > 0){ 
+					exit("ERR-SUP-3");
+				} elseif(strlen($u) < 3 || strlen($u) > 16) {
+					exit("ERR-SUP-4"); 
+				} elseif(is_numeric($u[0])) {
+					exit("ERR-SUP-5");
+				} else {
+					// CRATE ROW IN `users` TABLE
+						$sql = "INSERT INTO `users` (`username`, `email`, `password`, signup)       
+								VALUES('$u','$e','$p_hash','$g','$c','$ip',now(),now(),now())";
+						$query = mysqli_query($db_conx, $sql); 
+						$uid = mysqli_insert_id($db_conx);
+					// GET THE USER'S UID
+						$sql = "SELECT `uid` FROM `users` WHERE `username`='$u', `email`='$e', `password`='$p_hash' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql); 
+						$row = mysqli_fetch_row($query);
+						$uid = $row[0];
+					// CRATE ROW IN `user_data` TABLE
+						$sql = "INSERT INTO `user_data` (`uid`, `registered`)       
+								VALUES('$uid', now())";
+						$query = mysqli_query($db_conx, $sql); 
+						$uid = mysqli_insert_id($db_conx);
+					// CRATE ROW IN `user_prefs` TABLE
+						$sql = "INSERT INTO `user_prefs` (`uid`)       
+								VALUES('$uid')";
+						$query = mysqli_query($db_conx, $sql); 
+						$uid = mysqli_insert_id($db_conx);
 
-					$sql = "INSERT INTO `user_prefs` (username, email, password, gender, country, ip, signup, lastlogin, notescheck)       
-							VALUES('$u','$e','$p_hash','$g','$c','$ip',now(),now(),now())";
-					$query = mysqli_query($db_conx, $sql); 
-					$uid = mysqli_insert_id($db_conx);
-
-					if (!file_exists("user/$u")) {
-						mkdir("user/$u", 0755);
-					}
-					echo "success";
-					exit();
+						if (!file_exists("user/$u")) {
+							mkdir("user/$u", 0755);
+						}
+					exit("success");
 				}
-				exit();
+				exit("ERR-SUP-OTHER");
 			}
+		}
 	// LOGIN
 		elseif($api_type == "login") {
 			$success = NULL;
 			if($email == "") {
 				exit("ERR-LIN-2");
-			} else{
+			} else {
 				$e = mysqli_real_escape_string($db_conx, $email);;
 				$p = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 				$sql = "SELECT count(*) FROM `users` WHERE `email`='$e' AND `enabled`='1' LIMIT 1";
