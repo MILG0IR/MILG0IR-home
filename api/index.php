@@ -138,7 +138,7 @@
 				}
 			}
 		}
-    // CHECK EMAIL AVAILABILITY				T.B.D
+    // CHECK EMAIL AVAILABILITY
 		elseif($api_type == "check_email"){
 			if(isset($email)){
 				$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
@@ -154,7 +154,7 @@
 				}
 			}
 		}
-	// CREATE ACCOUNT						T.B.D
+	// CREATE ACCOUNT
 		elseif($api_type == "signup") {
 			if(!isset($username) || !isset($email) || !isset($password)) {
 				exit("ERR-SUP-1");
@@ -172,43 +172,45 @@
 					$sql = "SELECT `uid` FROM `users` WHERE `email`='$e' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql); 
 					$e_check = mysqli_num_rows($query);
-				if($u_check > 0){ 
-					exit("ERR-SUP-2");
-				} elseif($e_check > 0){ 
-					exit("ERR-SUP-3");
-				} elseif(strlen($u) < 3 || strlen($u) > 16) {
-					exit("ERR-SUP-4"); 
-				} elseif(is_numeric($u[0])) {
-					exit("ERR-SUP-5");
-				} else {
-					// CRATE ROW IN `users` TABLE
-						$sql = "INSERT INTO `users` (`username`, `email`, `password`)       
-								VALUES('$u', '$e', '$p_hash')";
-						$query = mysqli_query($db_conx, $sql); 
-						$uid = mysqli_insert_id($db_conx);
-					// GET THE USER'S UID
-						$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' AND `email`='$e' AND `password`='$p_hash' LIMIT 1";
-						$query = mysqli_query($db_conx, $sql); 
-						$row = mysqli_fetch_row($query);
-						$uid = $row[0];
-					// CRATE ROW IN `user_data` TABLE
-						$sql = "INSERT INTO `user_data` (`uid`, `registered`)       
-								VALUES('$uid', now())";
-						$query = mysqli_query($db_conx, $sql); 
-						$uid = mysqli_insert_id($db_conx);
-					// CRATE ROW IN `user_prefs` TABLE
-						$sql = "INSERT INTO `user_preferences` (`uid`)       
-								VALUES('$uid')";
-						$query = mysqli_query($db_conx, $sql); 
-						$uid = mysqli_insert_id($db_conx);
-
-						if (!file_exists("user/$u")) {
-							mkdir("user/$u", 0755);
-						}
+				// DO BASIC CHECKS
+					if($u_check > 0){ 
+						exit("ERR-SUP-2");
+					} elseif($e_check > 0){ 
+						exit("ERR-SUP-3");
+					} elseif(strlen($u) < 3 || strlen($u) > 16) {
+						exit("ERR-SUP-4"); 
+					} elseif(is_numeric($u[0])) {
+						exit("ERR-SUP-5");
+					}
+				// CRATE ROW IN `users` TABLE
+					$sql = "INSERT INTO `users` (`username`, `email`, `password`)       
+							VALUES('$u', '$e', '$p_hash')";
+					$query = mysqli_query($db_conx, $sql); 
+					$uid = mysqli_insert_id($db_conx);
+				// GET THE USER'S UID
+					$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' AND `email`='$e' AND `password`='$p_hash' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql); 
+					$row = mysqli_fetch_row($query);
+					$uid = $row[0];
+				// CRATE ROW IN `user_data` TABLE
+					$sql = "INSERT INTO `user_data` (`uid`, `registered`)       
+							VALUES('$uid', now())";
+					$query = mysqli_query($db_conx, $sql); 
+					$uid = mysqli_insert_id($db_conx);
+				// CRATE ROW IN `user_prefs` TABLE
+					$sql = "INSERT INTO `user_preferences` (`uid`)       
+							VALUES('$uid')";
+					$query = mysqli_query($db_conx, $sql); 
+					$uid = mysqli_insert_id($db_conx);
+				// CREATE USER FOLDER
+					if (!file_exists("user/$u")) {
+						mkdir("user/$u", 0755);
+					}
+				// RESPOND
 					exit("success");
-				}
-				exit("ERR-SUP-OTHER");
+				//
 			}
+			exit("ERR-SUP-OTHER");
 		}
 	// LOGIN
 		elseif($api_type == "login") {
@@ -227,7 +229,7 @@
 					$success = "email";
 				} else {
 					// NO ACCOUNT EXISTS WITH THAT EMAIL ADDRESS. TRYING USERNAME
-					$sql = "SELECT count(*) FROM `users` WHERE `username`='$e' AND `enabled`='1' LIMIT 1";
+					$sql = "SELECT count(*) FROM `users` WHERE `username`='$' AND `enabled`='1' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$row = mysqli_fetch_array($query);
 					$total = $row[0];

@@ -1,4 +1,5 @@
-<form id="loginform" onsubmit="return false;">
+<form id="loginform" class="login" onsubmit="return false;">
+	<img src="<?echo$mg_branding['texticon']['value']?>">
 	<h3>Log In Here</h3>
 
 	<div>Email Address:</div>

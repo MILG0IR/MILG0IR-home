@@ -9,14 +9,17 @@
 	<html>
 		<head>
 			<meta charset="UTF-8">
-			<title>Logout</title>
-			<link rel="icon" href="favicon.ico" type="image/x-icon">
-			<? include_once($mg_dir['js']."js.php");	?>
+			<title>Logout | <?echo$mg_branding['slogan']['value']?></title>
+			<link rel="icon" href="<?echo$mg_branding['favicon']['value']?>" type="image/x-icon">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<? include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body OnLoad="logout()">
-			<div class="content">
-				<?	include_once($mg_dir['templates']."logout.php")	?>
-			</div>
+			<!-- CONTENT -->
+				<div class="content">
+					<?	include_once($mg_dir['templates']."logout.php")	?>
+				</div>
+			<!-- JS -->
+			<? include_once($mg_dir['js']."js.php"); ?>
 		</body>
 	</html>

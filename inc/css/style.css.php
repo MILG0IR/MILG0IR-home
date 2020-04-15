@@ -3,31 +3,39 @@
 		height: 100%;
 		background-color: #EEEFFF; }
 	.button-primary {
-		background-color: #82bce3;
-		background: #82bce3;
+		background-color: #82BCE3;
 		color: #333; }
 	.button-primary:hover,
 	.btn-primary:active {
-		background-color: #2980b9;
-		background: #2980b9;
+		background-color: #2980B9;
 		color: #FFF; }
 
 	.button-secondary {
 		background-color: #D9D9D9;
-		background: #D9D9D9;
 		color: #333; }
 	.button-secondary:hover,
 	.button-secondary:active {
 		background-color: #A2A2A2;
-		background: #A2A2A2;
 		color: #FFF; }
+	form {
+		text-align: center; }
+	button {
+		text-decoration: none;
+		text-align: center;
+		border-radius: 2px;
+		cursor: pointer;
+		font-size: 16px;
+		padding: 0.5rem;
+		border: none; }
+	input, input:focus, input:after {
+		width: 25rem; }
 </style>
 <style name="PRELOADER">
 	body > .preloader {
 		position: fixed;
 		width: 100%;
 		height: 100%;
-		background: #2980b9;
+		background: #2980B9;
 		z-index: 1000; }
 	body > .preloader > .spinner {
 		position: absolute;
@@ -80,7 +88,8 @@
 		z-index: 999;
 		max-height: 56px; }
 	body > .navbar > .menu-toggle {
-		line-height: 0; }
+		line-height: 0;
+		color: #0275D8; }
 	body > .navbar > .menu-toggle > .menu-toggle-icon {
 		font-size: 1.5rem;
 		line-height: 1.5rem;
@@ -106,9 +115,9 @@
 		padding: 1rem;
 		border-left: 1px solid lightgray; }
 	body > .container-fluid {
-		height: 100vh; }
+		/*height: 100vh;*/ }
 	body > .container-fluid > .fixed-nav {
-		height: 100vh; }
+		/*height: 100vh;*/ }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner {
 		display: inline-flex;
 		flex-direction: column;
@@ -116,7 +125,7 @@
 		top: 0;
 		left: 0;
 		bottom: 0;
-		background-color: #f9f9f9;
+		background-color: #F9F9F9;
 		border-right: 1px solid lightgray;
 		flex: 1;
 		z-index: 99; }
@@ -132,13 +141,13 @@
 		width: 0.175rem;
 		visibility: hidden;
 		position: absolute;
-		background: #0275d8;
+		background: #0275D8;
 		top: 0;
 		left: 0;
 		bottom: 0;
 		right: auto; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover {
-		background-color: #f3f3f3;
+		background-color: #F3F3F3;
 		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(0, 0, 0, 0.04), inset 0 2px 1px -1px rgba(0, 0, 0, 0.02); }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover:before {
 		opacity: 1;
@@ -169,26 +178,27 @@
 <style name="CONTAINER">
 	body > .content {
 		position: absolute;
-		height: 100%;
+		height: auto;
 		width: 100%;
-		top: 56px; }
+		top: 56px;
+		margin: 0 auto; }
 </style>
-<style name="forms">
+<style name="LOGIN & SIGNUP">
 	body > .content > form {
-		display: inline-block; }
-	body > .content > form > button {
-		text-decoration: none;
-		display: inline-block;
-		text-align: center;
+		display: table;
+		margin: 0 auto;
+		top: 100px;
+		position: relative;
+		background: white;
 		border-radius: 2px;
-		cursor: pointer;
-		font-size: 16px;
-		padding: 0.5rem;
+		padding: 3rem;
+		box-shadow: black 0px 0px 15px;
+		width: 408px; }
+	body > .content > form > button {
+		display: inline-block;
 		margin-left: 1%;
-		border: none;
 		width: 48%; }
-	body > .content > form > input,
-	body > .content > form > input:focus,
-	body > .content > form > input:after {
-		width: 25rem; }
+	body > .content > form > img {
+		max-height: 150px;
+		margin-bottom: 1rem; }
 </style>

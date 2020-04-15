@@ -1,4 +1,5 @@
-<form name="signupform" id="signupform" onsubmit="return false;">
+<form id="signupform" class="signup" onsubmit="return false;">
+	<img src="<?echo$mg_branding['texticon']['value']?>">
     <h3>Sign Up Here</h3>
 
     <div>Username: </div>
