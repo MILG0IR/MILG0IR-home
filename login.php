@@ -1,5 +1,5 @@
 <?php
-	include_once("./db/db_vars.php");
+	include_once("./db/db_conx.php");
 	if($user_ok) {
 		header("location: ".$mg_dir['root']."home.php");
 		exit();
