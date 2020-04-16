@@ -204,8 +204,8 @@
 						exit("ERR-SUP-6");
 					}
 				// CRATE ROW IN `users` TABLE
-					$sql = "INSERT INTO `users` (`username`, `email`, `password`)       
-							VALUES('$u', '$e', '$p_hash')";
+					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `enabled`='')       
+							VALUES('$u', '$e', '$p_hash', '1')";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
 				// GET THE USER'S UID
