@@ -215,7 +215,7 @@
 					}
 				// CRATE ROW IN `users` TABLE
 					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `change_passkey`, `enabled`)
-							VALUES('$u', '$e', '$p_hash', '0', '1')";
+								VALUES('$u', '$e', '$p_hash', '0', '1')";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
 				// GET THE USER'S UID
@@ -225,12 +225,12 @@
 					$uid = $row[0];
 				// CRATE ROW IN `user_data` TABLE
 					$sql = "INSERT INTO `user_data` (`uid`, `registered`)       
-							VALUES('$uid', now())";
+								VALUES('$uid', now())";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
-				// CRATE ROW IN `user_prefs` TABLE
-					$sql = "INSERT INTO `user_preferences` (`uid`)       
-							VALUES('$uid')";
+				// CRATE ROW IN `user_preferences` TABLE
+					$sql = "INSERT INTO `user_preferences` (`uid`)
+								VALUES('$uid')";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
 				// CLOSE THE REFERENCE
@@ -399,7 +399,7 @@
 		#
 	// GET LATEST VERSION					T.B.D
 		#
-	// CHECK FOR AN UPDATE					T.B.D
+	// CHECK FOR AN UPDATE
 		elseif($api_type == "check_for_update") {
 			if(isset($branch)) {
 				if(isset($ver)) {
