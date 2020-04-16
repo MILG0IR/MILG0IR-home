@@ -220,29 +220,39 @@
 			} else {
 				$e = mysqli_real_escape_string($db_conx, $email);;
 				$p = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
-				$sql = "SELECT count(*) FROM `users` WHERE `email`='$e' AND `enabled`='1' LIMIT 1";
-				$query = mysqli_query($db_conx, $sql);
-				$row = mysqli_fetch_array($query);
-				$total = $row[0];
-				if($total > 0) {
-					// USER ENTERED THEIR EMAIL
-					$success = "email";
-				} else {
-					// NO ACCOUNT EXISTS WITH THAT EMAIL ADDRESS. TRYING USERNAME
-					$sql = "SELECT count(*) FROM `users` WHERE `username`='$' AND `enabled`='1' LIMIT 1";
+				// CHECK IF USER ENTERED USERNAME OR EMAIL ADDRESS
+					$sql = "SELECT count(*) FROM `users` WHERE `email`='$e' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$row = mysqli_fetch_array($query);
 					$total = $row[0];
 					if($total > 0) {
-						// USER ENTERED THEIR USERNAME
-						$success = "username";
+						// USER ENTERED THEIR EMAIL
+						$success = "email";
 					} else {
-						// NO ACCOUNT EXISTS WITH THAT EMAIL OR USERNAME
-						exit("ERR-LIN-4");
+						// NO ACCOUNT EXISTS WITH THAT EMAIL ADDRESS. TRYING USERNAME
+						$sql = "SELECT count(*) FROM `users` WHERE `username`='$e' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$row = mysqli_fetch_array($query);
+						$total = $row[0];
+						if($total > 0) {
+							// USER ENTERED THEIR USERNAME
+							$success = "username";
+						} else {
+							// NO ACCOUNT EXISTS WITH THAT EMAIL OR USERNAME
+							exit("ERR-LIN-4");
+						}
 					}
-				}
-				#--------------------------------#
-				if(isset($success)) { // LOG THE USER INTO THEIR ACCOUNT
+				// CHECK IF USER ACCOUNT IS ENABLED
+					$sql = "SELECT count(*) FROM `users` WHERE `username`='$e' AND `enabled`='1' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$row = mysqli_fetch_array($query);
+					$total = $row[0];
+					if(!$total > 0) {
+						// USER IS NOT ENABLED
+						exit("ERR-LIN-5");
+					}
+				// LOG THE USER INTO THEIR ACCOUNT
+				if(isset($success)) {
 					$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `$success`='$e' AND `enabled`='1' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$row = mysqli_fetch_row($query);
@@ -251,7 +261,7 @@
 					$db_pass_str = $row[2];
 					#--------------------------------#
 					if($p != $db_pass_str){
-						exit("ERR-LIN-5");
+						exit("ERR-LIN-6");
 					} else {
 						// create the session in the database
 						$sql = "INSERT INTO `user_sessions` (`uid`, `ip_address`, `start_time`, `active`) VALUES ('$user_id', '$ip', now(), '1')";

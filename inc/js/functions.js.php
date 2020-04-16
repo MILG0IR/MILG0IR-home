@@ -18,6 +18,27 @@
 	function emptyElement(x) {
 		_(x).innerHTML = "";
 	}
+	function passchecker(pass) {
+		if (pass.length < 8) {
+			// return "Password too short!";
+			return "ERR-PAS-1";
+		} else if (p1.match("#[0-9]+#")) {
+			// return "Password must include at least one number!";
+			return "ERR-PAS-2";
+		} else if (p1.match("#[a-zA-Z]+#")) {
+			// return "Password must include at least one letter!";
+			return "ERR-PAS-3";
+		} else {
+			return "INF-PAS-1";
+		}
+	}
+	function stringcomparison(str1, str2) {
+		if(str1 == str2) {
+			return "INF-STR-1";
+		} else {
+			return "ERR-STR-1";
+		}
+	}
 	function checkresponse(code) {
 		var output = $.ajax({
 			url: 'api/index.php',
@@ -71,6 +92,57 @@
 			});
 		});
 	}
+	function checkpassword() {
+		var p1		= _("pass1").value;
+		var p2		= _("pass2").value;
+		var pass1	= _("pass1status");
+		var pass2	= _("pass2status");
+		if(p1 != "" && p2 == "") {
+			// PASSWORD 1
+			var p1_status = passchecker(p1);
+			checkresponse(p1_status).done(function(codeARRAY) {
+				var codeJSON = jQuery.parseJSON(codeARRAY);
+				if(p1_status == "INF-PAS-1") {
+					pass1.innerHTML = '<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+				} else {
+					pass1.innerHTML = '<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+				}
+			});
+		} else if(p1 == "" && p2 != "") {
+			// PASSWORD 2
+			var p2_status = stringcomparison(p1, p2);
+			checkresponse(p2_status).done(function(codeARRAY) {
+				var codeJSON = jQuery.parseJSON(codeARRAY);
+				if(data == "INF-PAS-1") {
+					pass2.innerHTML = '<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+				} else {
+					pass2.innerHTML = '<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+				}
+			});
+		} else if(p1 != "" && p2 != "") { // PASSWORD 1 IS SET // PASSWORD 2 IS SET
+			// PASSWORD 1
+				var p1_status = passchecker(p1);
+				checkresponse(p1_status).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(data == "INF-PAS-1") {
+						pass1.innerHTML = '<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+					} else {
+						pass1.innerHTML = '<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+					}
+				});
+			// PASSWORD 2
+				var p2_status = stringcomparison(p1, p2);
+				checkresponse(p2_status).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(data == "INF-PAS-1") {
+						pass2.innerHTML = '<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+					} else {
+						pass2.innerHTML = '<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>';
+					}
+				});
+			//
+		}
+	}
 	function signup() {
 		var u = _("username").value;
 		var e = _("email").value;
@@ -89,7 +161,7 @@
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
-						status.innerHTML = '<span class="bubble error">' + codeJSON[2] + '</span>';
+						status.innerHTML = '<span class="error">' + codeJSON[2] + '</span>';
 					});
 				}
 			});

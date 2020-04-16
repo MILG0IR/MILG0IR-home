@@ -4,15 +4,17 @@
     <p>
         <!---->
     </p>
-    <input onfocus="emptyElement('status')" onblur="checkusername()" onkeyup="restrict('username')" type="text" id="username" maxlength="16" placeholder="Username:" autocomplete="username">
+    <input onfocus="emptyElement('status')" onkeyup="restrict('username')" onblur="checkusername()" type="text" id="username" maxlength="16" placeholder="Username:" autocomplete="username">
     <span class="output" id="usernamestatus"></span>
-    <input onfocus="emptyElement('status')" onblur="checkemail()" onkeyup="restrict('email')" type="text" id="email" maxlength="88" placeholder="Email Address:" autocomplete="email">
+    <input onfocus="emptyElement('status')" onkeyup="restrict('email')" onblur="checkemail()" type="text" id="email" maxlength="88" placeholder="Email Address:" autocomplete="email">
     <span class="output" id="emailstatus"></span>
-    <input onfocus="emptyElement('status')" type="password" id="pass1" maxlength="32" placeholder="Password:" autocomplete="new-password">
-    <input onfocus="emptyElement('status')" type="password" id="pass2" maxlength="32" placeholder="Confirm Password:" autocomplete="new-password">
+    <input onfocus="emptyElement('status')" onkeyup="checkpassword()" type="password" id="pass1" maxlength="32" placeholder="Password:" autocomplete="new-password">
+    <span class="output" id="pass1status"></span>
+    <input onfocus="emptyElement('status')" onkeyup="checkpassword()" type="password" id="pass2" maxlength="32" placeholder="Confirm Password:" autocomplete="new-password">
+    <span class="output" id="pass2status"></span>
     </br>
     </br>
-	<button class="button-secondary" onclick="redirect('<?echo$mg_dir['root']?>login.php')">Go to login</button>
 	<button class="button-primary" onclick="signup()">Signup</button>
+	<button class="button-secondary" onclick="redirect('<?echo$mg_dir['root']?>login.php')">Go to login</button>
     <span id="status"></span>
 </form>

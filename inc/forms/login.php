@@ -8,8 +8,8 @@
 	<input onfocus="emptyElement('status')" type="password" id="password" placeholder="Password:" autocomplete="current-password">
 	</br>
 	</br>
-	<button class="button-secondary" onclick="redirect('<?echo$mg_dir['root']?>signup.php')">Go to signup</button>
 	<button class="button-primary" onclick="login()">Log In</button>
+	<button class="button-secondary" onclick="redirect('<?echo$mg_dir['root']?>signup.php')">Go to signup</button>
 	<p id="status"></p>
 	<a href="<?echo$mg_dir['root']?>forgot_password.php">Forgot Your Password?</a>
 </form>
