@@ -181,12 +181,9 @@
 					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 				// CHECK IF THE REFERENCE CODE IS VALID
 					if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/",$reference)) {
-						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
+						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
 						$query = mysqli_query($db_conx, $sql);
-						$numrows = mysqli_num_rows($query);
-						if(!$numrows > 0){
-							exit('ERR-SUP-7');
-						}
+						$ref_check = mysqli_num_rows($query);
 					} else {
 						exit('ERR-SUP-8');
 					}
@@ -195,16 +192,20 @@
 					$query = mysqli_query($db_conx, $sql); 
 					$u_check = mysqli_num_rows($query);
 				// CHECK FOR EXISTING EMAIL ADDRESS
+				if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					$sql = "SELECT `uid` FROM `users` WHERE `email`='$e' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql); 
 					$e_check = mysqli_num_rows($query);
+				} else {
+					exit('ERR-SUP-7');
+				}
 				// DO BASIC CHECKS
-					if($ref_check > 0) {
+					if($ref_check == 0) { 
 						exit("ERR-SUP-2");
-					} elseif($u_check > 0){ 
+					} elseif($u_check > 0) { 
 						exit("ERR-SUP-3");
-					} elseif($e_check > 0){ 
-						exit("ERR-SUP-2");
+					} elseif($e_check > 0) { 
+						exit("ERR-SUP-4");
 					} elseif(strlen($u) < 3 || strlen($u) > 16) {
 						exit("ERR-SUP-5"); 
 					} elseif(is_numeric($u[0])) {
@@ -369,7 +370,7 @@
 				exit('ERR-REF-1');
 			} else {
 				if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/",$reference)) {
-					$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
+					$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$numrows = mysqli_num_rows($query);
 					if($numrows > 0){
