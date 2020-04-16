@@ -41,6 +41,7 @@ If you do not have a webserver then please follow one of these guides to create 
 
 ## Our branches
 We have many branched, Each listed below and each for a different purpose.
+
 | BRANCH          | PURPOSE |
 | --------------- | ------- |
 | master          | This branch is for the most stable of all of the branches and is the recomended one to download |
