@@ -346,6 +346,25 @@
 					}
 			}
 		}
+	// CHECK REFERENCE
+		elseif($api_type == "check_reference") {
+			if(!isset($reference)) {
+				exit('ERR-REF-1');
+			} else {
+				if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/i",$reference)) {
+					$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$numrows = mysqli_num_rows($query);
+					if($numrows > 0){
+						exit('INF-REF-1');
+					} else {
+						exit('ERR-REF-2');
+					}
+				} else {
+					exit('ERR-REF-3');
+				}
+			}
+		}
 	// UPDATE AVATAR						T.B.D
 		#
 	// UPDATE BANNER						T.B.D
