@@ -26,15 +26,11 @@ MILG0IR home web app is a simple and easy to use web application, To install you
 
 Along with the following PHP extentions
 
-- PHP72-date
+- php72-filter
 - PHP72-hash
 - PHP72-json
-- PHP72-libxml
 - PHP72-MySQLi
-- PHP72-MySQLnd
-- PHP72-pcre
 - PHP72-pHash
-- PHP72-Reflection
 - PHP72-xml
 - PHP72-zip
 - PHP72-OpenSSL

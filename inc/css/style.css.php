@@ -27,6 +27,41 @@
 		font-size: 16px;
 		padding: 0.5rem;
 		border: none; }
+	.status.success {
+		color: lime; }
+	.status.info {
+		color: orange; }
+	.status.error {
+		color: red; }
+	.tooltip .tooltiptext {
+		visibility: hidden;
+		width: 120px;
+		background-color: #555;
+		color: #fff;
+		text-align: center;
+		padding: 5px 0;
+		border-radius: 6px;
+		position: absolute;
+		z-index: 1;
+		bottom: 125%;
+		left: 50%;
+		margin-left: -60px;
+		opacity: 0;
+		transition: opacity 0.3s; }
+	.tooltip .tooltiptext::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin-left: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: #555 transparent transparent transparent; }
+	.tooltip:hover .tooltiptext {
+		visibility: visible;
+		font-family: ubuntu;
+		font-size: 1rem;
+		opacity: 1; }
 </style>
 <style name="PRELOADER">
 	body > .preloader {
@@ -176,8 +211,8 @@
 		width: 100%;
 		top: 56px; }
 </style>
-<style name="LOGIN & SIGNUP">
-	body > .content > form {
+<style name="FORMS">
+	.content > form {
 				transform: translate(-50%, -50%);
 			 -o-transform: translate(-50%, -50%);
 		   -moz-transform: translate(-50%, -50%);
@@ -192,12 +227,21 @@
 		width: 408px;
 		left: 50%;
 		top: 50%; }
-	body > .content > form > button {
+	.content > form > button {
 		display: inline-block;
 		margin-left: 1%;
 		width: 48%; }
-	body > .content > form > img {
+	.content > form > img {
 		margin-bottom: 1rem;
 		border-radius: 3px;
 		max-height: 150px; }
+	.content > form > .output {
+		position: fixed;
+		margin-top: 0.5rem; }
+	.status{
+		position: relative;
+		display: inline-block;
+		opacity: 1;
+		font-size: 1.5rem;
+	}
 </style>

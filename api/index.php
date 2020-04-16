@@ -144,13 +144,13 @@
 				$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql); 
 				$email_check = mysqli_num_rows($query);
-				if (is_numeric($email[0])) {
+				if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 					exit('ERR-EMC-1');
 				}
-				if ($email_check < 1) {
+				if($email_check < 1) {
 					exit('INF-EMC-1');
 				} else {
-					exit('INF-EMC-0');
+					exit('INF-EMC-2');
 				}
 			}
 		}
