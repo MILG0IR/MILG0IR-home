@@ -12,6 +12,8 @@
     <span class="output" id="pass1status"></span>
     <input onfocus="emptyElement('status')" onblur="checkpassword()" type="password" id="pass2" maxlength="32" placeholder="Confirm Password:" autocomplete="new-password">
     <span class="output" id="pass2status"></span>
+    <input onfocus="emptyElement('status')" onblur="checkreference()" onkeyup="restrict('username')" type="text" id="reference" maxlength="15" placeholder="reference code:" autocomplete="">
+    <span class="output" id="referencestatus"></span>
     </br>
     </br>
 	<button class="button-primary" onclick="signup()">Signup</button>

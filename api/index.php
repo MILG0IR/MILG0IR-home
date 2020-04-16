@@ -66,6 +66,13 @@
 					$banner = $_POST['img_banner'];
 				}
 			} else {$banner = NULL;}										#					|
+			if(isset($_GET['ref']) || isset($_POST['ref'])) {				# $reference		|	Reference code for the user
+				if(isset($_GET['ref'])) {
+					$reference = $_GET['ref'];
+				} else {
+					$reference = $_POST['ref'];
+				}
+			} else {$reference = NULL;}										#					|
 			if(isset($_GET['uid']) || isset($_POST['uid'])) {				# $uid				|	User ID
 				if(isset($_GET['uid'])) {
 					$uid = $_GET['uid'];
@@ -156,14 +163,19 @@
 		}
 	// CREATE ACCOUNT
 		elseif($api_type == "signup") {
-			if(!isset($username) || !isset($email) || !isset($password)) {
+			if(!isset($username) || !isset($email) || !isset($password) || !isset($reference)) {
 				exit("ERR-SUP-1");
 			} else {
 				// SET THE VARIABLES
 					$e = $email;
 					$u = $username;
 					$p = $password;
+					$r = $reference;
 					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
+				// CHECK IF THE REFERENCE CODE IS VALID
+					$sql = "SELECT `id` FROM `reference_code` WHERE `code`='$reference' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql); 
+					$ref_check = mysqli_num_rows($query);
 				// CHECK FOR EXISTING USERNAME
 					$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql); 
@@ -173,14 +185,16 @@
 					$query = mysqli_query($db_conx, $sql); 
 					$e_check = mysqli_num_rows($query);
 				// DO BASIC CHECKS
-					if($u_check > 0){ 
+					if($ref_check > 0) {
 						exit("ERR-SUP-2");
-					} elseif($e_check > 0){ 
+					} elseif($u_check > 0){ 
 						exit("ERR-SUP-3");
+					} elseif($e_check > 0){ 
+						exit("ERR-SUP-2");
 					} elseif(strlen($u) < 3 || strlen($u) > 16) {
-						exit("ERR-SUP-4"); 
+						exit("ERR-SUP-5"); 
 					} elseif(is_numeric($u[0])) {
-						exit("ERR-SUP-5");
+						exit("ERR-SUP-6");
 					}
 				// CRATE ROW IN `users` TABLE
 					$sql = "INSERT INTO `users` (`username`, `email`, `password`)       

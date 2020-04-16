@@ -2,6 +2,8 @@
 	body {
 		height: 100%;
 		background-color: #EEEFFF; }
+	.content.content-background {
+	background: transparent; }
 	.button-primary {
 		background-color: #82BCE3;
 		color: #333; }
@@ -205,7 +207,7 @@
 		transform: translateX(0.75rem); }
 </style>
 <style name="CONTAINER">
-	body > .content {
+	.content {
 		position: absolute;
 		height: calc(100% - 56px);
 		width: 100%;
@@ -224,6 +226,7 @@
 		display: table;
 		margin: 0 auto;
 		padding: 3rem;
+		height: auto;
 		width: 408px;
 		left: 50%;
 		top: 50%; }
@@ -237,7 +240,8 @@
 		max-height: 150px; }
 	.content > form > .output {
 		position: fixed;
-		margin-top: 0.5rem; }
+		margin-top: 0.5rem;
+		transform: translate(-25px, -4px); }
 	.status{
 		position: relative;
 		display: inline-block;
