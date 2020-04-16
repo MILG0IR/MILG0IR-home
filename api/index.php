@@ -188,17 +188,21 @@
 						exit('ERR-SUP-8');
 					}
 				// CHECK FOR EXISTING USERNAME
-					$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' LIMIT 1";
-					$query = mysqli_query($db_conx, $sql); 
-					$u_check = mysqli_num_rows($query);
+					if(strlen($u) < 3 || strlen($u) > 16) {
+						exit("ERR-SUP-5"); 
+					} else {
+						$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql); 
+						$u_check = mysqli_num_rows($query);
+					}
 				// CHECK FOR EXISTING EMAIL ADDRESS
-				if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					$sql = "SELECT `uid` FROM `users` WHERE `email`='$e' LIMIT 1";
-					$query = mysqli_query($db_conx, $sql); 
-					$e_check = mysqli_num_rows($query);
-				} else {
-					exit('ERR-SUP-7');
-				}
+					if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						$sql = "SELECT `uid` FROM `users` WHERE `email`='$e' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql); 
+						$e_check = mysqli_num_rows($query);
+					} else {
+						exit('ERR-SUP-7');
+					}
 				// DO BASIC CHECKS
 					if($ref_check == 0) { 
 						exit("ERR-SUP-2");
@@ -206,14 +210,12 @@
 						exit("ERR-SUP-3");
 					} elseif($e_check > 0) { 
 						exit("ERR-SUP-4");
-					} elseif(strlen($u) < 3 || strlen($u) > 16) {
-						exit("ERR-SUP-5"); 
 					} elseif(is_numeric($u[0])) {
 						exit("ERR-SUP-6");
 					}
 				// CRATE ROW IN `users` TABLE
-					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `enabled`='')       
-							VALUES('$u', '$e', '$p_hash', '1')";
+					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `chage_passkey`, `enabled`)
+							VALUES('$u', '$e', '$p_hash', '0', '1')";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
 				// GET THE USER'S UID
