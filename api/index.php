@@ -108,6 +108,13 @@
 					$branch = $_POST['branch'];
 				}
 			} else {$branch = NULL;}										#					|
+			if(isset($_GET['version']) || isset($_POST['version'])) {		# $ver				|	version
+				if(isset($_GET['version'])) {
+					$ver = $_GET['version'];
+				} else {
+					$ver = $_POST['version'];
+				}
+			} else {$ver = NULL;}											#					|
 			if(isset($_GET['code']) || isset($_POST['code'])) {				# $code				|	Response code
 				if(isset($_GET['code'])) {
 					$code = $_GET['code'];
@@ -389,7 +396,38 @@
 		#
 	// GET LATEST VERSION					T.B.D
 		#
-	// UPDATE								T.B.D
-		#
+	// CHECK FOR AN UPDATE					T.B.D
+		elseif($api_type == "check_for_update") {
+			if(isset($branch)) {
+				if(isset($ver)) {
+					if(isset($device)) {
+						$update_uri = "https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$device."/".$branch."/etc/info.json";
+						$update_info = json_decode(file_get_contents($update_uri), true);
+					
+						if($app_info['Version'] == $update_info['Version']) {
+							exit("INF-UPD-1");
+							// Latest version is currently installed
+						} elseif($app_info['Version'] > $update_info['Version']) {
+							exit("INF-UPD-2");
+							// Update is available
+						} elseif($app_info['Version'] < $update_info['Version']) {
+							exit("INF-UPD-3");
+							// Current version is larger than the latest
+						} else {
+							exit("ERR-UPD-OTHER");
+						}
+					} else {
+						exit("ERR-UPD-1");
+						// DEVICE IS NOT SET
+					}
+				} else {
+					exit("ERR-UPD-2");
+					// VERSION IS NOT SET
+				}
+			} else {
+				exit("ERR-UPD-3");
+				// BRANCH IS NOT SET
+			}
+		}
 	//
 ?>

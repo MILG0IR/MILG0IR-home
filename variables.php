@@ -40,4 +40,7 @@
 		} else {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
+	// application information variables
+		$app_info = json_decode(file_get_contents('etc/info.json'), true);
+	//
 ?>

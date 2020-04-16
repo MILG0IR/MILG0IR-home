@@ -3,7 +3,7 @@
 		height: 100%;
 		background-color: #EEEFFF; }
 	.content.content-background {
-	background: transparent; }
+		background: transparent; }
 	.button-primary {
 		background-color: #82BCE3;
 		color: #333; }
@@ -29,6 +29,11 @@
 		font-size: 16px;
 		padding: 0.5rem;
 		border: none; }
+	.status{
+		position: relative;
+		display: inline-block;
+		opacity: 1;
+		font-size: 1rem; }
 	.status.success {
 		color: lime; }
 	.status.info {
@@ -212,6 +217,9 @@
 		height: calc(100% - 56px);
 		width: 100%;
 		top: 56px; }
+	.content.nav-inset {
+		width: calc(100% - 56px);
+		left: 56px; }
 </style>
 <style name="FORMS">
 	.content > form {
@@ -242,10 +250,4 @@
 		position: fixed;
 		margin-top: 0.5rem;
 		transform: translate(-25px, -4px); }
-	.status{
-		position: relative;
-		display: inline-block;
-		opacity: 1;
-		font-size: 1.5rem;
-	}
 </style>
