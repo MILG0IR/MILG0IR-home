@@ -15,11 +15,11 @@
 			<? include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body OnLoad="logout()">
+			<!-- JS -->
+			<? include_once($mg_dir['js']."js.php"); ?>
 			<!-- CONTENT -->
 				<div class="content">
 					<?	include_once($mg_dir['templates']."logout.php")	?>
 				</div>
-			<!-- JS -->
-			<? include_once($mg_dir['js']."js.php"); ?>
 		</body>
 	</html>

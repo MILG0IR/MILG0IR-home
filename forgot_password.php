@@ -15,6 +15,8 @@
 			<? include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body>
+			<!-- JS -->
+			<? include_once($mg_dir['js']."js.php"); ?>
 			<!-- PRELOADER -->
 				<div class="preloader">
 					<? include_once($mg_dir['templates']."preloader.php") ?>
@@ -25,7 +27,5 @@
 				<div class="content">
 					<?include_once($mg_dir['forms']."forgot_pass.php")?>
 				</div>
-			<!-- JS -->
-			<? include_once($mg_dir['js']."js.php"); ?>
 		</body>
 	</html>
