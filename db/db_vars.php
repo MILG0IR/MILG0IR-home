@@ -1,10 +1,22 @@
 <?php
+	// find root
+		$toroot = "";
+		$i = count(explode('/',$_SERVER['DOCUMENT_URI'])) -2;
+		while($i >= 1) {
+			$toroot .= "../";
+			$i--;
+		}
 	// SET USERS IP
-		if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+	// LOCAL USERDATA
+		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+			$ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		} else {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
+	// APPLICATION INFORMATION
+		$app_info = json_decode(file_get_contents($toroot.'etc/info.json'), true);
 	// CHECK IF THE USER IS LOGGED IN
 		// SET THE VARIABLES
 			$user_ok = false;
@@ -72,5 +84,29 @@
 				'updated'		=> $row['updated']
 			);
 		};
+	// DIRECTORIES QUICK ACCESS
+		$mg_dir = array(
+			"root"			=>	$toroot,						// Relative path to `root` dir
+			"api"			=>	$toroot."api/",					// Relative path to `API` dir
+			"assets"		=>	$toroot."assets/",				// Relative path to `assets` dir
+			"etc"			=>	$toroot."etc/",					// Relative path to `etc` dir
+			"inc"			=>	$toroot."inc/",					// Relative path to `inc` dir
+			"media"			=>	$toroot."media/",				// Relative path to `media` dir
+			"pages"			=>	$toroot."pages/",				// Relative path to `pages` dir
+			"userdata"		=>	$toroot."userdata/",			// Relative path to `userdata` dir
+
+			"js"			=>	$toroot."inc/js/",				// Relative path to `js` dir
+			"css"			=>	$toroot."inc/css/",				// Relative path to `css` dir
+			"forms"			=>	$toroot."inc/forms/",			// Relative path to `forms` dir
+			"fonts"			=>	$toroot."inc/fonts/",			// Relative path to `fonts` dir
+			"templates"		=>	$toroot."inc/page_templates/",		// Relative path to `templates` dir
+			
+			"error"			=>	$toroot."error/",				// Relative path to `error` file
+		); 
+	// FILE INFO
+		$mg_file = array(
+			"name"		=> $_SERVER['DOCUMENT_URI'],
+			"location"	=> $_SERVER['SCRIPT_FILENAME']
+		);
 	//
 ?>
