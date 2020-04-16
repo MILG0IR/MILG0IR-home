@@ -1,5 +1,5 @@
 <form id="signupform" class="signup" onsubmit="return false;">
-	<img src="<?echo$mg_branding['texticon']['value']?>">
+	<img src="<?php echo$mg_branding['texticon']['value']?>">
     <h3>Sign Up Here</h3>
     <p>
         <!---->
@@ -17,6 +17,6 @@
     </br>
     </br>
 	<button class="button-primary" onclick="signup()">Signup</button>
-	<button class="button-secondary" onclick="redirect('<?echo$mg_dir['root']?>login.php')">Go to login</button>
+	<button class="button-secondary" onclick="redirect('<?php echo$mg_dir['root']?>login.php')">Go to login</button>
     <span id="status"></span>
 </form>

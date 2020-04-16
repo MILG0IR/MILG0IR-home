@@ -220,7 +220,7 @@
 					type: 'POST',
 				}).done(function(data) {
 					if(data.includes("success")){
-						window.location = "<?echo$mg_dir['root']?>login.php";
+						window.location = "<?php echo$mg_dir['root']?>login.php";
 					} else {
 						checkresponse(data).done(function(codeARRAY) {
 							var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -241,7 +241,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data.includes("success")){
-					window.location = "<?echo$mg_dir['root']?>home.php";
+					window.location = "<?php echo$mg_dir['root']?>home.php";
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -277,7 +277,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data.includes("success")){
-					window.location = "<?echo$mg_dir['root']?>login.php";
+					window.location = "<?php echo$mg_dir['root']?>login.php";
 				} else {
 					checkresponse(data);
 				}

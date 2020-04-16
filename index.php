@@ -1,4 +1,4 @@
-<?
+<?php
     include_once("./db/db_conx.php");
     if($user_ok) {
         header("location: ".$mg_dir['root']."home.php");
