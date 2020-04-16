@@ -12,10 +12,7 @@
 			<title>Homepage | <?echo$mg_branding['slogan']['value']?></title>
 			<link rel="icon" href="<?echo$mg_branding['favicon']['value']?>" type="image/x-icon">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<!-- CSS -->
 			<? include_once($mg_dir['css']."css.php");	?>
-			<!-- JS -->
-			<? include_once($mg_dir['js']."js.php"); ?>
 		</head>
 		<body>
 			<!-- PRELOADER -->
@@ -27,5 +24,7 @@
 			<!-- CONTENT -->
 			<div class="content">
 			</div>
+			<!-- JS -->
+			<? include_once($mg_dir['js']."js.php"); ?>
 		</body>
 	</html>
