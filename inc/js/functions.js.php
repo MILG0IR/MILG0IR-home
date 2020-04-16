@@ -22,7 +22,7 @@
 			_(x).innerHTML = "";
 		}
 	//--------------------------- reference functions ---------------------------//
-		function checkpassword(pass) {
+		function validatepassword(pass) {
 			if (pass.length < 8) {
 				// return "Password too short!";
 				return "ERR-PAS-1";
@@ -124,7 +124,7 @@
 			var pass2	= _("pass2status");
 			if(p1 != "" && p2 == "") {			// PASSWORD 1 IS SET // PASSWORD 2 IS NOT
 				// PASSWORD 1
-				var p1_status = checkpassword(p1);
+				var p1_status = validatepassword(p1);
 				checkresponse(p1_status).done(function(codeARRAY) {
 					var codeJSON = jQuery.parseJSON(codeARRAY);
 					if(p1_status == "INF-PAS-1") {
@@ -146,7 +146,7 @@
 				});
 			} else if(p1 != "" && p2 != "") {	// PASSWORD 1 IS SET // PASSWORD 2 IS SET
 				// PASSWORD 1
-				var p1_status = checkpassword(p1);
+				var p1_status = validatepassword(p1);
 				checkresponse(p1_status).done(function(codeARRAY) {
 					var codeJSON = jQuery.parseJSON(codeARRAY);
 					if(p1_status == "INF-PAS-1") {
@@ -169,6 +169,7 @@
 		}
 		function checkreference() {
 			var reference = _("reference").value;
+			var status = _("referencestatus");
 			$.ajax({
 				url: 'api/index.php',
 				data: '#=check_reference&ref='+reference,
@@ -191,6 +192,7 @@
 			var e = _("email").value;
 			var p1 = _("pass1").value;
 			var p2 = _("pass2").value;
+			var ref = _("reference").value;
 			var status = _("status");
 			if(p1 == p2) {
 				$.ajax({

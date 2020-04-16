@@ -173,9 +173,16 @@
 					$r = $reference;
 					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 				// CHECK IF THE REFERENCE CODE IS VALID
-					$sql = "SELECT `id` FROM `reference_code` WHERE `code`='$reference' LIMIT 1";
-					$query = mysqli_query($db_conx, $sql); 
-					$ref_check = mysqli_num_rows($query);
+					if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/",$reference)) {
+						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$numrows = mysqli_num_rows($query);
+						if(!$numrows > 0){
+							exit('ERR-SUP-7');
+						}
+					} else {
+						exit('ERR-SUP-8');
+					}
 				// CHECK FOR EXISTING USERNAME
 					$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql); 
@@ -216,6 +223,9 @@
 							VALUES('$uid')";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
+				// CLOSE THE REFERENCE
+					$sql = "UPDATE `user_references` SET `active`=0 WHERE `reference_code`='$reference' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
 				// CREATE USER FOLDER
 					if (!file_exists("user/$u")) {
 						mkdir("user/$u", 0755);
@@ -351,7 +361,7 @@
 			if(!isset($reference)) {
 				exit('ERR-REF-1');
 			} else {
-				if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/i",$reference)) {
+				if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/",$reference)) {
 					$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$numrows = mysqli_num_rows($query);
