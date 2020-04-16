@@ -10,11 +10,11 @@ Hi! Here at MILG0IR we are working to create the best media organizer around! Wi
 To install MILG0IR home make sure you meet the requirements as stated below, then download out PHP file, place it onto your server and follow the instructions on screen! Installing could not be simpler. Use the commands below, within the website folder,  to get the install file!
 Wget:
 ```sh
-wget https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php
+wget https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-web/master/install.php
 ```
 cURL:
 ```sh
-curl https://raw.githubusercontent.com/MILG0IR/MILG0IR-home/master/install.php > install.php
+curl https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-web/master/install.php > install.php
 ```
 Once the file has been installed
 
@@ -26,25 +26,23 @@ MILG0IR home web app is a simple and easy to use web application, To install you
 
 Along with the following PHP extentions
 
-- PHP72-date
+- php72-filter
 - PHP72-hash
 - PHP72-json
-- PHP72-libxml
 - PHP72-MySQLi
-- PHP72-MySQLnd
-- PHP72-pcre
 - PHP72-pHash
-- PHP72-Reflection
 - PHP72-xml
 - PHP72-zip
 - PHP72-OpenSSL
+- PHP72-Session
 
 ## How to create a web server
 If you do not have a webserver then please follow one of these guides to create a new one
 
 ## Our branches
 We have many branched, Each listed below and each for a different purpose.
-| BRANCH      | PURPOSE |
-| ------------| ------- |
-| master      | This branch is for the most stable of all of the branches and is the recomended one to download |
-| instant     | :x: THIS BRANCH IS NOT RECCOMMENDED, In this branch you will see many updates, as each update is posted here as soon as it is done. We hold no liability if anything were to happen with this branch and we are not obliges to offer any support. :x:| 
+
+| BRANCH          | PURPOSE |
+| --------------- | ------- |
+| master          | This branch is for the most stable of all of the branches and is the recomended one to download |
+| instant         | :x: THIS BRANCH IS NOT RECCOMMENDED, In this branch you will see many updates, as each update is posted here as soon as it is done. We hold no liability if anything were to happen with this branch and we are not obliges to offer any support. :x:| 
