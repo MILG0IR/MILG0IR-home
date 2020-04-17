@@ -15,14 +15,14 @@
 			<?php include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body>
-			<!-- JS -->
-			<?php include_once($mg_dir['js']."js.php"); ?>
 			<!-- PRELOADER -->
 				<div class="preloader">
 					<?php include_once($mg_dir['templates']."preloader.php") ?>
 				</div>
 			<!-- HEADER -->
 				<?php include_once($mg_dir['templates']."header-minimal.php") ?>
+			<!-- JS -->
+				<?php include_once($mg_dir['js']."js.php"); ?>
 			<!-- CONTENT -->
 				<div class="content">
 					<?php include_once($mg_dir['forms']."signup.php")?>
