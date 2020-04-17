@@ -197,7 +197,7 @@
 			}).done(function(data) {
 				checkresponse(data).done(function(codeARRAY) {
 					var codeJSON = jQuery.parseJSON(codeARRAY);
-					var whatsnewJSON = jQuery.parseJSON("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-web/instant/inc/whatsnew.json");
+					//var whatsnewJSON = jQuery.parseJSON("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-web/instant/inc/whatsnew.json");
 					status.innerHTML = codeJSON[2];
 					whatsnew.innerHTML = "";
 				});
