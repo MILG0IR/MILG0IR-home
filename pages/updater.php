@@ -4,7 +4,7 @@
 	#		"WARNING: DO NOT MODIFY.",
 	#		"THE DETAILS ENTERED HERE WILL EFFECT IT'S DISPLAYED IN THE MENU."
 	#	],
-	#	"id": "5",
+	#	"id": "100",
 	#	"title": "Update",
 	#	"description": "",
 	#	"uri_remote": "./pages/updater.php",
