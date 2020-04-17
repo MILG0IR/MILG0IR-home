@@ -80,6 +80,13 @@
 					$uid = $_POST['uid'];
 				}
 			} else {$uid = NULL;}											#					|
+			if(isset($_GET['pid']) || isset($_POST['pid'])) {				# $pid				|	Page ID
+				if(isset($_GET['pid'])) {
+					$pid = $_GET['pid'];
+				} else {
+					$pid = $_POST['pid'];
+				}
+			} else {$pid = NULL;}											#					|
 			if(isset($_GET['msg']) || isset($_POST['msg'])) {				# $msg				|	Message
 				if(isset($_GET['msg'])) {
 					$message = $_GET['msg'];
@@ -385,10 +392,15 @@
 				}
 			}
 		}
-	// UPDATE AVATAR						T.B.D
-		#
-	// UPDATE BANNER						T.B.D
-		#
+	// GET PAGE INFO
+		elseif($api_type == "get_page_data") {
+			if(isset($pid)) {
+				$sql = "SELECT * FROM `var_pages` WHERE `id`='$pid' LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$row = mysqli_fetch_row($query);
+				exit(json_encode($row));
+			}
+		}
 	// GET USERDATA							T.B.D
 		#
 	// UPDATE USERDATA						T.B.D
@@ -396,8 +408,6 @@
 	// CHECK FOR MESSAGES					T.B.D
 		#
 	// SEND MESSAGE							T.B.D
-		#
-	// GET LATEST VERSION					T.B.D
 		#
 	// CHECK FOR AN UPDATE
 		elseif($api_type == "check_for_update") {

@@ -279,4 +279,34 @@
 				}
 			});
 		}
+		function openwebpage(pid) {
+			$.ajax({
+				url: 'api/index.php',
+				data: '#=get_page_data&pid='+pid,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				var pageJSON = jQuery.parseJSON(data);
+				var element = _(pageJSON[0])
+				var pages = _("child")
+				if(typeof(element) != 'undefined' && element != null) {
+					$('.child').hide();
+					$('#'+pageJSON[0]).show();
+					$('.active').toggleClass("active");
+					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
+				} else {
+					var child = document.createElement('iframe');
+					child.setAttribute('name', pageJSON[1]);
+					child.setAttribute('id', pageJSON[0]);
+					child.setAttribute('src', pageJSON[4]);
+					child.setAttribute('class', 'child');
+					_("parent").appendChild(child);
+					$('.child').hide();
+					$('#'+pageJSON[0]).show();
+					$('.active').toggleClass("active");
+					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
+					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
+				}
+			});
+		}
 </script>

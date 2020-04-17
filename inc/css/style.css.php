@@ -131,10 +131,10 @@
 		line-height: 0;
 		color: #0275D8; }
 	body > .navbar > .menu-toggle > .menu-toggle-icon {
-		font-size: 1.5rem;
-		line-height: 1.5rem;
-		padding: 1rem;
-		border-right: 1px solid lightgray; }
+		border-right: 1px solid lightgray;
+		padding: 0.5rem;
+		height: 100%;
+		width: 3.5rem; }
 	body > .navbar > .navbar-brand {
 		text-align: center;
 		width: 8.5rem;
@@ -167,41 +167,40 @@
 		border-right: 1px solid lightgray;
 		flex: 1;
 		z-index: 99;
-		padding-top: 56px; }
+		padding-top: 56px;
+		margin-top: 0.25rem; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul {
 		-ms-overflow-style: none;
 		list-style-type: none;
 		overflow-y: scroll;
-		height: 100%;
-		padding-top: 0.25rem;
+		height: auto;
 		margin: 0px; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul::-webkit-scrollbar {
 		display: none; }
+	/**/
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a {
-		display: flex;
-		align-items: center; }
-	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:before {
+		align-items: center;
+		display: flex;}
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover { }
+	/**/
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.enabled::before {
 		content: "";
-		opacity: 0;
-		width: 0.175rem;
-		visibility: hidden;
-		position: absolute;
-		background: #0275D8;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: auto; }
-	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.active,
-	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover {
-		background-color: #F3F3F3;
-		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(0, 0, 0, 0.04), inset 0 2px 1px -1px rgba(0, 0, 0, 0.02);
-		text-decoration: none; }
-	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.active:before,
-	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover:before {
-		opacity: 1;
-		visibility: visible; }
+		animation: breathing-enabled 2s linear infinite alternate }
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.enabled {
+		align-items: center;
+		display: flex; }
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.enabled:hover { }
+	/**/
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.active::before {
+		content: "";
+		animation: breathing-active 2s linear infinite alternate }
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.active {
+		align-items: center;
+		display: flex; }
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.active:hover { }
+	/**/
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li {
-		padding: 0.25rem calc(1rem - 5.2px); }
+		padding: 0.25rem calc(1rem - 5.5px); }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li > img {
 		vertical-align: baseline;
 		width: 34px; }
@@ -222,6 +221,30 @@
 		width: 8.5rem;
 		opacity: 1;
 		transform: translateX(0.75rem); }
+	@-webkit-keyframes breathing-active {
+		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
+		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+	@-moz-keyframes breathing-active {
+		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
+		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+	@-o-keyframes breathing-active {
+		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
+		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+	@keyframes breathing-active {
+		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
+		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+	@-webkit-keyframes breathing-enabled {
+		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
+		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
+	@-moz-keyframes breathing-enabled {
+		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
+		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
+	@-o-keyframes breathing-enabled {
+		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
+		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
+	@keyframes breathing-enabled {
+		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
+		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
 </style>
 <style name="CONTAINER">
 	.content {
@@ -232,6 +255,12 @@
 	.content.nav-inset {
 		width: calc(100% - 56px);
 		left: 56px; }
+	#parent {
+		display: inline-flex; }
+	#parent .child {
+		width: 100%;
+		height: 100%;
+		border: none; }
 </style>
 <style name="FORMS">
 	.content > form {

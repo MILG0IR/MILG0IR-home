@@ -24,6 +24,8 @@
 			<!-- JS -->
 				<?php include_once($mg_dir['js']."js.php"); ?>
 			<!-- CONTENT -->
+			<div class="content nav-inset">
 				<?php include_once($mg_dir['pages']."updater.php") ?>
+			</div>
 		</body>
 	</html>
