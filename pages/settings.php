@@ -13,7 +13,7 @@
 	#}
 ?>
 <?php
-
+	include_once('../db/db_conx.php');
 ?>
 <!DOCTYPE html>
 	<html>
@@ -22,60 +22,77 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<?php include_once($mg_dir['css']."css.php");	?>
 			<style>
-				body{
-					margin: 0; }
-				.topnav {
-					overflow: hidden;
-					background-color: #333; }
-				.topnav a{
-					float: left;
-					display: block;
-					color: #f2f2f2;
+				.nav-menu__sidebar {
+					position: fixed;
+					z-index: 98;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					transform: rotate(180deg);
+					display: flex;
+					justify-content: center;
+					margin: 0;
+					padding: 0;
 					text-align: center;
-					padding: 14px 16px; /* top&bottom, right&left */
+					writing-mode: vertical-lr;
+					width: 0;
+				}
+				.nav-menu__sidebar li {
+					display: inline-block;
+				}
+				.nav-menu__sidebar li a {
+					position: relative;
+					display: block;
+					padding: 0.75em;
+					margin: 0.25em;
+					color: #393E54;
+					font-size: 0.9em;
+					font-weight: 600;
+					letter-spacing: 0.1em;
+					text-transform: uppercase;
+					overflow: hidden;
+					transition: all 0.25s ease-in-out;
+					border: 2px solid transparent;
 					text-decoration: none;
-					font-size: 17px; }
-				.topnav a:hover {
-					background-color: #ddd;
-					color: black; }
-				.topnav .icon {
-					display: none; }
-				@media only screen and (max-width: 600px) {
-					.topnav a:not(:first-child) {
-						display: none; }
-					.topnav a.icon {
-						float: right;
-						display: block; }
-					.topnav.responsive {
-						position: relative; }
-					.topnav.responsive .icon {
-						position: absolute;
-						right: 0;
-						top: 0; }
-					.topnav.responsive a {
-						float: none;
-						display: block;
-						text-align: left; }
+				}
+				.nav-menu__sidebar li a:hover, .nav-menu__sidebar li a:active, .nav-menu__sidebar li a:focus {
+					border-color: #393E54;
+					transition: all 0.25s ease-in-out;
 				}
 			</style>
 		</head>
 		<body>
-			<div class="topnav" id="myTopnav">
-			<a href="#home">Home</a>
-			<a href="#news">News</a>
-			<a href="#contact">Contact</a>
-			<a href="about">About</a>
-			<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction();">&#9776;</a>
-			</div>
+			<!-- SIDEBAR -->
+				<ul class="nav-menu__sidebar">
+					<li class="menu-item">
+						<a href="#security">Database & security</a>
+					</li>
+					<li class="menu-item ">
+						<a href="#customization">Customization</a>
+					</li>
+					<li class="menu-item">
+						<a href="#users">Users & Ranks</a>
+					</li>
+					<li class="menu-item">
+						<a href="#pages">pages & categories</a>
+					</li>
+				</ul>
+			<!-- SETTINGS PAGES -->
+				<div class="" id="security">
+					<!---->
+				</div>
+				<div class="" id="customization">
+					<!---->
+				</div>
+				<div class="" id="users">
+					<!---->
+				</div>
+				<div class="" id="pages">
+					<!---->
+				</div>
+			<!-- JS -->
 			<?php include_once($mg_dir['js']."js.php");	?>
-			<script name="SETTINGS NAVIGATION">
-				function myFunction(){
-					var topnav = document.getElementById("myTopnav");
-					if (topnav.className === "topnav"){
-						topnav.className += " responsive";
-					}else{
-						topnav.className = "topnav";
-					}
-				}
+			<script>
+
 			</script>
 		</body>
