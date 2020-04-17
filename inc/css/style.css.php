@@ -152,8 +152,10 @@
 		right: 0px;
 		font-size: 1.5rem;
 		line-height: 1.5rem;
-		padding: 1rem;
+		padding: 0.5rem;
 		border-left: 1px solid lightgray; }
+	body > .navbar > .navbar-logout > img {
+		width: 2.5rem; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner {
 		display: inline-flex;
 		flex-direction: column;

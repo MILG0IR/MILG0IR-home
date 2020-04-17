@@ -15,7 +15,7 @@
 			<?php echo$mg_branding['name']['value']?>
 		</a>
 		<a href="logout.php" id="logout" class="navbar-logout waves-light">
-			<i class="material-icons">exit_to_app</i>
+			<img src="<?php echo$mg_img['symbols']['logout']['image']?>">
 		</a>
 	</nav>
 	<div class="container-fluid">
