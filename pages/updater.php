@@ -86,14 +86,35 @@
 				}
 			}
 		// COPY AND REPLACE THE EXISTING FILES
-			if($install_stage3) {
+			if($install_stage2) {
 				copy_directory($foldername, "./");
 				if(!file_exists("api/")) {
 					$log[] .= "<span class='error'>Unable to install the required files, Get in contact to find a resolution.</span>";
 					$errors[] .= "x";
 				} else {
 					$log[] .= "<span class='success'>The required files have been installed successfully</span>";
+					$install_stage3 = true;
+				}
+			}
+		// Remove the installation zip file
+			if($install_stage3) {
+				unlink($filename);
+				if(file_exists($filename)) {
+					$log[] .= "<span class='error'>Unable to remove the installation file - Minor issue, Please remove manually.</span>";
+					$errors[] .= "x";
+				} else {
+					$log[] .= "<span class='success'>The installation file has been removed successfully</span>";
 					$install_stage4 = true;
+				}
+			}
+		// REMOVE THE INSTALLATION FILE
+			if($install_stage4) {
+				delete_folder($foldername);
+				if(file_exists($foldername)) {
+					$log[] .= "<span class='error'>Unable to remove the temp installation folder - Minor issue, Please remove manually.</span>";
+					$errors[] .= "x";
+				} else {
+					$log[] .= "<span class='success'>The temp installation folder has been removed successfully</span>";
 				}
 			}
 		// Ammend info.json
@@ -109,27 +130,6 @@
 					$newJsonString = json_encode($data, JSON_PRETTY_PRINT);
 					file_put_contents($json, $newJsonString);
 				}
-		// Remove the installation zip file
-			if($install_stage2) {
-				unlink($filename);
-				if(file_exists($filename)) {
-					$log[] .= "<span class='error'>Unable to remove the installation file - Minor issue, Please remove manually.</span>";
-					$errors[] .= "x";
-				} else {
-					$log[] .= "<span class='success'>The installation file has been removed successfully</span>";
-					$install_stage3 = true;
-				}
-			}
-		// REMOVE THE INSTALLATION FILE
-			if($install_stage4) {
-				delete_folder($foldername);
-				if(file_exists($foldername)) {
-					$log[] .= "<span class='error'>Unable to remove the temp installation folder - Minor issue, Please remove manually.</span>";
-					$errors[] .= "x";
-				} else {
-					$log[] .= "<span class='success'>The temp installation folder has been removed successfully</span>";
-				}
-			}
 		//	
 	}
 ?>
