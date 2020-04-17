@@ -175,7 +175,7 @@
 		<?php
 			$json = "https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json";
 			$data = json_decode($jsonString, true);
-			
+			print_r($data);
 		?>
 	</div>
 </div>
