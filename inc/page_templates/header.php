@@ -28,7 +28,7 @@
 						foreach($query as $row) {
 							echo '
 								<a href="#" class="waves-light" onClick="bringtofront('.$row['id'].')">
-									<li><i class="material-icons">person_outline</i></li>
+									<li><img src="'.$mg_img[$row['icon_category']][$row['icon']].'"></li>
 									<li>'.$row['title'].'</li>
 								</a>';
 						}

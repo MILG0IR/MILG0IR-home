@@ -8,7 +8,8 @@
 	#	"title": "Update",
 	#	"description": "",
 	#	"uri_remote": "./pages/updater.php",
-	#	"icon": "26"
+	#	"icon_category": "clouds"
+	#	"icon": "upload"
 	#}
 ?><?php	// FUNCTIONS
 	function copy_directory( $source, $destination ) {

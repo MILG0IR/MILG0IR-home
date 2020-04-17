@@ -8,6 +8,7 @@
 	#	"title": "Messages",
 	#	"description": "",
 	#	"uri_remote": "./pages/messages.php",
-	#	"icon": ""
+	#	"icon_category": "communications",
+	#	"icon": "chat"
 	#}
 ?>

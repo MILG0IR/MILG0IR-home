@@ -8,7 +8,8 @@
 	#	"title": "Images",
 	#	"description": "",
 	#	"uri_remote": "./pages/images.php",
-	#	"icon": "14"
+	#	"icon_category": "seo",
+	#	"icon": "laptop"
 	#}
 ?>
 <?
