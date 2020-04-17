@@ -5,10 +5,10 @@
 	#		"THE DETAILS ENTERED HERE WILL EFFECT IT'S DISPLAYED IN THE MENU."
 	#	],
 	#	"id": "100",
-	#	"title": "Update",
+	#	"title": "Updater",
 	#	"description": "",
 	#	"uri_remote": "./pages/updater.php",
-	#	"icon_category": "clouds"
+	#	"icon_category": "clouds",
 	#	"icon": "upload"
 	#}
 ?><?php	// FUNCTIONS
