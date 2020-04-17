@@ -51,12 +51,18 @@
 	}
 ?><?php
 	if(isset($_GET['download'])) {
+		$log = array();
+		$errors = array();
+		$install_stage1 = false;
+		$install_stage2 = false;
+		$install_stage3 = false;
+		$install_stage4 = false;
 		// DOWNLOAD THE UPDATE ZIP
 			echo "downloading";
 			set_time_limit(1200);
 			$filename	= $app_info['Branch'].".zip";
-			$foldername	= "MILG0IR-home-".$app_info['Version']."-".$app_info['Branch'];
-			$file = file_get_contents('https://github.com/MILG0IR/MILG0IR-home-'.$app_info['Version'].'/archive/'.$app_info['Branch'].'.zip');
+			$foldername	= "MILG0IR-home-".$app_info['Device']."-".$app_info['Branch'];
+			$file = file_get_contents('https://github.com/MILG0IR/MILG0IR-home-'.$app_info['Device'].'/archive/'.$app_info['Branch'].'.zip');
 			file_put_contents($filename, $file);
 			if(!file_exists($filename)) {
 				$log[] .= "<span class='error'>UNABLE TO GATHER THE REQUIRED FILES. Please try again later.</span>";
@@ -68,7 +74,7 @@
 		// UNZIP THE UPDATE FILE
 			if($install_stage1) {
 				$zip = new ZipArchive();
-				$zip->open($app_info['Branch'].".zip");
+				$zip->open($filename);
 				$destination = "./";
 				$zip->extractTo($destination);
 				if(!file_exists($foldername)) {
@@ -111,6 +117,8 @@
 					$log[] .= "<span class='success'>The temp installation folder has been removed successfully</span>";
 				}
 			}
+		// Echo the output
+			print_r($log);
 	} else {
 		echo "not downloading";
 	}
