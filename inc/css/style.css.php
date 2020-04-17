@@ -171,7 +171,7 @@
 		list-style-type: none;
 		overflow-y: scroll;
 		height: 100%;
-		padding: 0;
+		padding-top: 0.25rem;
 		margin: 0px; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul::-webkit-scrollbar {
 		display: none; }
@@ -189,20 +189,20 @@
 		left: 0;
 		bottom: 0;
 		right: auto; }
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.active,
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover {
 		background-color: #F3F3F3;
 		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(0, 0, 0, 0.04), inset 0 2px 1px -1px rgba(0, 0, 0, 0.02);
 		text-decoration: none; }
+	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.active:before,
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover:before {
 		opacity: 1;
 		visibility: visible; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li {
-		padding: 0.25rem 0.7rem; }
+		padding: 0.25rem calc(1rem - 5.2px); }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li > img {
 		vertical-align: baseline;
-		width: 34px;
-		font-size: 1.5rem;
-		line-height: 3rem; }
+		width: 34px; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a > li:nth-child(2n) {
 		font-size: 1rem;
 		padding: 0;
