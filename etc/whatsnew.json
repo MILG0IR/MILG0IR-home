@@ -14,9 +14,12 @@
 			"Update page",
 			"Settings page",
 			"Update functionality",
-			"Page list functionality added to navigation"
+			"Page list functionality added to navigation",
+			"Settings UI"
 		],
-		"Changelog-removed": []
+		"Changelog-removed": [
+			"update.php - all updates can now be done from within the application."
+		]
 	},
 	"v0.1.1": {
 		"status": "Release",
