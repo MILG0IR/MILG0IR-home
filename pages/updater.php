@@ -146,12 +146,12 @@
 					file_put_contents($json, $newJsonString);
 				}
 			// Test
-				$json = file_get_contents($json);
+				$jsonString = file_get_contents($json);
 				$data = json_decode($jsonString, true);
-				if(isset($data['Branch']) && (isset($app_info['Device']))) {
+				if($data['Branch'] == $app_info['Branch']) {
 					$log[] .= "<span class='success'>The installation information has been saveds successfully.</span>";
 				} else {
-					$log[] .= "<span class='error'> Unable to save the installation information.</span>";
+					$log[] .= "<span class='error'>Unable to save the installation information.</span>";
 					$errors[] .= "x";
 				}
 		//	
