@@ -45,7 +45,7 @@
 		}
 		function checkresponse(code) {
 			var output = $.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=search_code&code='+code,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -58,7 +58,7 @@
 			var u		= _("username").value;
 			var status	= _("usernamestatus");
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=check_username&u='+u,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -79,7 +79,7 @@
 			var e		= _("email").value;
 			var status	= _("emailstatus");
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=check_email&e='+e,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -100,7 +100,7 @@
 			var e		= _("email").value;
 			var status	= _("emailstatus");
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=check_email&e='+e,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -171,7 +171,7 @@
 			var reference = _("reference").value;
 			var status = _("referencestatus");
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=check_reference&ref='+reference,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -189,7 +189,7 @@
 		function checkforupdate(version, device, branch) {
 			var status = _("updatestatus");
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=check_for_update&version='+version+'&device='+device+'&branch='+branch,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -210,7 +210,7 @@
 			var status = _("status");
 			if(p1 == p2) {
 				$.ajax({
-					url: 'api/index.php',
+					url: '<?php echo$mg_dir['root']?>api/index.php',
 					data: '#=signup&u='+u+'&e='+e+'&p='+p1+'&ref='+ref,
 					contentType: 'application/x-www-form-urlencoded',
 					type: 'POST',
@@ -231,7 +231,7 @@
 			var p = _("password").value;
 			var status = _("status");
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=login&e='+e+'&p='+p,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -250,7 +250,7 @@
 			var e = _("email").value;
 			var status = _("status").value;
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=forgot_password&e='+e,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -267,7 +267,7 @@
 		}
 		function logout() {
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=logout',
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
@@ -281,7 +281,7 @@
 		}
 		function openwebpage(pid) {
 			$.ajax({
-				url: 'api/index.php',
+				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=get_page_data&pid='+pid,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',

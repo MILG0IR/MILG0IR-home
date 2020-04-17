@@ -11,7 +11,9 @@
 	#	"icon_category": "clouds",
 	#	"icon": "upload"
 	#}
-?><?php	// FUNCTIONS
+?>
+<?php	// FUNCTIONS
+	include_once('../db/db_conx.php');
 	function copy_directory( $source, $destination ) {
 		if ( is_dir( $source ) ) {
 				@mkdir( $destination );
@@ -155,40 +157,46 @@
 		//	
 	}
 ?>
-<script>
-	$(document).ready(function() {
-		checkforupdate(<?php echo "\"".$app_info['Version']."\", \"".$app_info['Device']."\", \"".$app_info['Branch']."\"" ?>);
-	});
-</script>
-<div class="content nav-inset">
-	<h1 id="updatestatus"></h1>
-	<button class="button-secondary" onclick="redirect('?download')">Force reinstall</button>
-	<div class='log'>
-		<?php
-			$arrlength = count($log);
-			if($arrlength > 0) {
-				echo "";
-					echo "<pre>";
-					echo "<h4 class='title'>LOG:</h4>";
-					echo "</br>";
-					for($x = 0; $x < $arrlength; $x++) {
-						if($x < 10) {
-							echo "0" . $x . " - " . $log[$x];
-							echo "<br>";
-						} else {
-							echo $x . " - " . $log[$x];
-							echo "<br>";
+
+<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<?php include_once($mg_dir['css']."css.php");	?>
+		</head>
+		<body onLoad='checkforupdate(<?php echo "\"".$app_info['Version']."\", \"".$app_info['Device']."\", \"".$app_info['Branch']."\"" ?>);'>
+			<div class="content nav-inset">
+				<h1 id="updatestatus"></h1>
+				<button class="button-secondary" onclick="redirect('?download')">Force reinstall</button>
+				<div class='log'>
+					<?php
+						$arrlength = count($log);
+						if($arrlength > 0) {
+							echo "";
+								echo "<pre>";
+								echo "<h4 class='title'>LOG:</h4>";
+								echo "</br>";
+								for($x = 0; $x < $arrlength; $x++) {
+									if($x < 10) {
+										echo "0" . $x . " - " . $log[$x];
+										echo "<br>";
+									} else {
+										echo $x . " - " . $log[$x];
+										echo "<br>";
+									}
+								}
+								echo "</pre>";
 						}
-					}
-					echo "</pre>";
-			}
-		?>
-	</div>
-	<div id="whatsnew">
-		<?php
-			$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
-			$data = json_decode($json, true);
-			print_r($data);
-		?>
-	</div>
-</div>
+					?>
+				</div>
+				<div id="whatsnew">
+					<?php
+						$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
+						$data = json_decode($json, true);
+						print_r($data);
+					?>
+				</div>
+			</div>
+			<?php include_once($mg_dir['js']."js.php");	?>
+		</body>
