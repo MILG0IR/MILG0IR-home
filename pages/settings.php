@@ -1,13 +1,22 @@
+<?php
+	#{
+	#	"_comment": [
+	#		"WARNING: DO NOT MODIFY.",
+	#		"THE DETAILS ENTERED HERE WILL EFFECT ITS DISPLAY IN THE MENU."
+	#	],
+	#	"id": "999",
+	#	"title": "Settings",
+	#	"description": "",
+	#	"uri_remote": "./pages/settings.php",
+	#	"icon": ""
+	#}
+?>
 <style>
 	body{
-		margin: 0;
-	}
-
+		margin: 0; }
 	.topnav {
 		overflow: hidden;
-		background-color: #333;
-	}
-
+		background-color: #333; }
 	.topnav a{
 		float: left;
 		display: block;
@@ -15,38 +24,28 @@
 		text-align: center;
 		padding: 14px 16px; /* top&bottom, right&left */
 		text-decoration: none;
-		font-size: 17px;
-	}
-
+		font-size: 17px; }
 	.topnav a:hover {
 		background-color: #ddd;
-		color: black;
-	}
-
+		color: black; }
 	.topnav .icon {
-		display: none;
-	}
-
+		display: none; }
 	@media only screen and (max-width: 600px) {
 		.topnav a:not(:first-child) {
-			display: none;
-		}
+			display: none; }
 		.topnav a.icon {
 			float: right;
-			display: block;
-		}
-
-		.topnav.responsive {position: relative;}
+			display: block; }
+		.topnav.responsive {
+			position: relative; }
 		.topnav.responsive .icon {
 			position: absolute;
 			right: 0;
-			top: 0;
-		}
+			top: 0; }
 		.topnav.responsive a {
 			float: none;
 			display: block;
-			text-align: left;
-		}
+			text-align: left; }
 	}
 </style>
 <div class="topnav" id="myTopnav">

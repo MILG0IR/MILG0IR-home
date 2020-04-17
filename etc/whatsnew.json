@@ -1,36 +1,38 @@
 {
 	"v0.1.2": {
-		"type": "Minor",
+		"status": "In progress",
+		"type": "Patch",
 		"Date": "",
 		"Title": "",
-		"Description": "",
+		"Description": "This update is all about the ease of use. We have added a few new features and changed a few pre-existing ones to make the application easire to use.",
 		"Changelog-changed": [
 			"Minor bug fixes and improvements"
 		],
 		"Changelog-added": [
+			"Update page",
+			"Settings page",
 			"Update functionality",
-			"Pages list"
+			"Page list functionality added to navigation"
 		],
 		"Changelog-removed": []
 	},
 	"v0.1.1": {
-		"type": "Minor",
+		"status": "Release",
+		"type": "Patch",
 		"Date": "16-04-2020",
 		"Title": "The accounts update",
 		"Description": "In this update we have added the functionality of accounts. You can now create accounts (With a reference code), login and log out.",
-		"Changelog-changed": [
-		],
+		"Changelog-changed": [],
 		"Changelog-added": [
 			"Signup functionality",
 			"Login functionality",
 			"Logout functionality",
 			"Basic user interface"
 		],
-		"Changelog-removed": [
-
-		]
+		"Changelog-removed": []
 	},
 	"v0.1.0": {
+		"status": "Release",
 		"type": "Minor",
 		"Date": "08-04-2020",
 		"Title": "MILG0IR home",

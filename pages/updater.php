@@ -1,4 +1,16 @@
-<?php	// FUNCTIONS
+<?php
+	#{
+	#	"_comment": [
+	#		"WARNING: DO NOT MODIFY.",
+	#		"THE DETAILS ENTERED HERE WILL EFFECT ITS DISPLAY IN THE MENU."
+	#	],
+	#	"id": "5",
+	#	"title": "Update",
+	#	"description": "",
+	#	"uri_remote": "./pages/updater.php",
+	#	"icon": ""
+	#}
+?><?php	// FUNCTIONS
 	function copy_directory( $source, $destination ) {
 		if ( is_dir( $source ) ) {
 				@mkdir( $destination );
@@ -49,7 +61,7 @@
 			echo "ERROR;";
 		}
 	}
-?><?php
+?><?php // UPDATE SCRIPT			URI: ?download
 	$log = array();
 	if(isset($_GET['download'])) {
 		$errors = array();
@@ -173,8 +185,8 @@
 	</div>
 	<div id="whatsnew">
 		<?php
-			$json = "https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json";
-			$data = json_decode($jsonString, true);
+			$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
+			$data = json_decode($json, true);
 			print_r($data);
 		?>
 	</div>
