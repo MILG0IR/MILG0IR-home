@@ -13,4 +13,5 @@ if(isset($_GET['download'])) {
 </script>
 <div class="content nav-inset">
 	<h1 id="updatestatus"></h1>
+	<div id="whatsnew"></div>
 </div>
