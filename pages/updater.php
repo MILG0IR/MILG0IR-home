@@ -68,7 +68,7 @@
 				$log[] .= "<span class='error'>UNABLE TO GATHER THE REQUIRED FILES. Please try again later.</span>";
 				$errors[] .= "x";
 			} else {
-				$log[] .= "<span class='success'>The required files have been downloaded successfully</span>";
+				$log[] .= "<span class='success'>The required files have been downloaded successfully.</span>";
 				$install_stage1 = true;
 			}
 		// UNZIP THE UPDATE FILE
@@ -81,7 +81,7 @@
 					$log[] .= "<span class='error'>UNABLE TO UNZIP THE REQUIRED FILES. Please try again later.</span>";
 					$errors[] .= "x";
 				} else {
-					$log[] .= "<span class='success'>The required files have been unzipped successfully</span>";
+					$log[] .= "<span class='success'>The required files have been unzipped successfully.</span>";
 					$install_stage2 = true;
 				}
 			}
@@ -92,7 +92,7 @@
 					$log[] .= "<span class='error'>Unable to install the required files, Get in contact to find a resolution.</span>";
 					$errors[] .= "x";
 				} else {
-					$log[] .= "<span class='success'>The required files have been installed successfully</span>";
+					$log[] .= "<span class='success'>The required files have been installed successfully.</span>";
 					$install_stage3 = true;
 				}
 			}
@@ -103,7 +103,7 @@
 					$log[] .= "<span class='error'>Unable to remove the installation file - Minor issue, Please remove manually.</span>";
 					$errors[] .= "x";
 				} else {
-					$log[] .= "<span class='success'>The installation file has been removed successfully</span>";
+					$log[] .= "<span class='success'>The installation file has been removed successfully.</span>";
 					$install_stage4 = true;
 				}
 			}
@@ -114,7 +114,7 @@
 					$log[] .= "<span class='error'>Unable to remove the temp installation folder - Minor issue, Please remove manually.</span>";
 					$errors[] .= "x";
 				} else {
-					$log[] .= "<span class='success'>The temp installation folder has been removed successfully</span>";
+					$log[] .= "<span class='success'>The temp installation folder has been removed successfully.</span>";
 				}
 			}
 		// Ammend info.json
@@ -129,6 +129,15 @@
 			// Encode and close the file
 					$newJsonString = json_encode($data, JSON_PRETTY_PRINT);
 					file_put_contents($json, $newJsonString);
+				}
+			// Test
+				$json = file_get_contents($json);
+				$data = json_decode($jsonString, true);
+				if(isset($data['Branch']) && (isset($app_info['Device']))) {
+					$log[] .= "<span class='success'>The installation information has been saveds successfully.</span>";
+				} else {
+					$log[] .= "<span class='error'> Unable to save the installation information.</span>";
+					$errors[] .= "x";
 				}
 		//	
 	}
