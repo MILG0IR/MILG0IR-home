@@ -8,7 +8,7 @@
 	#	"title": "Settings",
 	#	"description": "",
 	#	"uri_remote": "./pages/settings.php",
-	#	"icon": ""
+	#	"icon": "24"
 	#}
 ?>
 <style>

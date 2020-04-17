@@ -8,6 +8,6 @@
 	#	"title": "Homepage",
 	#	"description": "",
 	#	"uri_remote": "./pages/homepage.php",
-	#	"icon": ""
+	#	"icon": "14"
 	#}
 ?>

@@ -67,6 +67,10 @@
 		$query = mysqli_query($db_conx, $sql);
 		$mg_img = array();
 		while ($row = mysqli_fetch_array($query)) {
+			$mg_img[$row['id']] = array( 
+				'image'			=> $row['image_base64'],
+				'description'	=> $row['image_description']
+			);
 			$mg_img[$row['image_category']][$row['image_name']] = array( 
 				'image'			=> $row['image_base64'],
 				'description'	=> $row['image_description']
