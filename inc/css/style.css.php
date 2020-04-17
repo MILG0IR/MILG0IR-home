@@ -71,13 +71,13 @@
 		opacity: 1; }
 </style>
 <style name="PRELOADER">
-	body > .preloader {
+	.preloader {
 		position: fixed;
 		width: 100%;
 		height: 100%;
 		background: #2980B9;
 		z-index: 1000; }
-	body > .preloader > .spinner {
+	.preloader > .spinner {
 		position: absolute;
 		top: calc(50% - 20px);
 		left: calc(50% - 25px);
@@ -85,23 +85,23 @@
 		height: 40px;
 		text-align: center;
 		font-size: 10px; }
-	body > .preloader > .spinner > div {
+	.preloader > .spinner > div {
 		background-color: #333;
 		height: 100%;
 		width: 6px;
 		display: inline-block;
 		-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
 				animation: sk-stretchdelay 1.2s infinite ease-in-out; }
-	body > .preloader > .spinner > .rect2 {
+	.preloader > .spinner > .rect2 {
 		-webkit-animation-delay: -1.1s;
 				animation-delay: -1.1s; }
-	body > .preloader > .spinner > .rect3 {
+	.preloader > .spinner > .rect3 {
 		-webkit-animation-delay: -1.0s;
 				animation-delay: -1.0s; }
-	body > .preloader > .spinner > .rect4 {
+	.preloader > .spinner > .rect4 {
 		-webkit-animation-delay: -0.9s;
 				animation-delay: -0.9s; }
-	body > .preloader > .spinner > .rect5 {
+	.preloader > .spinner > .rect5 {
 		-webkit-animation-delay: -0.8s;
 				animation-delay: -0.8s; }
 	@-webkit-keyframes sk-stretchdelay {
@@ -164,7 +164,8 @@
 		background-color: #F9F9F9;
 		border-right: 1px solid lightgray;
 		flex: 1;
-		z-index: 99; }
+		z-index: 99;
+		padding-top: 56px; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul {
 		list-style-type: none;
 		padding: 0; }
@@ -184,7 +185,8 @@
 		right: auto; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover {
 		background-color: #F3F3F3;
-		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(0, 0, 0, 0.04), inset 0 2px 1px -1px rgba(0, 0, 0, 0.02); }
+		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(0, 0, 0, 0.04), inset 0 2px 1px -1px rgba(0, 0, 0, 0.02);
+		text-decoration: none; }
 	body > .container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover:before {
 		opacity: 1;
 		visibility: visible; }

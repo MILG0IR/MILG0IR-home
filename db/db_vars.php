@@ -64,9 +64,9 @@
 		);
 	// SET THE IMAGE VARIABLES FROM THE DB
 		$sql="SELECT * FROM `var_images`";
-		$result = mysqli_query($db_conx, $sql);
+		$query = mysqli_query($db_conx, $sql);
 		$mg_img = array();
-		while ($row = mysqli_fetch_array($result)) {
+		while ($row = mysqli_fetch_array($query)) {
 			$mg_img[$row['image_category']][$row['image_name']] = array( 
 				'image'			=> $row['image_base64'],
 				'description'	=> $row['image_description']
@@ -74,9 +74,9 @@
 		};
 	// SET THE BRANDING VARIABLES FROM THE DB
 		$sql="SELECT * FROM `var_branding`";
-		$result = mysqli_query($db_conx, $sql);
+		$query = mysqli_query($db_conx, $sql);
 		$mg_branding = array();
-		while ($row = mysqli_fetch_array($result)) {
+		while ($row = mysqli_fetch_array($query)) {
 			$mg_branding[$row['name']] = array( 
 				'id'			=> $row['id'],
 				'value'			=> $row['value'],

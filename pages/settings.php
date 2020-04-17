@@ -2,7 +2,7 @@
 	#{
 	#	"_comment": [
 	#		"WARNING: DO NOT MODIFY.",
-	#		"THE DETAILS ENTERED HERE WILL EFFECT ITS DISPLAY IN THE MENU."
+	#		"THE DETAILS ENTERED HERE WILL EFFECT IT'S DISPLAYED IN THE MENU."
 	#	],
 	#	"id": "999",
 	#	"title": "Settings",

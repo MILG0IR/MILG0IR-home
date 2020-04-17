@@ -20,7 +20,7 @@
 					<?php include_once($mg_dir['templates']."preloader.php")		?>
 				</div>
 			<!-- HEADER -->
-				<?php include_once($mg_dir['templates']."header-navigation.php")	?>
+				<?php include_once($mg_dir['templates']."header.php")	?>
 			<!-- JS -->
 				<?php include_once($mg_dir['js']."js.php"); ?>
 			<!-- CONTENT -->
