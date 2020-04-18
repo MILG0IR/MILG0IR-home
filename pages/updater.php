@@ -17,7 +17,8 @@
 	$log = array();
 	$errors = NULL;
 	if(isset($_GET['log']) && isset($_GET['errors'])) {
-		$log = json_encode($_GET['log']);
+		print_r($_GET['log']);
+		$log[] = json_encode($_GET['log']);
 		$errors = $_GET['errors'];
 	}
 ?>
