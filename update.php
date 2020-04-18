@@ -51,7 +51,6 @@
 		}
 	}
 ?><?php // UPDATE SCRIPT
-	$log = array();
 	if(isset($_GET['download'])) {
 ?>
 <!DOCTYPE html>
@@ -62,69 +61,77 @@
 		</body>
 	</html>
 <?php
-		$errors = array();
-		$install_stage1 = false;
-		$install_stage2 = false;
-		$install_stage3 = false;
-		$install_stage4 = false;
+		$l = '{"_comment":"Starting update"';
+		$e = 0;
+		$i = 0;
+		$s = 0;
 		// DOWNLOAD THE UPDATE ZIP
-			echo "downloading";
 			set_time_limit(1200);
 			$filename	= $app_info['Branch'].".zip";
 			$foldername	= "MILG0IR-home-".$app_info['Device']."-".$app_info['Branch'];
 			$file = file_get_contents('https://github.com/MILG0IR/MILG0IR-home-'.$app_info['Device'].'/archive/'.$app_info['Branch'].'.zip');
 			file_put_contents($filename, $file);
 			if(!file_exists($filename)) {
-				$log[] .= "<span class='error'>UNABLE TO GATHER THE REQUIRED FILES. Please try again later.</span>";
-				$errors[] .= "x";
+				$l .= ',"'.$i.'": "<span class=\'error\'>UNABLE TO GATHER THE REQUIRED FILES. Please try again later.</span>"';
+				$e++;
+				$i++;
 			} else {
-				$log[] .= "<span class='success'>The required files have been downloaded successfully.</span>";
-				$install_stage1 = true;
+				$l .= ',"'.$i.'": "<span class=\'success\'>The required files have been downloaded successfully.</span>"';
+				$s++;
+				$i++;
 			}
 		// UNZIP THE UPDATE FILE
-			if($install_stage1) {
+			if($s > 0) {
 				$zip = new ZipArchive();
 				$zip->open($filename);
 				$destination = "./";
 				$zip->extractTo($destination);
 				if(!file_exists($foldername)) {
-					$log[] .= "<span class='error'>UNABLE TO UNZIP THE REQUIRED FILES. Please try again later.</span>";
-					$errors[] .= "x";
+					$l .= ',"'.$i.'": "<span class=\'error\'>UNABLE TO UNZIP THE REQUIRED FILES. Please try again later.</span>"';
+					$e++;
+					$i++;
 				} else {
-					$log[] .= "<span class='success'>The required files have been unzipped successfully.</span>";
-					$install_stage2 = true;
+					$l .= ',"'.$i.'": "<span class=\'success\'>The required files have been unzipped successfully.</span>"';
+					$s++;
+					$i++;
 				}
 			}
 		// COPY AND REPLACE THE EXISTING FILES
-			if($install_stage2) {
+			if($s > 1) {
 				copy_directory($foldername, "./");
 				if(!file_exists("api/")) {
-					$log[] .= "<span class='error'>Unable to install the required files, Get in contact to find a resolution.</span>";
-					$errors[] .= "x";
+					$l .= ',"'.$i.'": "<span class=\'error\'>Unable to install the required files, Get in contact to find a resolution.</span>"';
+					$e++;
+					$i++;
 				} else {
-					$log[] .= "<span class='success'>The required files have been installed successfully.</span>";
-					$install_stage3 = true;
+					$l .= ',"'.$i.'": "<span class=\'success\'>The required files have been installed successfully.</span>"';
+					$s++;
+					$i++;
 				}
 			}
 		// Remove the installation zip file
-			if($install_stage3) {
+			if($s > 2) {
 				unlink($filename);
 				if(file_exists($filename)) {
-					$log[] .= "<span class='error'>Unable to remove the installation file - Minor issue, Please remove manually.</span>";
-					$errors[] .= "x";
+					$l .= ',"'.$i.'": "<span class=\'error\'>Unable to remove the installation file - Minor issue, Please remove manually.</span>"';
+					$e++;
+					$i++;
 				} else {
-					$log[] .= "<span class='success'>The installation file has been removed successfully.</span>";
-					$install_stage4 = true;
+					$l .= ',"'.$i.'": "<span class=\'success\'>The installation file has been removed successfully.</span>"';
+					$s4 = true;
+					$i++;
 				}
 			}
 		// REMOVE THE INSTALLATION FILE
-			if($install_stage4) {
+			if($s > 3) {
 				delete_folder($foldername);
 				if(file_exists($foldername)) {
-					$log[] .= "<span class='error'>Unable to remove the temp installation folder - Minor issue, Please remove manually.</span>";
-					$errors[] .= "x";
+					$l .= ',"'.$i.'": "<span class=\'error\'>Unable to remove the temp installation folder - Minor issue, Please remove manually.</span>"';
+					$e++;
+					$i++;
 				} else {
-					$log[] .= "<span class='success'>The temp installation folder has been removed successfully.</span>";
+					$l .= ',"'.$i.'": "<span class=\'success\'>The temp installation folder has been removed successfully.</span>"';
+					$i++;
 				}
 			}
 		// Ammend info.json
@@ -144,15 +151,16 @@
 				$jsonString = file_get_contents($json);
 				$data = json_decode($jsonString, true);
 				if($data['Branch'] == $app_info['Branch']) {
-					$log[] .= "<span class='success'>The installation information has been saveds successfully.</span>";
+					$l .= ',"'.$i.'": "<span class=\'success\'>The installation information has been saveds successfully.</span>"';
+					$i++;
 				} else {
-					$log[] .= "<span class='error'>Unable to save the installation information.</span>";
-					$errors[] .= "x";
+					$l .= ',"'.$i.'": "<span class=\'error\'>Unable to save the installation information.</span>"';
+					$e++;
+					$i++;
 				}
 		//	
+		$l .= "}";
 	}
-
-	$logString = json_encode($log);
-	$errorString = count($errors);
-	header('Location: ./pages/updater.php?log='.$logString.'&errors='.$errorString);
+	echo $URL = '/pages/updater.php?log='.$l.'&errors='.$e;
+	header('Location: '.$URL);
 ?>

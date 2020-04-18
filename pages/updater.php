@@ -17,8 +17,8 @@
 	$log = array();
 	$errors = NULL;
 	if(isset($_GET['log']) && isset($_GET['errors'])) {
-		print_r($_GET['log']);
-		$log[] = json_encode($_GET['log']);
+		$log = json_decode($_GET['log'], true);
+		print_r($log);
 		$errors = $_GET['errors'];
 	}
 ?>
@@ -40,7 +40,7 @@
 							$log[] .= "";
 							$log[] .= "<span class='error'>This installation has been complete with " . count($errors) . " errors.</span>";
 						}
-						$arrlength = count($log);
+						$arrlength = count($log)-1;
 						if($arrlength > 0) {
 							echo "";
 								echo "<pre>";
