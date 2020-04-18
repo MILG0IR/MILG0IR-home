@@ -1,31 +1,158 @@
-<?
-    include_once("./db/db_conx.php");
-    if(!$user_ok) {
-		header("location: ".$mg_dir['root']."login.php");
-		exit();
-    }
+<?php	// FUNCTIONS
+	include_once('./db/db_conx.php');
+	function copy_directory( $source, $destination ) {
+		if ( is_dir( $source ) ) {
+				@mkdir( $destination );
+				$directory = dir( $source );
+				while ( FALSE !== ( $readdirectory = $directory->read() ) ) {
+						if ( $readdirectory == '.' || $readdirectory == '..' ) {
+								continue;
+						}
+						$PathDir = $source . '/' . $readdirectory;
+						if ( is_dir( $PathDir ) ) {
+								copy_directory( $PathDir, $destination . '/' . $readdirectory );
+								continue;
+						}
+						copy( $PathDir, $destination . '/' . $readdirectory );
+				}
+					$directory->close();
+		}
+		else {
+				copy( $source, $destination );
+		}
+	}
+	function delete_folder($target, $avoid = NULL) {
+		if($avoid === NULL) {
+			foreach(glob($target . '/*') as $file) {
+				if(is_dir($file)) {
+					delete_folder($file);
+				} else {
+					unlink($file);
+				}
+			}
+			if(file_exists($target) && $target != "/" && $target != "./" && $target != "." && $target != "..") {
+				rmdir($target);
+			}
+		} elseif($avoid != NULL) {
+			foreach(glob($target . '/*') as $file) {
+				if($file != $avoid && $file != $target.$avoid) {
+					if(is_dir($file)) {
+						delete_folder($file, $avoid);
+					} else {
+						unlink($file);
+					}
+				}
+			}
+			if(file_exists($target) && $target != "/" && $target != "./" && $target != "." && $target != ".." && $target != $avoid && $target != $target.$avoid) {
+				rmdir($target);
+			}
+		} else {
+			echo "ERROR;";
+		}
+	}
+?><?php // UPDATE SCRIPT
+	$log = array();
+	if(isset($_GET['download'])) {
 ?>
 <!DOCTYPE html>
 	<html>
 		<head>
-			<meta charset="UTF-8">
-			<title>Homepage | <?php echo$mg_branding['slogan']['value']?></title>
-			<link rel="icon" href="<?php echo$mg_branding['favicon']['value']?>" type="image/x-icon">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<?php include_once($mg_dir['css']."css.php");	?>
 		</head>
 		<body>
-			<!-- PRELOADER -->
-				<div class="preloader">
-					<?php include_once($mg_dir['templates']."preloader.php") ?>
-				</div>
-			<!-- HEADER -->
-				<?php include_once($mg_dir['templates']."header.php") ?>
-			<!-- JS -->
-				<?php include_once($mg_dir['js']."js.php"); ?>
-			<!-- CONTENT -->
-			<div class="content nav-inset">
-				<?php include_once($mg_dir['pages']."updater.php") ?>
-			</div>
 		</body>
 	</html>
+<?php
+		$errors = array();
+		$install_stage1 = false;
+		$install_stage2 = false;
+		$install_stage3 = false;
+		$install_stage4 = false;
+		// DOWNLOAD THE UPDATE ZIP
+			echo "downloading";
+			set_time_limit(1200);
+			$filename	= $app_info['Branch'].".zip";
+			$foldername	= "MILG0IR-home-".$app_info['Device']."-".$app_info['Branch'];
+			$file = file_get_contents('https://github.com/MILG0IR/MILG0IR-home-'.$app_info['Device'].'/archive/'.$app_info['Branch'].'.zip');
+			file_put_contents($filename, $file);
+			if(!file_exists($filename)) {
+				$log[] .= "<span class='error'>UNABLE TO GATHER THE REQUIRED FILES. Please try again later.</span>";
+				$errors[] .= "x";
+			} else {
+				$log[] .= "<span class='success'>The required files have been downloaded successfully.</span>";
+				$install_stage1 = true;
+			}
+		// UNZIP THE UPDATE FILE
+			if($install_stage1) {
+				$zip = new ZipArchive();
+				$zip->open($filename);
+				$destination = "./";
+				$zip->extractTo($destination);
+				if(!file_exists($foldername)) {
+					$log[] .= "<span class='error'>UNABLE TO UNZIP THE REQUIRED FILES. Please try again later.</span>";
+					$errors[] .= "x";
+				} else {
+					$log[] .= "<span class='success'>The required files have been unzipped successfully.</span>";
+					$install_stage2 = true;
+				}
+			}
+		// COPY AND REPLACE THE EXISTING FILES
+			if($install_stage2) {
+				copy_directory($foldername, "./");
+				if(!file_exists("api/")) {
+					$log[] .= "<span class='error'>Unable to install the required files, Get in contact to find a resolution.</span>";
+					$errors[] .= "x";
+				} else {
+					$log[] .= "<span class='success'>The required files have been installed successfully.</span>";
+					$install_stage3 = true;
+				}
+			}
+		// Remove the installation zip file
+			if($install_stage3) {
+				unlink($filename);
+				if(file_exists($filename)) {
+					$log[] .= "<span class='error'>Unable to remove the installation file - Minor issue, Please remove manually.</span>";
+					$errors[] .= "x";
+				} else {
+					$log[] .= "<span class='success'>The installation file has been removed successfully.</span>";
+					$install_stage4 = true;
+				}
+			}
+		// REMOVE THE INSTALLATION FILE
+			if($install_stage4) {
+				delete_folder($foldername);
+				if(file_exists($foldername)) {
+					$log[] .= "<span class='error'>Unable to remove the temp installation folder - Minor issue, Please remove manually.</span>";
+					$errors[] .= "x";
+				} else {
+					$log[] .= "<span class='success'>The temp installation folder has been removed successfully.</span>";
+				}
+			}
+		// Ammend info.json
+			// Open and decode the file
+				$json = "etc/info.json";
+				if(file_exists($json)) {
+					$jsonString = file_get_contents($json);
+					$data = json_decode($jsonString, true);
+			// Ammend the needed values
+					$data['Branch'] = $app_info['Branch'];
+					$data['Device'] = $app_info['Device'];
+			// Encode and close the file
+					$newJsonString = json_encode($data, JSON_PRETTY_PRINT);
+					file_put_contents($json, $newJsonString);
+				}
+			// Test
+				$jsonString = file_get_contents($json);
+				$data = json_decode($jsonString, true);
+				if($data['Branch'] == $app_info['Branch']) {
+					$log[] .= "<span class='success'>The installation information has been saveds successfully.</span>";
+				} else {
+					$log[] .= "<span class='error'>Unable to save the installation information.</span>";
+					$errors[] .= "x";
+				}
+		//	
+	}
+
+	$logString = json_encode($log);
+	$errorString = count($errors);
+	header('Location: ./pages/updater.php?log='.$logString.'&errors='.$errorString);
+?>

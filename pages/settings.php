@@ -59,6 +59,10 @@
 					border-color: #393E54;
 					transition: all 0.25s ease-in-out;
 				}
+
+				.settings-page {
+					
+				}
 			</style>
 		</head>
 		<body>
@@ -78,17 +82,17 @@
 					</li>
 				</ul>
 			<!-- SETTINGS PAGES -->
-				<div class="" id="security">
-					<!---->
+				<div class="settings-page" id="security">
+					page 1
 				</div>
-				<div class="" id="customization">
-					<!---->
+				<div class="settings-page" id="customization">
+					page 2
 				</div>
-				<div class="" id="users">
-					<!---->
+				<div class="settings-page" id="users">
+					page 3
 				</div>
-				<div class="" id="pages">
-					<!---->
+				<div class="settings-page" id="pages">
+					page 4
 				</div>
 			<!-- JS -->
 			<?php include_once($mg_dir['js']."js.php");	?>

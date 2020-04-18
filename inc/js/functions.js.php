@@ -1,5 +1,5 @@
 <script name="FUNCTIONS">
-	//--------------------------- univaersal functions ---------------------------//
+	//--------------------------- universal functions ---------------------------//
 		function _(x) {
 			return document.getElementById(x);
 		}
@@ -20,6 +20,12 @@
 		}
 		function emptyElement(x) {
 			_(x).innerHTML = "";
+		}
+		function reloadpage() {
+			var iframe = $(".child-active");
+			iframe.attr( 'src', function ( i, val ) {
+				return val;
+			});
 		}
 	//--------------------------- reference functions ---------------------------//
 		function validatepassword(pass) {
@@ -290,22 +296,29 @@
 				var element = _(pageJSON[0])
 				var pages = _("child")
 				if(typeof(element) != 'undefined' && element != null) {
+					// Display the chosen page and append the class'
 					$('.child').hide();
 					$('#'+pageJSON[0]).show();
 					$('.active').toggleClass("active");
+					$('.child-active').toggleClass("child-active");
+					$('#'+pageJSON[0]).toggleClass("child-active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
 				} else {
+					// Create the page
 					var child = document.createElement('iframe');
 					child.setAttribute('name', pageJSON[1]);
 					child.setAttribute('id', pageJSON[0]);
 					child.setAttribute('src', pageJSON[4]);
 					child.setAttribute('class', 'child');
 					_("parent").appendChild(child);
+					// Display the chosen page and append the class'
 					$('.child').hide();
 					$('#'+pageJSON[0]).show();
 					$('.active').toggleClass("active");
-					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
+					$('.child-active').toggleClass("child-active");
+					$('#'+pageJSON[0]).toggleClass("child-active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
+					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
 				}
 			});
 		}

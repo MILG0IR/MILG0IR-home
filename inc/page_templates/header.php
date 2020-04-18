@@ -13,8 +13,11 @@
 				<path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 013 11h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 7h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 3h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
 			</svg>
 		</a>
-		<a class="navbar-brand waves-light" href="<?php echo$mg_dir['root']?>home.php">
+		<a href="<?php echo$mg_dir['root']?>home.php" class="navbar-brand waves-light">
 			<?php echo$mg_branding['name']['value']?>
+		</a>
+		<a href="#" onClick="reloadpage()" id="reload" class="navbar-reload waves-light">
+			<img src="<?php echo$mg_img['symbols']['refresh 1']['image']?>">
 		</a>
 		<a href="#" onClick="logout()" id="logout" class="navbar-logout waves-light">
 			<img src="<?php echo$mg_img['symbols']['logout']['image']?>">

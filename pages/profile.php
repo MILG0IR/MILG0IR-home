@@ -11,6 +11,8 @@
 	#	"icon_category": "icons",
 	#	"icon": "user"
 	#}
+?><?php
+	include_once("../db/db_conx.php");
 ?>
 <!DOCTYPE html>
 	<html>
