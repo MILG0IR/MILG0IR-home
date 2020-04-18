@@ -1,7 +1,7 @@
 {
 	"Changelog": [{
-			"status": "In progress",
-			"type": "Patch",
+			"Status": "In progress",
+			"Type": "Patch",
 			"Version": "v0.1.2",
 			"Date": "",
 			"Title": "",
@@ -23,8 +23,8 @@
 			]
 		},
 		{
-			"status": "Release",
-			"type": "Patch",
+			"Status": "Release",
+			"Type": "Patch",
 			"Version": "v0.1.1",
 			"Date": "16-04-2020",
 			"Title": "The accounts update",
@@ -40,8 +40,8 @@
 			"Changelog-removed": []
 		},
 		{
-			"status": "Release",
-			"type": "Minor",
+			"Status": "Release",
+			"Type": "Minor",
 			"Version": "v0.1.0",
 			"Date": "08-04-2020",
 			"Title": "MILG0IR home",
