@@ -63,7 +63,24 @@
 					<?php
 						$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
 						$data = json_decode($json, true);
-						print_r($data);
+				#		print_r($data);
+						foreach($data["Changelog"] as $cl) {
+							echo "
+								<div>
+									<h3>".$cl['Title']."</h3>
+									<p>".$cl['Version']."</p>
+									<p>".$cl['Status']."</p>
+									<p>".$cl['Type']."</p>
+									<p>".$cl['Date']."</p>
+									<p>".$cl['Changelog-notes']."</p>
+									<div>
+										<p>".$cl['Changelog-notes']."</p>
+										<p>".$cl['Changelog-added']."</p>
+										<p>".$cl['Changelog-removed']."</p>
+									</div>
+								</div>
+							";
+						}
 					?>
 				</div>
 			</div>
