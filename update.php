@@ -118,7 +118,7 @@
 					$i++;
 				} else {
 					$l .= ',"'.$i.'": "<span class=\'success\'>The installation file has been removed successfully.</span>"';
-					$s4 = true;
+					$s++;
 					$i++;
 				}
 			}
@@ -151,7 +151,7 @@
 				$jsonString = file_get_contents($json);
 				$data = json_decode($jsonString, true);
 				if($data['Branch'] == $app_info['Branch']) {
-					$l .= ',"'.$i.'": "<span class=\'success\'>The installation information has been saveds successfully.</span>"';
+					$l .= ',"'.$i.'": "<span class=\'success\'>The installation information has been saved successfully.</span>"';
 					$i++;
 				} else {
 					$l .= ',"'.$i.'": "<span class=\'error\'>Unable to save the installation information.</span>"';
