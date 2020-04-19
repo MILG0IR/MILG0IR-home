@@ -16,14 +16,14 @@
 		<a href="<?php echo$mg_dir['root']?>home.php" class="navbar-brand waves-light">
 			<?php echo$mg_branding['name']['value']?>
 		</a>
-		<a href="#" onClick="reloadpage()" id="reload" class="navbar-reload waves-light">
-			<img src="<?php echo$mg_img['symbols']['refresh 1']['image']?>">
+		<a href="#" onClick="reloadpage()" id="reload" class="navbar-controls waves-light">
+			<img src="<?php echo$mg_img['multimedia']['refresh']['image']?>">
 		</a>
-		<a href="#" onClick="closepage()" id="close" class="navbar-close waves-light">
-			<img src="<?php echo$mg_img['symbols']['forbidden']['image']?>">
+		<a href="#" onClick="closepage()" id="close" class="navbar-controls waves-light">
+			<img src="<?php echo$mg_img['multimedia']['cancel']['image']?>">
 		</a>
 		<a href="#" onClick="logout()" id="logout" class="navbar-logout waves-light">
-			<img src="<?php echo$mg_img['symbols']['logout']['image']?>">
+			<img src="<?php echo$mg_img['multimedia']['logout']['image']?>">
 		</a>
 	</nav>
 	<div class="container-fluid">
@@ -35,7 +35,7 @@
 						$query = mysqli_query($db_conx, $sql);
 						foreach($query as $row) {
 							echo '
-								<a href="#" class="waves-light" id="'.$row['title'].'-'.$row['id'].'" onClick="openwebpage('.$row['id'].')">
+								<a href="#" class="waves-light" id="'.$row['title'].'-'.$row['id'].'" onClick="openpage('.$row['id'].')">
 									<li><img src="'.$mg_img[$row['icon_category']][$row['icon']]['image'].'"></li>
 									<li>'.$row['title'].'</li>
 								</a>';

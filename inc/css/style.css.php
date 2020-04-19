@@ -130,7 +130,7 @@
 	.navbar > a > span {
 		font-weight: 800; }
 	.navbar > a > img {
-		width: 2.5rem; }
+		width: 100%; }
 	.navbar > .menu-toggle {
 		line-height: 0;
 		color: #0275D8; }
@@ -140,22 +140,27 @@
 		height: 100%;
 		width: 3.5rem; }
 	.navbar > .navbar-brand {
-		text-align: center;
-		width: 8.5rem;
-		font-size: 1rem;
-		line-height: 1.5rem;
-		padding: 1rem;
 		border-right: 1px solid lightgray;
+		margin-right: 0.5rem;
+		line-height: 1.5rem;
+		text-align: center;
 		font-weight: 400;
 		max-width: 136px;
-		max-height: 56px; }
+		max-height: 56px;
+		font-size: 1rem;
+		width: 8.5rem;
+		padding: 1rem; }
+	.navbar > .navbar-controls {
+		margin: 0.5rem;
+		width: 2rem; }
 	.navbar > .navbar-logout {
-		position: fixed;
-		right: 0px;
-		font-size: 1.5rem;
+		border-left: 1px solid lightgray;
 		line-height: 1.5rem;
-		padding: 0.5rem;
-		border-left: 1px solid lightgray; }
+		font-size: 1.5rem;
+		position: fixed;
+		padding: 0.7rem;
+		width: 3.5rem;
+		right: 0px; }
 	.container-fluid > .fixed-nav > .fixed-nav-inner {
 		display: inline-flex;
 		flex-direction: column;

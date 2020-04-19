@@ -19,7 +19,7 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<?php include_once($mg_dir['css']."css.php");	?>
 		</head>
-		<body Onload="openwebpage(<?php echo $row[0]; ?>)">
+		<body Onload="openpage(<?php echo $row[0]; ?>)">
 			<!-- PRELOADER -->
 				<div class="preloader">
 					<?php include_once($mg_dir['templates']."preloader.php")		?>

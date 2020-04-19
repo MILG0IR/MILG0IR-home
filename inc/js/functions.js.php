@@ -21,12 +21,6 @@
 		function emptyElement(x) {
 			_(x).innerHTML = "";
 		}
-		function reloadpage() {
-			var iframe = $(".child-active");
-			iframe.attr( 'src', function ( i, val ) {
-				return val;
-			});
-		}
 	//--------------------------- reference functions ---------------------------//
 		function validatepassword(pass) {
 			if (pass.length < 8) {
@@ -291,7 +285,7 @@
 				}
 			});
 		}
-		function openwebpage(pid) {
+		function openpage(pid) {
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=get_page_data&pid='+pid,
@@ -327,5 +321,19 @@
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
 				}
 			});
+		}
+		function reloadpage() {
+			var iframe = $(".child-active");
+			iframe.attr( 'src', function ( i, val ) {
+				return val;
+			});
+		}
+		function closepage() {
+			var iframe = $(".child-active");
+			var tabID = iframe.attr('name') + "-" + iframe.attr('id') 
+			var tab =  $("#"+tabID);
+			tab.removeClass("enabled");
+			iframe.remove();
+			openpage(0);
 		}
 </script>
