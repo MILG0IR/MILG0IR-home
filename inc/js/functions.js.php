@@ -198,7 +198,7 @@
 				checkresponse(data).done(function(codeARRAY) {
 					var codeJSON = jQuery.parseJSON(codeARRAY);
 					status.html(codeJSON[2]);
-					if(codeJSON[2] != 'INF-UPD-1') {
+					if(data != 'INF-UPD-1') {
 						updateBTN.html("Download & install update")
 					} else (
 						updateBTN.html("Force reinstall")

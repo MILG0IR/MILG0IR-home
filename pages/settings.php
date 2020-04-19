@@ -23,46 +23,52 @@
 			<?php include_once($mg_dir['css']."css.php");	?>
 			<style>
 				.nav-menu__sidebar {
-					position: fixed;
-					z-index: 98;
-					top: 0;
-					right: 0;
-					bottom: 0;
-					transform: rotate(180deg);
-					display: flex;
-					justify-content: center;
-					margin: 0;
-					padding: 0;
-					text-align: center;
 					writing-mode: vertical-lr;
+					transform: rotate(180deg);
+					justify-content: center;
+					text-align: center;
+					position: fixed;
+					display: flex;
+					z-index: 98;
+					padding: 0;
+					bottom: 0;
+					margin: 0;
 					width: 0;
-				}
+					right: 0;
+					top: 0; }
 				.nav-menu__sidebar li {
-					display: inline-block;
-				}
+					display: inline-block; }
 				.nav-menu__sidebar li a {
-					position: relative;
-					display: block;
-					padding: 0.75em;
-					margin: 0.25em;
-					color: #393E54;
-					font-size: 0.9em;
-					font-weight: 600;
-					letter-spacing: 0.1em;
-					text-transform: uppercase;
-					overflow: hidden;
 					transition: all 0.25s ease-in-out;
 					border: 2px solid transparent;
+					text-transform: uppercase;
+					letter-spacing: 0.1em;
 					text-decoration: none;
-				}
+					position: relative;
+					font-size: 0.9em;
+					font-weight: 600;
+					overflow: hidden;
+					padding: 0.75em;
+					display: block;
+					margin: 0.25em;
+					color: #393E54; }
 				.nav-menu__sidebar li a:hover, .nav-menu__sidebar li a:active, .nav-menu__sidebar li a:focus {
-					border-color: #393E54;
 					transition: all 0.25s ease-in-out;
+					border-color: #393E54; }
+				.settings-wrapper {
+					vertical-align: middle;
+					display: -webkit-box;
+					display: -moz-box;
+					display: -o-box;
+					display: box;
+					overflow: hidden;
+					height: 100%;
+					width: 100%;
 				}
-
-				.settings-page {
-					
-				}
+				.settings-wrapper > .settings-page {
+					width: 100%;
+					height: 100%;
+					text-align: center; }
 			</style>
 		</head>
 		<body>
@@ -81,18 +87,23 @@
 						<a href="#pages">pages & categories</a>
 					</li>
 				</ul>
-			<!-- SETTINGS PAGES -->
-				<div class="settings-page" id="security">
-					page 1
-				</div>
-				<div class="settings-page" id="customization">
-					page 2
-				</div>
-				<div class="settings-page" id="users">
-					page 3
-				</div>
-				<div class="settings-page" id="pages">
-					page 4
+				<div class="settings-wrapper">
+					<!-- SETTINGS PAGES -->
+					<div class="settings-page" id="DEFAULT">
+						DEFAULT
+					</div>
+					<div class="settings-page" id="security">
+						security
+					</div>
+					<div class="settings-page" id="customization">
+						customization
+					</div>
+					<div class="settings-page" id="users">
+						users
+					</div>
+					<div class="settings-page" id="pages">
+						pages
+					</div>
 				</div>
 			<!-- JS -->
 			<?php include_once($mg_dir['js']."js.php");	?>
