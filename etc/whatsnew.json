@@ -7,7 +7,7 @@
 			"Title": "",
 			"Description": "This update is all about the ease of use. We have added a few new features and changed a few pre-existing ones to make the application easire to use.",
 			"Changelog-notes": [],
-			"Changelog-changed": [
+			"Changelog-changes": [
 				"Minor bug fixes and improvements.",
 				"Side navigation has custom images and names - No longer placeholders."
 			],
@@ -30,7 +30,7 @@
 			"Title": "The accounts update",
 			"Description": "In this update we have added the functionality of accounts. You can now create accounts (With a reference code), login and log out.",
 			"Changelog-notes": [],
-			"Changelog-changed": [],
+			"Changelog-changes": [],
 			"Changelog-added": [
 				"Signup functionality.",
 				"Login functionality.",
@@ -47,7 +47,7 @@
 			"Title": "MILG0IR home",
 			"Description": "Welcome to MILG0IR home! We are working to create the best media organizer around! With a simple and easy to use user interface, it is unbeatable!",
 			"Changelog-notes": [],
-			"Changelog-changed": [],
+			"Changelog-changes": [],
 			"Changelog-added": [],
 			"Changelog-removed": []
 		}

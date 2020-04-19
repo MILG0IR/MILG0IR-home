@@ -62,23 +62,84 @@
 					<?php
 						$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
 						$data = json_decode($json, true);
-				#		print_r($data);
+						$i = 0;
+						$x = 0;
+						$Status = array();
+						$Type = array();
+						$Version = array();
+						$Date = array();
+						$Title = array();
+						$Description = array();
+						$Changelog_notes = array();
+						$Changelog_changes = array();
+						$Changelog_added = array();
+						$Changelog_removed = array();
 						foreach($data["Changelog"] as $cl) {
-							echo "
-								<div>
-									<h3>".$cl['Title']."</h3>
-									<p>".$cl['Version']."</p>
-									<p>".$cl['Status']."</p>
-									<p>".$cl['Type']."</p>
-									<p>".$cl['Date']."</p>
-									<p>".$cl['Changelog-notes']."</p>
-									<div>
-										<p>".$cl['Changelog-notes']."</p>
-										<p>".$cl['Changelog-added']."</p>
-										<p>".$cl['Changelog-removed']."</p>
-									</div>
-								</div>
-							";
+							$i++;
+							$Status[$i] = $cl['Status'];
+							$Type[$i] = $cl['Type'];
+							$Version[$i] = $cl['Version'];
+							$Date[$i] = $cl['Date'];
+							$Title[$i] = $cl['Title'];
+							$Description[$i] = $cl['Description'];
+							foreach($cl['Changelog-notes'] as $cn) {
+								$Changelog_notes[$i] = $cl['Changelog-notes'];
+							}
+							foreach($cl['Changelog-changed'] as $cc) {
+								$Changelog_changes[$i] = $cl['Changelog-changed'];
+							}
+							foreach($cl['Changelog-added'] as $ca) {
+								$Changelog_added[$i] = $cl['Changelog-added'];
+							}
+							foreach($cl['Changelog-removed'] as $cr) {
+								$Changelog_removed[$i] = $cl['Changelog-removed'];
+							}
+						}
+						while($x < $i) {
+							$x++;
+							echo '	<div>';
+							echo '		<h3>'.$Title[$x].'</h3>';
+							echo '		<h6>'.$Version[$x].'</h6>';
+							echo '		<p>'.$Type[$x].' '.$Status[$x].'</p>';
+							echo '		<p> Released: '.$Date[$x].'</p>';
+							echo '		<p>'.$Description[$x].'</p>';
+							echo '		<div class="Changelog_notes">';
+							if (isset($Changelog_notes[$x])) {
+								foreach($Changelog_notes[$x] as $notes) {
+									if($changes != NULL){
+										echo '<p>'.$notes.'</p>';
+									}
+								}
+							}
+							echo '		</div>';
+							echo '		<div class="Changelog_changes">';
+							if (isset($Changelog_changes[$x])) {
+								foreach($Changelog_changes[$x] as $changes) {
+									if($changes != NULL){
+										echo '<p>'.$changes.'</p>';
+									}
+								}
+							}
+							echo '		</div>';
+							echo '		<div class="Changelog_added">';
+							if (isset($Changelog_added[$x])) {
+								foreach($Changelog_added[$x] as $added) {
+									if($added != NULL){
+										echo '<p>'.$added.'</p>';
+									}
+								}
+							}
+							echo '		</div>';
+							echo '		<div class="Changelog_removed">';
+							if (isset($Changelog_removed[$x])) {
+								foreach($Changelog_removed[$x] as $removed) {
+									if($removed != NULL){
+										echo '<p>'.$removed.'</p>';
+									}
+								}
+							}
+							echo '		</div>';
+							echo '	</div>';
 						}
 					?>
 				</div>
