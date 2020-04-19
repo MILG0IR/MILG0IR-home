@@ -124,8 +124,8 @@
 			}
 		// REMOVE THE INSTALLATION FILE
 			if($s > 3) {
-				delete_folder($foldername."/");
-				if(file_exists($foldername."/")) {
+				delete_folder("./".$foldername."/");
+				if(file_exists("./".$foldername."/")) {
 					$l .= ',"'.$i.'": "<span class=\'error\'>Unable to remove the temp installation folder - Minor issue, Please remove manually.</span>"';
 					$e++;
 					$i++;
