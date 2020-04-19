@@ -138,8 +138,8 @@
 						foreach($cl['Changelog-notes'] as $cn) {
 							$Changelog_notes[$i] = $cl['Changelog-notes'];
 						}
-						foreach($cl['Changelog-changed'] as $cc) {
-							$Changelog_changes[$i] = $cl['Changelog-changed'];
+						foreach($cl['Changelog-changes'] as $cc) {
+							$Changelog_changes[$i] = $cl['Changelog-changes'];
 						}
 						foreach($cl['Changelog-added'] as $ca) {
 							$Changelog_added[$i] = $cl['Changelog-added'];

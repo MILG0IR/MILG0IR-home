@@ -19,6 +19,9 @@
 		<a href="#" onClick="reloadpage()" id="reload" class="navbar-reload waves-light">
 			<img src="<?php echo$mg_img['symbols']['refresh 1']['image']?>">
 		</a>
+		<a href="#" onClick="closepage()" id="close" class="navbar-close waves-light">
+			<img src="<?php echo$mg_img['symbols']['forbidden']['image']?>">
+		</a>
 		<a href="#" onClick="logout()" id="logout" class="navbar-logout waves-light">
 			<img src="<?php echo$mg_img['symbols']['logout']['image']?>">
 		</a>
