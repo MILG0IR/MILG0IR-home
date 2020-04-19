@@ -9,14 +9,14 @@
 			"Changelog-notes": [],
 			"Changelog-changes": [
 				"Minor bug fixes and improvements.",
-				"Side navigation has custom images and names - No longer placeholders."
+				"Side navigation has custom images and names - No longer placeholders.",
+				"Ability to open, close and reload pages at will"
 			],
 			"Changelog-added": [
 				"Update page",
 				"Settings page",
 				"Update functionality",
-				"Page list functionality added to navigation",
-				"Settings UI"
+				"Page list functionality added to navigation"
 			],
 			"Changelog-removed": [
 				"update.php - all updates can now be done from within the application."
