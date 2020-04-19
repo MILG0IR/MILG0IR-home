@@ -193,7 +193,8 @@
 			});
 		}
 		function checkforupdate(version, device, branch) {
-			var status = _("updatestatus");
+			var status = $("#updatestatus");
+			var updateBTN = $(".update-button");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=check_for_update&version='+version+'&device='+device+'&branch='+branch,
@@ -202,7 +203,12 @@
 			}).done(function(data) {
 				checkresponse(data).done(function(codeARRAY) {
 					var codeJSON = jQuery.parseJSON(codeARRAY);
-					status.innerHTML = codeJSON[2];
+					status.html(codeJSON[2]);
+					if(codeJSON[2] != 'INF-UPD-1') {
+						updateBTN.html("Download & install update")
+					} else (
+						updateBTN.html("Force reinstall")
+					)
 				});
 			});
 		}
