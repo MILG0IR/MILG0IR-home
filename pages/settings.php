@@ -99,20 +99,34 @@
 					display: none; }
 				.popup { }
 				.popup > span.settings-popup {
-					width: 100%;
-					height: 100%;
 					background: rgba(0, 0, 0, 0.3);
+					position: fixed;
 					display: block;
-					position: absolute;
-					top: 0px;
-					left: 0px; }
+					height: 100%;
+					width: 100%;
+					left: 0px;
+					top: 0px; }
 				.popup > span.settings-popup > form {
+					height: fit-content;
+					width: fit-content;
+					position: absolute;
+					border-radius: 5px;
 					background: white;
-					width: 70%;
-					height: auto;
-					top: 5rem;
-					left: 15%;
-					position: absolute; }
+					padding: 2rem;
+					margin: auto;
+					bottom: 0;
+					right: 0;
+					left: 0;
+					top: 0; }
+				.popup > span.settings-popup > form > input[type=button] {
+					border-radius: 2px;
+					padding: 0.5rem;
+					margin: 0.5rem;
+					border: none; }
+				.popup > span.settings-popup > form > input[type=button].primary {
+					background: #6495ed; }
+				.popup > span.settings-popup > form > input[type=button].secondary {
+					background: #a9a9a9; }
 				@media only screen and (min-resolution: 117dpi) and (max-resolution: 119dpi), only screen and (min-resolution: 131dpi) and (max-resolution: 133dpi), only screen and (min-resolution: 145dpi) and (max-resolution: 154dpi), only screen and (min-resolution: 162dpi) and (max-resolution: 164dpi), only screen and (min-resolution: 169dpi) {
 					.settings-wrapper > .settings-page > .panel {
 						margin-right: 6rem;
@@ -139,11 +153,6 @@
 			<!-- JS -->
 				<?php include_once($mg_dir['js']."js.php");	?>
 				<script>
-					$("tbody").sortable({
-						items: "> tr:not(:first)",
-						appendTo: "parent",
-						helper: "clone"
-					}).disableSelection();
 					function editPopup(type, json) {
 						var json = jQuery.parseJSON(json);
 						if(type == "rank") {
@@ -155,37 +164,43 @@
 								var span = document.createElement('span');
 									span.setAttribute('class', 'settings-popup');
 								var form = document.createElement('form');
-								var title = document.createElement('input');
-									title.setAttribute('type', 'text');
-									title.setAttribute('name', 'title');
-									title.setAttribute('class', 'form-change-title');
-									title.setAttribute('value', json.title);
+								var icon = document.createElement('img');
+									icon.setAttribute('type', 'text');
+									icon.setAttribute('name', 'uri_local');
+									icon.setAttribute('class', 'form-change-uri_local');
+									icon.setAttribute('src', json.icon);
+								var name = document.createElement('input');
+									name.setAttribute('type', 'text');
+									name.setAttribute('name', 'title');
+									name.setAttribute('class', 'form-change-title');
+									name.setAttribute('value', json.name);
 								var desc = document.createElement('input');
 									desc.setAttribute('type', 'text');
 									desc.setAttribute('name', 'description');
 									desc.setAttribute('class', 'form-change-description');
 									desc.setAttribute('class', 'form-change-description');
 									desc.setAttribute('value', json.description);
-								var local = document.createElement('input');
-									local.setAttribute('type', 'text');
-									local.setAttribute('name', 'uri_local');
-									local.setAttribute('class', 'form-change-uri_local');
-									local.setAttribute('value', json.uri_local);
-								var remote = document.createElement('input');
-									remote.setAttribute('type', 'text');
-									remote.setAttribute('name', 'uri_remote');
-									remote.setAttribute('class', 'form-change-uri_remote');
-									remote.setAttribute('value', json.uri_remote);
-								var select = document.createElement('select');
-								var option = document.createElement('option');
+								var cancel = document.createElement('input');
+									cancel.setAttribute('class', 'form-removal-submit');
+									cancel.setAttribute('onClick', 'closePopup()');
+									cancel.setAttribute('class', 'secondary');
+									cancel.setAttribute('value', "cancel");
+									cancel.setAttribute('type', 'button');
+									cancel.setAttribute('name', 'close');
+								var submit = document.createElement('input');
+									submit.setAttribute('onClick', 'updateranks("'+ json.id +'")');
+									submit.setAttribute('class', 'form-removal-submit');
+									submit.setAttribute('value', "Save");
+									submit.setAttribute('class', 'primary');
+									submit.setAttribute('name', 'submit');
+									submit.setAttribute('type', 'button');
 								parent.append(span);
 								span.append(form);
-								form.append(title);
+								form.append(icon);
+								form.append(name);
 								form.append(desc);
-								form.append(local);
-								form.append(remote);
-								form.append(select);
-								select.append(option);
+								form.append(cancel);
+								form.append(submit);
 							}
 						} else if(type == "reference") {
 							if( $("#"+json.reference_code).hasClass("filtered") ) {
@@ -205,16 +220,25 @@
 									info.setAttribute('class', 'form-removal-info');
 									info.setAttribute('style', 'color: red;');
 									info.textContent = "It is highly unreccommended to reactivate reference codes. Are you sure you would like to continue?";
+								var cancel = document.createElement('input');
+									cancel.setAttribute('class', 'form-removal-submit');
+									cancel.setAttribute('onClick', 'closePopup()');
+									cancel.setAttribute('class', 'secondary');
+									cancel.setAttribute('value', "cancel");
+									cancel.setAttribute('type', 'button');
+									cancel.setAttribute('name', 'close');
 								var submit = document.createElement('input');
-									submit.setAttribute('type', 'button');
-									submit.setAttribute('name', 'uri_local');
-									submit.setAttribute('class', 'form-removal-submit');
 									submit.setAttribute('onClick', 'reactivatereference("'+ json.id +'")');
+									submit.setAttribute('class', 'form-removal-submit');
 									submit.setAttribute('value', "Reactivate");
+									submit.setAttribute('class', 'primary');
+									submit.setAttribute('name', 'submit');
+									submit.setAttribute('type', 'button');
 								parent.append(span);
 								span.append(form);
 								form.append(title);
 								form.append(info);
+								form.append(cancel);
 								form.append(submit);
 							}
 						} else if(type == "page") {
@@ -244,16 +268,25 @@
 									info.setAttribute('name', 'info');
 									info.setAttribute('class', 'form-removal-info');
 									info.textContent = "Are you sure you would like to deactivate this reference code?";
+								var cancel = document.createElement('input');
+									cancel.setAttribute('class', 'form-removal-submit');
+									cancel.setAttribute('onClick', 'closePopup()');
+									cancel.setAttribute('value', "cancel");
+									cancel.setAttribute('class', 'secondary');
+									cancel.setAttribute('name', 'close');
+									cancel.setAttribute('type', 'button');
 								var submit = document.createElement('input');
-									submit.setAttribute('type', 'button');
-									submit.setAttribute('name', 'uri_local');
-									submit.setAttribute('class', 'form-removal-submit');
 									submit.setAttribute('onClick', 'deactivatereference("'+ json.id +'")');
+									submit.setAttribute('class', 'form-removal-submit');
 									submit.setAttribute('value', "Deactivate");
+									submit.setAttribute('class', 'primary');
+									submit.setAttribute('name', 'submit');
+									submit.setAttribute('type', 'button');
 								parent.append(span);
 								span.append(form);
 								form.append(title);
 								form.append(info);
+								form.append(cancel);
 								form.append(submit);
 							}
 						}
@@ -357,12 +390,12 @@
 												$rank_click = "";
 											} else {
 												$rank_class = "unfiltered";
-												$rank_image = $mg_img['multimedia']['info']['image'];
+												$rank_image = $mg_img['multimedia']['more']['image'];
 												$rank_click = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
 											};
 											echo "<tr id=\"".$rank['name']."\" class=\"".$rank_class."\">";
 											echo "	<td>".$rank['id']."</td>";
-											echo "	<td><img src=\"".$mg_img[$rank['icon_category']][$rank['icon']]['image']."\"></td>";
+											echo "	<td><img src=\"".$rank['icon']."\"></td>";
 											echo "	<td>".$rank['name']."</td>";
 											echo "	<td>".$rank['description']."</td>";
 											echo "	<td><img src=\"".$rank_image."\" onClick='".$rank_click."' class=\"actions\"></td>";

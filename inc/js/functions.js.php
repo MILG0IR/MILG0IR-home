@@ -280,7 +280,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data == "success") {
-					redirect("#users");
+					window.location = window.location.href;
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
