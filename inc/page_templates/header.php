@@ -36,7 +36,7 @@
 						foreach($query as $row) {
 							echo '
 								<a href="#" class="waves-light" id="'.$row['title'].'-'.$row['id'].'" onClick="openpage('.$row['id'].')">
-									<li><img src="'.$mg_img[$row['icon_category']][$row['icon']]['image'].'"></li>
+									<li><img src="'.$row['icon'].'"></li>
 									<li>'.$row['title'].'</li>
 								</a>';
 						}
