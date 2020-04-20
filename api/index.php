@@ -571,7 +571,7 @@
 		}
 	// UPDATE RANK INFO						T.B.D - Error codes
 		elseif($api_type == "update_rank_info") {
-			if(isset($id) && isset($icon) && isset($name) && isset($desc)) {
+			if(isset($id) && isset($name)) {
 				// Check for new ID if moved in ranks
 					if(isset($nid)) {
 						$sql = "UPDATE `user_ranks` SET `id`='$nid' WHERE `id`='$id' LIMIT 1";
@@ -579,6 +579,9 @@
 						$id = $nid;
 					}
 				// Update the information in the table
+					if(isset($icon)) {
+						$icon = str_replace(" ", "+", $icon);
+					}
 					$sql = "UPDATE `user_ranks` SET `name`='$name', `description`='$desc', `icon`='$icon' WHERE `id`='$id' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 				// Test and check that the information has been updated successfully
@@ -595,8 +598,8 @@
 			}
 		}
 	// UPDATE PAGE INFO						T.B.D - Error codes
-		elseif($api_type == "update_pagek_info") {
-			if(isset($id) && isset($icon) && isset($title) && isset($desc) && isset($uri_local) && isset($uri_remote)) {
+		elseif($api_type == "update_page_info") {
+			if(isset($id) && isset($title)) {
 				// Check for new ID if moved in ranks
 					if(isset($nid)) {
 						$sql = "UPDATE `var_pages` SET `id`='$nid' WHERE `id`='$id' LIMIT 1";
@@ -604,6 +607,9 @@
 						$id = $nid;
 					}
 				// Update the information in the table
+					if(isset($icon)) {
+						$icon = str_replace(" ", "+", $icon);
+					}
 					$sql = "UPDATE `var_pages` SET `title`='$title', `description`='$desc', `icon`='$icon', `uri_local`='$uri_local', `uri_remote`='$uri_remote' WHERE `id`='$id' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 				// Test and check that the information has been updated successfully
@@ -613,7 +619,7 @@
 						if($confirm > 0) {
 							exit("success");
 						} else {
-							exit("ID: ".$id."<br> name: ".$name."<br> desc: ".$desc."<br> icon: ".$icon);
+							exit("ID: ".$id."<br> title: ".$title."<br> desc: ".$desc."<br> icon: ".$icon);
 						}
 				//
 			exit("-OTHER");

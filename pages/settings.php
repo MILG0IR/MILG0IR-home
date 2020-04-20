@@ -13,6 +13,12 @@
 ?>
 <?php
 	include_once('../db/db_conx.php');
+	$log = array();
+	$errors = NULL;
+	if(isset($_GET['log']) && isset($_GET['errors'])) {
+		$log = json_decode($_GET['log'], true);
+		$errors = $_GET['errors'];
+	}
 ?>
 <!DOCTYPE html>
 	<html>
@@ -21,122 +27,274 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<?php include_once($mg_dir['css']."css.php");	?>
 			<style>
-				.nav-menu__sidebar {
-					writing-mode: vertical-lr;
-					transform: rotate(180deg);
-					justify-content: center;
-					text-align: center;
-					position: fixed;
-					display: flex;
-					z-index: 98;
-					padding: 0;
-					bottom: 0;
-					margin: 0;
-					width: 0;
-					right: 0;
-					top: 0; }
-				.nav-menu__sidebar li {
-					display: inline-block; }
-				.nav-menu__sidebar li a {
-					transition: all 0.25s ease-in-out;
-					border: 2px solid transparent;
-					text-transform: uppercase;
-					letter-spacing: 0.1em;
-					text-decoration: none;
-					position: relative;
-					font-size: 0.9em;
-					font-weight: 600;
-					overflow: hidden;
-					padding: 0.75em;
-					display: block;
-					margin: 0.25em;
-					color: #393E54; }
-				.nav-menu__sidebar li a:hover, .nav-menu__sidebar li a:active, .nav-menu__sidebar li a:focus {
-					transition: all 0.25s ease-in-out;
-					border-color: #393E54; }
-				.settings-wrapper {
-					vertical-align: middle;
-					display: -webkit-box;
-					display: -moz-box;
-					display: -o-box;
-					display: box;
-					overflow: hidden;
-					height: 100%;
-					width: 100%; }
-				.settings-wrapper > .settings-page {
-					width: 100%;
-					height: 100%;
-					text-align: center; }
-				.unfiltered {
-					cursor: pointer; }
-				tbody > tr > td {
-					text-align: left; }
-				tbody > tr > td > img {
-					width: 50px; }
-				tbody > tr > td > .actions {
-					width: 20px;
-					cursor: pointer; }
-				.settings-wrapper > .settings-page#DEFAULT {}
-				.settings-wrapper > .settings-page#security {}
-				.settings-wrapper > .settings-page#customization {}
-				.settings-wrapper > .settings-page#users > .users {}
-				.settings-wrapper > .settings-page#users > .ranks {}
-				.settings-wrapper > .settings-page#pages > .pages {}
-				.settings-wrapper > .settings-page#pages > .categories {}
-				.settings-wrapper > .settings-page > .panel {
-					box-shadow: 0px 0px 20px 0px #00000080;
-					-ms-overflow-style: none;
-					list-style-type: none;
-					display: inline-block;
-					border-radius: 5px;
-					background: white;
-					overflow: scroll;
-					padding: 1rem;
-					margin: 1rem;
-					width: 70%; }
-				.settings-wrapper > .settings-page > .panel::-webkit-scrollbar {
-					display: none; }
-				.popup { }
-				.popup > span.settings-popup {
-					background: rgba(0, 0, 0, 0.3);
-					position: fixed;
-					display: block;
-					z-index: 100;
-					height: 100%;
-					width: 100%;
-					left: 0px;
-					top: 0px; }
-				.popup > span.settings-popup > form {
-					height: fit-content;
-					width: fit-content;
-					position: absolute;
-					border-radius: 5px;
-					background: white;
-					padding: 2rem;
-					margin: auto;
-					bottom: 0;
-					right: 0;
-					left: 0;
-					top: 0; }
-				.popup > span.settings-popup > form > input[type=button] {
-					border-radius: 2px;
-					padding: 0.5rem;
-					margin: 0.5rem;
-					border: none; }
-				.popup > span.settings-popup > form > input[type=button].primary {
-					background: #6495ed; }
-				.popup > span.settings-popup > form > input[type=button].secondary {
-					background: #a9a9a9; }
-				.popup > span.settings-popup > form > img {
-					width: 5rem ; }
-				@media only screen and (min-resolution: 117dpi) and (max-resolution: 119dpi), only screen and (min-resolution: 131dpi) and (max-resolution: 133dpi), only screen and (min-resolution: 145dpi) and (max-resolution: 154dpi), only screen and (min-resolution: 162dpi) and (max-resolution: 164dpi), only screen and (min-resolution: 169dpi) {
-					.settings-wrapper > .settings-page > .panel {
-						margin-right: 6rem;
-					 }
-				}
+				/** PRELOADER */
+					.preloader {
+						background: #00000080; }
+					.preloader .sk-fading-circle {
+						position: absolute;
+						top: calc(50% - 20px);
+						left: calc(50% - 25px);
+						width: 50px;
+						height: 40px;
+						text-align: center;
+						font-size: 10px;}
+					.preloader .sk-fading-circle .sk-circle {
+						width: 100%;
+						height: 100%;
+						position: absolute;
+						left: 0;
+						top: 0; }
+					.preloader .sk-fading-circle .sk-circle:before {
+						content: '';
+						display: block;
+						margin: 0 auto;
+						width: 15%;
+						height: 15%;
+						background-color: #333;
+						border-radius: 100%;
+						-webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
+								animation: sk-circleFadeDelay 1.2s infinite ease-in-out both; }
+					.preloader .sk-fading-circle .sk-circle2 {
+						-webkit-transform: rotate(30deg);
+							-ms-transform: rotate(30deg);
+								transform: rotate(30deg); }
+					.preloader .sk-fading-circle .sk-circle3 {
+						-webkit-transform: rotate(60deg);
+							-ms-transform: rotate(60deg);
+								transform: rotate(60deg); }
+					.preloader .sk-fading-circle .sk-circle4 {
+						-webkit-transform: rotate(90deg);
+							-ms-transform: rotate(90deg);
+								transform: rotate(90deg); }
+					.preloader .sk-fading-circle .sk-circle5 {
+						-webkit-transform: rotate(120deg);
+							-ms-transform: rotate(120deg);
+								transform: rotate(120deg); }
+					.preloader .sk-fading-circle .sk-circle6 {
+						-webkit-transform: rotate(150deg);
+							-ms-transform: rotate(150deg);
+								transform: rotate(150deg); }
+					.preloader .sk-fading-circle .sk-circle7 {
+						-webkit-transform: rotate(180deg);
+							-ms-transform: rotate(180deg);
+								transform: rotate(180deg); }
+					.preloader .sk-fading-circle .sk-circle8 {
+						-webkit-transform: rotate(210deg);
+							-ms-transform: rotate(210deg);
+								transform: rotate(210deg); }
+					.preloader .sk-fading-circle .sk-circle9 {
+						-webkit-transform: rotate(240deg);
+							-ms-transform: rotate(240deg);
+								transform: rotate(240deg); }
+					.preloader .sk-fading-circle .sk-circle10 {
+						-webkit-transform: rotate(270deg);
+							-ms-transform: rotate(270deg);
+								transform: rotate(270deg); }
+					.preloader .sk-fading-circle .sk-circle11 {
+						-webkit-transform: rotate(300deg);
+							-ms-transform: rotate(300deg);
+								transform: rotate(300deg); }
+					.preloader .sk-fading-circle .sk-circle12 {
+						-webkit-transform: rotate(330deg);
+							-ms-transform: rotate(330deg);
+								transform: rotate(330deg); }
+					.preloader .sk-fading-circle .sk-circle2:before {
+						-webkit-animation-delay: -1.1s;
+								animation-delay: -1.1s; }
+					.preloader .sk-fading-circle .sk-circle3:before {
+						-webkit-animation-delay: -1s;
+								animation-delay: -1s; }
+					.preloader .sk-fading-circle .sk-circle4:before {
+						-webkit-animation-delay: -0.9s;
+								animation-delay: -0.9s; }
+					.preloader .sk-fading-circle .sk-circle5:before {
+						-webkit-animation-delay: -0.8s;
+								animation-delay: -0.8s; }
+					.preloader .sk-fading-circle .sk-circle6:before {
+						-webkit-animation-delay: -0.7s;
+								animation-delay: -0.7s; }
+					.preloader .sk-fading-circle .sk-circle7:before {
+						-webkit-animation-delay: -0.6s;
+								animation-delay: -0.6s; }
+					.preloader .sk-fading-circle .sk-circle8:before {
+						-webkit-animation-delay: -0.5s;
+								animation-delay: -0.5s; }
+					.preloader .sk-fading-circle .sk-circle9:before {
+						-webkit-animation-delay: -0.4s;
+								animation-delay: -0.4s; }
+					.preloader .sk-fading-circle .sk-circle10:before {
+						-webkit-animation-delay: -0.3s;
+								animation-delay: -0.3s; }
+					.preloader .sk-fading-circle .sk-circle11:before {
+						-webkit-animation-delay: -0.2s;
+								animation-delay: -0.2s; }
+					.preloader .sk-fading-circle .sk-circle12:before {
+						-webkit-animation-delay: -0.1s;
+								animation-delay: -0.1s; }
+					@-webkit-keyframes sk-circleFadeDelay {
+						0%, 39%, 100% { opacity: 0; }
+						40% { opacity: 1; } }
+					@keyframes sk-circleFadeDelay {
+						0%, 39%, 100% { opacity: 0; }
+						40% { opacity: 1; } }
+				/** NAVBAR */
+					.nav-menu__sidebar {
+						writing-mode: vertical-lr;
+						transform: rotate(180deg);
+						justify-content: center;
+						text-align: center;
+						position: fixed;
+						display: flex;
+						z-index: 98;
+						padding: 0;
+						bottom: 0;
+						margin: 0;
+						width: 0;
+						right: 0;
+						top: 0; }
+					.nav-menu__sidebar li {
+						display: inline-block; }
+					.nav-menu__sidebar li a {
+						transition: all 0.25s ease-in-out;
+						border: 2px solid transparent;
+						text-transform: uppercase;
+						letter-spacing: 0.1em;
+						text-decoration: none;
+						position: relative;
+						font-size: 0.9em;
+						font-weight: 600;
+						overflow: hidden;
+						padding: 0.75em;
+						display: block;
+						margin: 0.25em;
+						color: #393E54; }
+					.nav-menu__sidebar li a:hover, .nav-menu__sidebar li a:active, .nav-menu__sidebar li a:focus {
+						transition: all 0.25s ease-in-out;
+						border-color: #393E54; }
+					.settings-wrapper {
+						vertical-align: middle;
+						display: -webkit-box;
+						display: -moz-box;
+						display: -o-box;
+						display: box;
+						overflow: hidden;
+						height: 100%;
+						width: 100%; }
+					.settings-wrapper > .settings-page {
+						width: 100%;
+						height: 100%;
+						text-align: center; }
+				/** TABLES */
+					.unfiltered {
+						cursor: pointer; }
+					tbody > tr > td {
+						text-align: left; }
+					tbody > tr > td > img {
+						width: 50px; }
+					tbody > tr > td > .actions {
+						width: 20px;
+						cursor: pointer; }
+				/** PAGES  */
+					/** dEFAULT */
+						.whatsnew > .update,
+						.settings-wrapper > .settings-page > .panel {
+							box-shadow: 0px 0px 20px 0px #00000080;
+							-ms-overflow-style: none;
+							list-style-type: none;
+							display: inline-block;
+							border-radius: 5px;
+							background: white;
+							text-align: left;
+							overflow: scroll;
+							padding: 1rem;
+							margin: 1rem;
+							width: 70%; }
+						.whatsnew > .update::-webkit-scrollbar,
+						.settings-wrapper > .settings-page > .panel::-webkit-scrollbar {
+							display: none; }
+					/** Whats New */
+						.whatsnew {
+							border-radius: 5px;
+							margin: 1rem;
+							padding: 1rem; }
+						.whatsnew > .update > .changelog_notes > .note {
+							text-indent: 50px; }
+						.whatsnew > .update > .changelog_notes > .note::before {
+							content: "# "; }
+						.whatsnew > .update > .changelog_changes > .change {
+							text-indent: 50px; }
+						.whatsnew > .update > .changelog_changes > .change::before {
+							content: "* "; }
+						.whatsnew > .update > .changelog_added > .addition {
+							text-indent: 50px; }
+						.whatsnew > .update > .changelog_added > .addition::before {
+							content: "+ "; }
+						.whatsnew > .update > .changelog_removed > .removal {
+							text-indent: 50px; }
+						.whatsnew > .update > .changelog_removed > .removal::before {
+							content: "- "; }
+				/** POPUP */
+					.popup { }
+					.popup > span.settings-popup {
+						background: rgba(0, 0, 0, 0.3);
+						position: fixed;
+						display: block;
+						z-index: 100;
+						height: 100%;
+						width: 100%;
+						left: 0px;
+						top: 0px; }
+					.popup > span.settings-popup > form {
+						height: fit-content;
+						width: fit-content;
+						position: absolute;
+						border-radius: 5px;
+						background: white;
+						padding: 2rem;
+						margin: auto;
+						bottom: 0;
+						right: 0;
+						left: 0;
+						top: 0; }
+					.popup > span.settings-popup > form > input[type=button] {
+						border-radius: 2px;
+						padding: 0.5rem;
+						margin: 0.5rem;
+						border: none; }
+					.popup > span.settings-popup > form > input[type=button].primary {
+						background: #6495ed; }
+					.popup > span.settings-popup > form > input[type=button].secondary {
+						background: #a9a9a9; }
+					.popup > span.settings-popup > form > img {
+						width: 5rem ; }
+				/** MOBILE TWEAKS */
+					@media only screen and (min-resolution: 117dpi) and (max-resolution: 119dpi), only screen and (min-resolution: 131dpi) and (max-resolution: 133dpi), only screen and (min-resolution: 145dpi) and (max-resolution: 154dpi), only screen and (min-resolution: 162dpi) and (max-resolution: 164dpi), only screen and (min-resolution: 169dpi) {
+						.whatsnew > .update,
+						.whatsnew > .update > h1,
+						.settings-wrapper > .settings-page > .panel {
+							margin-right: 6rem;
+						}
+					}
 			</style>
 		</head>
-		<body>
+		<body onLoad='checkforupdate(<?php echo "\"".$app_info['Version']."\", \"".$app_info['Device']."\", \"".$app_info['Branch']."\"" ?>);'>
+			<!-- PRELOADER -->
+				<div class="preloader">
+					<div class="sk-fading-circle">
+						<div class="sk-circle1 sk-circle"></div>
+						<div class="sk-circle2 sk-circle"></div>
+						<div class="sk-circle3 sk-circle"></div>
+						<div class="sk-circle4 sk-circle"></div>
+						<div class="sk-circle5 sk-circle"></div>
+						<div class="sk-circle6 sk-circle"></div>
+						<div class="sk-circle7 sk-circle"></div>
+						<div class="sk-circle8 sk-circle"></div>
+						<div class="sk-circle9 sk-circle"></div>
+						<div class="sk-circle10 sk-circle"></div>
+						<div class="sk-circle11 sk-circle"></div>
+						<div class="sk-circle12 sk-circle"></div>
+					</div>
+				</div>
 			<!-- SIDEBAR -->
 				<ul class="nav-menu__sidebar">
 					<li class="menu-item">
@@ -178,13 +336,13 @@
 									name.setAttribute('type', 'text');
 									name.setAttribute('name', 'name');
 									name.setAttribute('class', 'form-change-name');
-									name.setAttribute('placeholder', 'Rank name');
+									name.setAttribute('placeholder', 'Rank Name');
 									name.setAttribute('value', json.name);
 								var desc = document.createElement('input');
 									desc.setAttribute('type', 'text');
 									desc.setAttribute('name', 'description');
 									desc.setAttribute('class', 'form-change-description');
-									desc.setAttribute('placeholder', 'Rank description');
+									desc.setAttribute('placeholder', 'Rank Nescription');
 									desc.setAttribute('value', json.description);
 								var cancel = document.createElement('input');
 									cancel.setAttribute('class', 'form-removal-submit');
@@ -260,7 +418,7 @@
 								var header = document.createElement('h2');
 									header.setAttribute('name', 'header');
 									header.setAttribute('class', 'form-removal-title');
-									header.textContent = "Rank editor";
+									header.textContent = "Page editor";
 								var icon = document.createElement('img');
 									icon.setAttribute('name', 'icon');
 									icon.setAttribute('class', 'form-change-icon');
@@ -269,25 +427,25 @@
 									title.setAttribute('type', 'text');
 									title.setAttribute('name', 'title');
 									title.setAttribute('class', 'form-change-title');
-									title.setAttribute('placeholder', 'Rank description');
+									title.setAttribute('placeholder', 'Page Title');
 									title.setAttribute('value', json.title);
 								var desc = document.createElement('input');
 									desc.setAttribute('type', 'text');
 									desc.setAttribute('name', 'description');
 									desc.setAttribute('class', 'form-change-description');
-									desc.setAttribute('placeholder', 'Rank description');
+									desc.setAttribute('placeholder', 'Page Description');
 									desc.setAttribute('value', json.description);
 								var uri_local = document.createElement('input');
 									uri_local.setAttribute('type', 'text');
 									uri_local.setAttribute('name', 'local URI');
 									uri_local.setAttribute('class', 'form-change-uri_local');
-									uri_local.setAttribute('placeholder', 'Rank name');
+									uri_local.setAttribute('placeholder', 'Page Local URI');
 									uri_local.setAttribute('value', json.uri_local);
 								var uri_remote = document.createElement('input');
 									uri_remote.setAttribute('type', 'text');
 									uri_remote.setAttribute('name', 'remote  URI');
 									uri_remote.setAttribute('class', 'form-change-uri_remote');
-									uri_remote.setAttribute('placeholder', 'Rank name');
+									uri_remote.setAttribute('placeholder', 'Pae Remote URI');
 									uri_remote.setAttribute('value', json.uri_remote);
 								var cancel = document.createElement('input');
 									cancel.setAttribute('class', 'form-removal-submit');
@@ -366,31 +524,104 @@
 				<div class="settings-wrapper">
 					<!-- SETTINGS PAGES -->
 					<div class="settings-page" id="DEFAULT">
-						<div class="panel">
-							DEFAULT
-						</div>
+						<div class="whatsnew">
+							<h1>Whats New!</h1>
+							<?php
+								$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
+								$data = json_decode($json, true);
+								$i = 0;
+								$x = 0;
+								$Status = array();
+								$Type = array();
+								$Version = array();
+								$Date = array();
+								$Title = array();
+								$Description = array();
+								$Changelog_notes = array();
+								$Changelog_changes = array();
+								$Changelog_added = array();
+								$Changelog_removed = array();
+								foreach($data["Changelog"] as $cl) {
+									$i++;
+									$Status[$i] = $cl['Status'];
+									$Type[$i] = $cl['Type'];
+									$Version[$i] = $cl['Version'];
+									$Date[$i] = $cl['Date'];
+									$Title[$i] = $cl['Title'];
+									$Description[$i] = $cl['Description'];
+									foreach($cl['Changelog-notes'] as $cn) {
+										$Changelog_notes[$i] = $cl['Changelog-notes'];
+									}
+									foreach($cl['Changelog-changes'] as $cc) {
+										$Changelog_changes[$i] = $cl['Changelog-changes'];
+									}
+									foreach($cl['Changelog-added'] as $ca) {
+										$Changelog_added[$i] = $cl['Changelog-added'];
+									}
+									foreach($cl['Changelog-removed'] as $cr) {
+										$Changelog_removed[$i] = $cl['Changelog-removed'];
+									}
+								}
+								while($x < $i) {
+									$x++;
+									echo '	<div class="update">';
+									echo '		<h3 class="version">'.$Version[$x].'</h3>';
+									echo '		<h6 class="">'.$Title[$x].'</h6>';
+									echo '		<p class="type">'.$Type[$x].' '.$Status[$x].'</p>';
+									echo '		<p class="date"> Released: '.$Date[$x].'</p>';
+									echo '		<p class="description">'.$Description[$x].'</p>';
+									echo '		<div class="changelog_notes">';
+										if (isset($Changelog_notes[$x])) {
+											foreach($Changelog_notes[$x] as $notes) {
+												if($changes != NULL){
+													echo '<p class="note">'.$notes.'</p>';
+												}
+											}
+										}
+									echo '		</div>';
+									echo '		<div class="changelog_changes">';
+										if (isset($Changelog_changes[$x])) {
+											foreach($Changelog_changes[$x] as $changes) {
+												if($changes != NULL){
+													echo '<p class="change">'.$changes.'</p>';
+												}
+											}
+										}
+									echo '		</div>';
+									echo '		<div class="changelog_added">';
+										if (isset($Changelog_added[$x])) {
+											foreach($Changelog_added[$x] as $added) {
+												if($added != NULL){
+													echo '<p class="addition">'.$added.'</p>';
+												}
+											}
+										}
+									echo '		</div>';
+									echo '		<div class="changelog_removed">';
+										if (isset($Changelog_removed[$x])) {
+											foreach($Changelog_removed[$x] as $removed) {
+												if($removed != NULL){
+													echo '<p class="removal">'.$removed.'</p>';
+												}
+											}
+										}
+									echo '		</div>';
+									echo '	</div>';
+								}
+							?>
+						 </div>
 					</div>
 					<div class="settings-page" id="security">
-						<div class="panel">
-							Update
-						</div>
-						<div class="panel">
-							Update settings
-						</div>
-						<div class="panel">
-							Database settings
-						</div>
-						<div class="panel">
-							Security settings
-						</div>
+						<div class="panel">Update</div>
+						<div class="panel">Update settings</div>
+						<div class="panel">Database settings</div>
+						<div class="panel">Security settings</div>
 					</div>
 					<div class="settings-page" id="customization">
-						<div class="panel">
-							Branding customization
-						</div>
+						<div class="panel">Branding customization</div>
 					</div>
 					<div class="settings-page" id="users">
-						<div class="panel">
+						<div class="panel reference_codes">
 							<h1>References</h1>
 							<button onclick="createreference('<?php echo$user['username']?>')">Create reference code</button>
 							<h4 id="ref"></h4>
@@ -431,8 +662,8 @@
 									?>
 								</tbody>
 							</table>
-						</div>
-						<div class="panel"> Users </div>
+						 </div>
+						<div class="panel">Users</div>
 						<div class="panel ranks">
 							<h1>Ranks</h1>
 							<table class="table table-striped table-hover">
@@ -471,7 +702,7 @@
 									?>
 								</tbody>
 							</table>
-						</div>
+						 </div>
 					</div>
 					<div class="settings-page" id="pages">
 						<div class="panel pages">
@@ -512,7 +743,7 @@
 									?>
 								</tbody>
 							</table>
-						</div>
+						 </div>
 						<div class="panel categories">Categories</div>
 					</div>
 					<div class="popup"></div>

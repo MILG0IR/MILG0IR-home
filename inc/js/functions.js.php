@@ -317,7 +317,7 @@
 			var uri_remote = $(".form-change-uri_remote").val();
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=update_rank_info&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
+				data: '#=update_page_info&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
