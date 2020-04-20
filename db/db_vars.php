@@ -7,7 +7,6 @@
 			$i--;
 		}
 	// SET USERS IP
-	// LOCAL USERDATA
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
 		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -57,6 +56,33 @@
 			} else {
 				$user_ok = false;
 			}
+	// SET USERDATA
+		if($user_ok) {
+			$sql = "SELECT * FROM `users` WHERE `username`='$log_username' AND `password`='$log_password' LIMIT 1";
+			$query = mysqli_query($db_conx, $sql);
+			$row = mysqli_fetch_row($query);
+			$user['uid'] = $row[0];
+			$user['username'] = $row[1];
+			$user['email'] = $row[2];
+			$user['password'] = $row[3];
+			$user['change_passkey'] = $row[4];
+			$user['enabled'] = $row[5];
+
+			$sql = "SELECT * FROM `user_data` WHERE `uid`='$row[0]' LIMIT 1";
+			$query = mysqli_query($db_conx, $sql);
+			$row = mysqli_fetch_row($query);
+			$user['rank'] = $row[0];
+			$user['firstname'] = $row[1];
+			$user['surname'] = $row[2];
+			$user['avatar'] = $row[3];
+			$user['banner'] = $row[4];
+			$user['registered'] = $row[5];
+
+			$sql = "SELECT * FROM `user_preferences` WHERE `uid`='$row[0]' LIMIT 1";
+			$query = mysqli_query($db_conx, $sql);
+			$row = mysqli_fetch_row($query);
+			$user['lang'] = $row[0];
+		}
 	// ENCRYPTION SETTINGS
 		$mg_security = array(
 			"hash"	=>	"sha512",

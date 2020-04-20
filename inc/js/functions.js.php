@@ -1,5 +1,5 @@
 <script name="FUNCTIONS">
-	//--------------------------- universal functions ---------------------------//
+	//--------------------------- Universal functions ---------------------------//
 		function _(x) {
 			return document.getElementById(x);
 		}
@@ -21,7 +21,7 @@
 		function emptyElement(x) {
 			_(x).innerHTML = "";
 		}
-	//--------------------------- reference functions ---------------------------//
+	//--------------------------- Check functions ---------------------------//
 		function validatepassword(pass) {
 			if (pass.length < 8) {
 				// return "Password too short!";
@@ -206,6 +206,10 @@
 				});
 			});
 		}
+		function checkregex(string, regex) {
+			re = new RegExp( regex );
+       		return re.test(string);
+		}
 	//--------------------------- * ---------------------------//
 		function signup() {
 			var u = _("username").value;
@@ -231,6 +235,59 @@
 					}
 				});
 			}
+		}
+		function createreference(user) {
+			var status = _("refstatus");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=create_user_reference&u='+user,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(checkregex(data, /[a-z]{2}[0-9]{1}-[0-9]{2}[a-z]{1}-[a-z]{3}-[0-9]{3}/ig)){
+					_("ref").innerHTML = "Your unique reference code is: <pre>" + data + "</pre>";
+					status.innerHTML = "This is a one time use code. If you would like to invite multiple users, Please create one per person. ";
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function deactivatereference(id) {
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=deactivate_user_reference&id='+id,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					redirect("#users");
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function reactivatereference(id) {
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=reactivate_user_reference&id='+id,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					redirect("#users");
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
 		}
 		function login() {
 			var e = _("email").value;
@@ -288,7 +345,7 @@
 		function openpage(pid) {
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=get_page_data&pid='+pid,
+				data: '#=get_page_data&id='+pid,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {

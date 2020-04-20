@@ -31,7 +31,7 @@
 			<div class="fixed-nav-inner">
 				<ul class="text-center">
 					<?
-						$sql = "SELECT * FROM `var_pages` ORDER BY `id` asc;";
+						$sql = "SELECT * FROM `var_pages` ORDER BY CHAR_LENGTH(`id`), `id` asc;";
 						$query = mysqli_query($db_conx, $sql);
 						foreach($query as $row) {
 							echo '

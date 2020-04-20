@@ -80,13 +80,13 @@
 					$uid = $_POST['uid'];
 				}
 			} else {$uid = NULL;}											#					|
-			if(isset($_GET['pid']) || isset($_POST['pid'])) {				# $pid				|	Page ID
-				if(isset($_GET['pid'])) {
-					$pid = $_GET['pid'];
+			if(isset($_GET['id']) || isset($_POST['id'])) {				# $id				|	Page ID
+				if(isset($_GET['id'])) {
+					$id = $_GET['id'];
 				} else {
-					$pid = $_POST['pid'];
+					$id = $_POST['id'];
 				}
-			} else {$pid = NULL;}											#					|
+			} else {$id = NULL;}											#					|
 			if(isset($_GET['msg']) || isset($_POST['msg'])) {				# $msg				|	Message
 				if(isset($_GET['msg'])) {
 					$message = $_GET['msg'];
@@ -128,7 +128,21 @@
 				} else {
 					$code = $_POST['code'];
 				}
-			} else {$code = NULL;}
+			} else {$code = NULL;}											#					|
+			if(isset($_GET['table']) || isset($_POST['table'])) {			# $table			|	Database table
+				if(isset($_GET['table'])) {
+					$table = $_GET['table'];
+				} else {
+					$table = $_POST['table'];
+				}
+			} else {$table = NULL;}											#					|
+			if(isset($_GET['data']) || isset($_POST['data'])) {				# $data				|	Database table data requested seperated by a comma
+				if(isset($_GET['data'])) {
+					$data = $_GET['data'];
+				} else {
+					$data = $_POST['data'];
+				}
+			} else {$data = NULL;}
 		#------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//
 	// GET ERROR CODE INFO
@@ -293,32 +307,33 @@
 						exit("ERR-LIN-5");
 					}
 				// LOG THE USER INTO THEIR ACCOUNT
-				if(isset($success)) {
-					$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `$success`='$e' AND `enabled`='1' LIMIT 1";
-					$query = mysqli_query($db_conx, $sql);
-					$row = mysqli_fetch_row($query);
-					$user_id = $row[0];
-					$db_username = $row[1];
-					$db_pass_str = $row[2];
-					#--------------------------------#
-					if($p != $db_pass_str){
-						exit("ERR-LIN-6");
-					} else {
-						// create the session in the database
-						$sql = "INSERT INTO `user_sessions` (`uid`, `ip_address`, `start_time`, `active`) VALUES ('$user_id', '$ip', now(), '1')";
-						$query = mysqli_query($db_conx, $sql);
-						// get the sessionm ID
-						$sql = "SELECT `session_id` FROM `user_sessions` WHERE `uid`='$user_id' AND `ip_address`='$ip' AND `active`='1' LIMIT 1";
+					if(isset($success)) {
+						$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `$success`='$e' AND `enabled`='1' LIMIT 1";
 						$query = mysqli_query($db_conx, $sql);
 						$row = mysqli_fetch_row($query);
-						$session_id = $row[0];
-						setcookie("user_id",	$user_id,		strtotime('+30 days'),	"/",	"",	"",	TRUE);
-						setcookie("session_id",	$user_id,		strtotime('+30 days'),	"/",	"",	"",	TRUE);
-						setcookie("username",	$db_username,	strtotime('+30 days'),	"/",	"",	"",	TRUE);
-						setcookie("password",	$db_pass_str,	strtotime('+30 days'),	"/",	"",	"",	TRUE);
-						exit("success");
+						$user_id = $row[0];
+						$db_username = $row[1];
+						$db_pass_str = $row[2];
+						#--------------------------------#
+						if($p != $db_pass_str){
+							exit("ERR-LIN-6");
+						} else {
+							// create the session in the database
+							$sql = "INSERT INTO `user_sessions` (`uid`, `ip_address`, `start_time`, `active`) VALUES ('$user_id', '$ip', now(), '1')";
+							$query = mysqli_query($db_conx, $sql);
+							// get the sessionm ID
+							$sql = "SELECT `session_id` FROM `user_sessions` WHERE `uid`='$user_id' AND `ip_address`='$ip' AND `active`='1' LIMIT 1";
+							$query = mysqli_query($db_conx, $sql);
+							$row = mysqli_fetch_row($query);
+							$session_id = $row[0];
+							setcookie("user_id",	$user_id,		strtotime('+30 days'),	"/",	"",	"",	TRUE);
+							setcookie("session_id",	$user_id,		strtotime('+30 days'),	"/",	"",	"",	TRUE);
+							setcookie("username",	$db_username,	strtotime('+30 days'),	"/",	"",	"",	TRUE);
+							setcookie("password",	$db_pass_str,	strtotime('+30 days'),	"/",	"",	"",	TRUE);
+							exit("success");
+						}
 					}
-				}
+				//
 			}
 			exit("ERR-LIN-OTHER");
 		}
@@ -378,7 +393,7 @@
 			if(!isset($reference)) {
 				exit('ERR-REF-1');
 			} else {
-				if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/",$reference)) {
+				if(preg_match("/[a-zA-Z]{2}[0-9]{1}-[0-9]{2}[a-zA-Z]{1}-[a-zA-Z]{3}-[0-9]{3}/",$reference)) {
 					$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$numrows = mysqli_num_rows($query);
@@ -394,21 +409,13 @@
 		}
 	// GET PAGE INFO
 		elseif($api_type == "get_page_data") {
-			if(isset($pid)) {
-				$sql = "SELECT * FROM `var_pages` WHERE `id`='$pid' LIMIT 1";
+			if(isset($id)) {
+				$sql = "SELECT * FROM `var_pages` WHERE `id`='$id' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$row = mysqli_fetch_row($query);
 				exit(json_encode($row));
 			}
 		}
-	// GET USERDATA							T.B.D
-		#
-	// UPDATE USERDATA						T.B.D
-		#
-	// CHECK FOR MESSAGES					T.B.D
-		#
-	// SEND MESSAGE							T.B.D
-		#
 	// CHECK FOR AN UPDATE
 		elseif($api_type == "check_for_update") {
 			if(isset($branch)) {
@@ -442,5 +449,82 @@
 				// BRANCH IS NOT SET
 			}
 		}
+	// GET TABLE DATA
+		elseif($api_type == "get_sql_data") {
+			if(isset($table)) {
+				$sql = "SELECT * FROM `".$table."`";
+				$query = mysqli_query($db_conx, $sql);
+				$result = "";
+				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					$result .= json_encode($row);
+				}
+				$JSONarray = "[".str_replace("}{", "},{", $result)."]";
+				exit($JSONarray);
+			}
+		}
+	// CREATE USER REFERENCE CODE
+		elseif($api_type == "create_user_reference") {
+			if(isset($username)) {
+				$letters = str_split('abcdefghijklmnopqrstuvwxyz'.'ABCDEFGHIJKLMNOPQRSTUVWXYZ'); shuffle($letters);
+				$numbers = str_split('0123456789'); shuffle($numbers);
+				$code = $randLetters = $randNumbers = "";
+				foreach(array_rand($letters, 6) as $k) $randLetters .= $letters[$k];
+				foreach(array_rand($numbers, 6) as $k) $randNumbers .= $numbers[$k];
+				$l = str_split($randLetters);
+				$n = str_split($randNumbers);
+				$code = $l[0].$l[1].$n[0]."-".$n[1].$n[2].$l[2]."-".$l[3].$l[4].$l[5]."-".$n[3].$n[4].$n[4];
+				if(preg_match("/[a-zA-Z]{2}[0-9]{1}-[0-9]{2}[a-zA-Z]{1}-[a-zA-Z]{3}-[0-9]{3}/", $code)) {
+					$sql = "INSERT INTO `user_references` (`reference_code`, `made_by_user`, `made_by_time`, `active`)
+								VALUES(	'$code', '$username', now(), '1')";
+					$query = mysqli_query($db_conx, $sql); 
+					$uid = mysqli_insert_id($db_conx);
+					exit($code);
+				} else {
+					exit("ERR-REF-OTHER");
+				}
+			}
+		}
+	// DEACTIVATE USER REFERENCE
+		elseif($api_type == "deactivate_user_reference") {
+			if(isset($id)){
+				$sql = "UPDATE `user_references` SET `active`=NULL WHERE `id`='$id'";
+				$query = mysqli_query($db_conx, $sql);
+				// Check to see if reference has been 
+				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`='1' LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$numrows = mysqli_num_rows($query);
+				if($numrows > 0){
+					exit('ERR-LOU-2');
+				} else {
+					exit("success");
+				}
+			} else {
+				exit("ERR-REF-OTHER");
+			}
+		}
+	// rEACTIVATE USER REFERENCE
+		elseif($api_type == "reactivate_user_reference") {
+			if(isset($id)){
+				$sql = "UPDATE `user_references` SET `active`='1' WHERE `id`='$id'";
+				$query = mysqli_query($db_conx, $sql);
+				// Check to see if reference has been 
+				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`=NULL LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$numrows = mysqli_num_rows($query);
+				if($numrows > 0){
+					exit('ERR-LOU-2');
+				} else {
+					exit("success");
+				}
+			} else {
+				exit("ERR-REF-OTHER");
+			}
+		}
+	// UPDATE USERDATA						T.B.D
+		#
+	// CHECK FOR MESSAGES					T.B.D
+		#
+	// SEND MESSAGE							T.B.D
+		#
 	//
 ?>
