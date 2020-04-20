@@ -101,6 +101,7 @@
 					background: rgba(0, 0, 0, 0.3);
 					position: fixed;
 					display: block;
+					z-index: 100;
 					height: 100%;
 					width: 100%;
 					left: 0px;
@@ -126,6 +127,8 @@
 					background: #6495ed; }
 				.popup > span.settings-popup > form > input[type=button].secondary {
 					background: #a9a9a9; }
+				.popup > span.settings-popup > form > img {
+					width: 5rem ; }
 				@media only screen and (min-resolution: 117dpi) and (max-resolution: 119dpi), only screen and (min-resolution: 131dpi) and (max-resolution: 133dpi), only screen and (min-resolution: 145dpi) and (max-resolution: 154dpi), only screen and (min-resolution: 162dpi) and (max-resolution: 164dpi), only screen and (min-resolution: 169dpi) {
 					.settings-wrapper > .settings-page > .panel {
 						margin-right: 6rem;
@@ -163,21 +166,25 @@
 								var span = document.createElement('span');
 									span.setAttribute('class', 'settings-popup');
 								var form = document.createElement('form');
+								var title = document.createElement('h2');
+									title.setAttribute('name', 'header');
+									title.setAttribute('class', 'form-removal-title');
+									title.textContent = "Rank editor";
 								var icon = document.createElement('img');
-									icon.setAttribute('type', 'text');
-									icon.setAttribute('name', 'uri_local');
-									icon.setAttribute('class', 'form-change-uri_local');
+									icon.setAttribute('name', 'icon');
+									icon.setAttribute('class', 'form-change-icon');
 									icon.setAttribute('src', json.icon);
 								var name = document.createElement('input');
 									name.setAttribute('type', 'text');
-									name.setAttribute('name', 'title');
-									name.setAttribute('class', 'form-change-title');
+									name.setAttribute('name', 'name');
+									name.setAttribute('class', 'form-change-name');
+									name.setAttribute('placeholder', 'Rank name');
 									name.setAttribute('value', json.name);
 								var desc = document.createElement('input');
 									desc.setAttribute('type', 'text');
 									desc.setAttribute('name', 'description');
 									desc.setAttribute('class', 'form-change-description');
-									desc.setAttribute('class', 'form-change-description');
+									desc.setAttribute('placeholder', 'Rank description');
 									desc.setAttribute('value', json.description);
 								var cancel = document.createElement('input');
 									cancel.setAttribute('class', 'form-removal-submit');
@@ -195,6 +202,7 @@
 									submit.setAttribute('type', 'button');
 								parent.append(span);
 								span.append(form);
+								form.append(title);
 								form.append(icon);
 								form.append(name);
 								form.append(desc);
@@ -241,10 +249,70 @@
 								form.append(submit);
 							}
 						} else if(type == "page") {
-							if( $("#"+pageJSON.title).hasClass("filtered") ) {
+							if( $("#"+json.title).hasClass("filtered") ) {
 								alert("Cannot change required ");
 							} else {
-
+								closePopup();
+								var parent = $(".popup");
+								var span = document.createElement('span');
+									span.setAttribute('class', 'settings-popup');
+								var form = document.createElement('form');
+								var header = document.createElement('h2');
+									header.setAttribute('name', 'header');
+									header.setAttribute('class', 'form-removal-title');
+									header.textContent = "Rank editor";
+								var icon = document.createElement('img');
+									icon.setAttribute('name', 'icon');
+									icon.setAttribute('class', 'form-change-icon');
+									icon.setAttribute('src', json.icon);
+								var title = document.createElement('input');
+									title.setAttribute('type', 'text');
+									title.setAttribute('name', 'title');
+									title.setAttribute('class', 'form-change-title');
+									title.setAttribute('placeholder', 'Rank description');
+									title.setAttribute('value', json.title);
+								var desc = document.createElement('input');
+									desc.setAttribute('type', 'text');
+									desc.setAttribute('name', 'description');
+									desc.setAttribute('class', 'form-change-description');
+									desc.setAttribute('placeholder', 'Rank description');
+									desc.setAttribute('value', json.description);
+								var uri_local = document.createElement('input');
+									uri_local.setAttribute('type', 'text');
+									uri_local.setAttribute('name', 'local URI');
+									uri_local.setAttribute('class', 'form-change-uri_local');
+									uri_local.setAttribute('placeholder', 'Rank name');
+									uri_local.setAttribute('value', json.uri_local);
+								var uri_remote = document.createElement('input');
+									uri_remote.setAttribute('type', 'text');
+									uri_remote.setAttribute('name', 'remote  URI');
+									uri_remote.setAttribute('class', 'form-change-uri_remote');
+									uri_remote.setAttribute('placeholder', 'Rank name');
+									uri_remote.setAttribute('value', json.uri_remote);
+								var cancel = document.createElement('input');
+									cancel.setAttribute('class', 'form-removal-submit');
+									cancel.setAttribute('onClick', 'closePopup()');
+									cancel.setAttribute('class', 'secondary');
+									cancel.setAttribute('value', "cancel");
+									cancel.setAttribute('type', 'button');
+									cancel.setAttribute('name', 'close');
+								var submit = document.createElement('input');
+									submit.setAttribute('onClick', 'updatepages("'+ json.id +'")');
+									submit.setAttribute('class', 'form-removal-submit');
+									submit.setAttribute('value', "Save");
+									submit.setAttribute('class', 'primary');
+									submit.setAttribute('name', 'submit');
+									submit.setAttribute('type', 'button');
+								parent.append(span);
+								span.append(form);
+								form.append(header);
+								form.append(icon);
+								form.append(title);
+								form.append(desc);
+								form.append(uri_local);
+								form.append(uri_remote);
+								form.append(cancel);
+								form.append(submit);
 							}
 						}
 					}
@@ -435,7 +503,7 @@
 											};
 											echo "<tr id=\"".$page['title']."\" class=\"".$page_class."\">";
 											echo "	<td>".$page['id']."</td>";
-											echo "	<td><img src=\"".$mg_img[$page['icon_category']][$page['icon']]['image']."\"></td>";
+											echo "	<td><img src=\"".$page['icon']."\"></td>";
 											echo "	<td>".$page['title']."</td>";
 											echo "	<td>".$page['description']."</td>";
 											echo "	<td><img src=\"".$page_image."\" onClick='".$page_click."' class=\"actions\"></td>";

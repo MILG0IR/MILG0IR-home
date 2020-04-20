@@ -80,13 +80,20 @@
 					$uid = $_POST['uid'];
 				}
 			} else {$uid = NULL;}											#					|
-			if(isset($_GET['id']) || isset($_POST['id'])) {				# $id				|	Page ID
+			if(isset($_GET['id']) || isset($_POST['id'])) {					# $id				|	ID
 				if(isset($_GET['id'])) {
 					$id = $_GET['id'];
 				} else {
 					$id = $_POST['id'];
 				}
 			} else {$id = NULL;}											#					|
+			if(isset($_GET['nid']) || isset($_POST['nid'])) {				# $nid				|	New ID
+				if(isset($_GET['nid'])) {
+					$nid = $_GET['nid'];
+				} else {
+					$nid = $_POST['nid'];
+				}
+			} else {$nid = NULL;}											#					|
 			if(isset($_GET['msg']) || isset($_POST['msg'])) {				# $msg				|	Message
 				if(isset($_GET['msg'])) {
 					$message = $_GET['msg'];
@@ -136,13 +143,55 @@
 					$table = $_POST['table'];
 				}
 			} else {$table = NULL;}											#					|
-			if(isset($_GET['data']) || isset($_POST['data'])) {				# $data				|	Database table data requested seperated by a comma
+			if(isset($_GET['data']) || isset($_POST['data'])) {				# $data				|	data
 				if(isset($_GET['data'])) {
 					$data = $_GET['data'];
 				} else {
 					$data = $_POST['data'];
 				}
-			} else {$data = NULL;}
+			} else {$data = NULL;}											#					|
+			if(isset($_GET['name']) || isset($_POST['name'])) {				# $name				|	name
+				if(isset($_GET['name'])) {
+					$name = $_GET['name'];
+				} else {
+					$name = $_POST['name'];
+				}
+			} else {$name = NULL;}											#					|
+			if(isset($_GET['desc']) || isset($_POST['desc'])) {				# $desc				|	Description
+				if(isset($_GET['desc'])) {
+					$desc = $_GET['desc'];
+				} else {
+					$desc = $_POST['desc'];
+				}
+			} else {$desc = NULL;}											#					|
+			if(isset($_GET['icon']) || isset($_POST['icon'])) {				# $icon				|	Icon in Base64 format
+				if(isset($_GET['icon'])) {
+					$icon = $_GET['icon'];
+				} else {
+					$icon = $_POST['icon'];
+				}
+			} else {$icon = NULL;}											#					|
+			if(isset($_GET['title']) || isset($_POST['title'])) {			# $title			|	title
+				if(isset($_GET['title'])) {
+					$title = $_GET['title'];
+				} else {
+					$title = $_POST['title'];
+				}
+			} else {$title = NULL;}											#					|
+			if(isset($_GET['uri_local']) || isset($_POST['uri_local'])) {	# $uri_local		|	Page local URI
+				if(isset($_GET['uri_local'])) {
+					$uri_local = $_GET['uri_local'];
+				} else {
+					$uri_local = $_POST['uri_local'];
+				}
+			} else {$uri_local = NULL;}										#					|
+			if(isset($_GET['uri_remote']) || isset($_POST['uri_remote'])) {	# $uri_remote		|	Page remote URI
+				if(isset($_GET['uri_remote'])) {
+					$uri_remote = $_GET['uri_remote'];
+				} else {
+					$uri_remote = $_POST['uri_remote'];
+				}
+			} else {$uri_remote = NULL;}
 		#------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//
 	// GET ERROR CODE INFO
@@ -219,7 +268,7 @@
 				// CHECK FOR EXISTING EMAIL ADDRESS
 					if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 						$sql = "SELECT `uid` FROM `users` WHERE `email`='$e' LIMIT 1";
-						$query = mysqli_query($db_conx, $sql); 
+						$query = mysqli_query($db_conx, $sql);
 						$e_check = mysqli_num_rows($query);
 					} else {
 						exit('ERR-SUP-7');
@@ -502,7 +551,7 @@
 				exit("ERR-REF-OTHER");
 			}
 		}
-	// rEACTIVATE USER REFERENCE
+	// REACTIVATE USER REFERENCE
 		elseif($api_type == "reactivate_user_reference") {
 			if(isset($id)){
 				$sql = "UPDATE `user_references` SET `active`='1' WHERE `id`='$id'";
@@ -520,8 +569,56 @@
 				exit("ERR-REF-OTHER");
 			}
 		}
-	// UPDATE USERDATA						T.B.D
-		#
+	// UPDATE RANK INFO						T.B.D - Error codes
+		elseif($api_type == "update_rank_info") {
+			if(isset($id) && isset($icon) && isset($name) && isset($desc)) {
+				// Check for new ID if moved in ranks
+					if(isset($nid)) {
+						$sql = "UPDATE `user_ranks` SET `id`='$nid' WHERE `id`='$id' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$id = $nid;
+					}
+				// Update the information in the table
+					$sql = "UPDATE `user_ranks` SET `name`='$name', `description`='$desc', `icon`='$icon' WHERE `id`='$id' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+				// Test and check that the information has been updated successfully
+					$sql = "SELECT * FROM `user_ranks` WHERE `id`='$id' AND `icon`='$icon' AND `name`='$name' AND `description`='$desc' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$confirm = mysqli_num_rows($query);
+						if($confirm > 0) {
+							exit("success");
+						} else {
+							exit("ID: ".$id."<br> name: ".$name."<br> desc: ".$desc."<br> icon: ".$icon);
+						}
+				//
+			exit("-OTHER");
+			}
+		}
+	// UPDATE PAGE INFO						T.B.D - Error codes
+		elseif($api_type == "update_pagek_info") {
+			if(isset($id) && isset($icon) && isset($title) && isset($desc) && isset($uri_local) && isset($uri_remote)) {
+				// Check for new ID if moved in ranks
+					if(isset($nid)) {
+						$sql = "UPDATE `var_pages` SET `id`='$nid' WHERE `id`='$id' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$id = $nid;
+					}
+				// Update the information in the table
+					$sql = "UPDATE `var_pages` SET `title`='$title', `description`='$desc', `icon`='$icon', `uri_local`='$uri_local', `uri_remote`='$uri_remote' WHERE `id`='$id' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+				// Test and check that the information has been updated successfully
+					$sql = "SELECT * FROM `var_pages` WHERE `id`='$id' AND `icon`='$icon' AND `title`='$title' AND `description`='$desc' AND `uri_local`='$uri_local' AND `uri_remote`='$uri_remote' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$confirm = mysqli_num_rows($query);
+						if($confirm > 0) {
+							exit("success");
+						} else {
+							exit("ID: ".$id."<br> name: ".$name."<br> desc: ".$desc."<br> icon: ".$icon);
+						}
+				//
+			exit("-OTHER");
+			}
+		}
 	// CHECK FOR MESSAGES					T.B.D
 		#
 	// SEND MESSAGE							T.B.D

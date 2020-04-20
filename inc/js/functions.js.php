@@ -289,6 +289,48 @@
 				}
 			});
 		}
+		function updateranks(id) {
+			var name = $(".form-change-name").val();
+			var desc = $(".form-change-description").val();
+			var icon = $(".form-change-icon").attr("src");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=update_rank_info&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					location.reload();
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function updatepages(id) {
+			var icon = $(".form-change-icon").attr("src");
+			var title = $(".form-change-title").val();
+			var desc = $(".form-change-description").val();
+			var uri_local = $(".form-change-uri_local").val();
+			var uri_remote = $(".form-change-uri_remote").val();
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=update_rank_info&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					location.reload();
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
 		function login() {
 			var e = _("email").value;
 			var p = _("password").value;
