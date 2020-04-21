@@ -186,7 +186,11 @@
 	.container-fluid > .fixed-nav > .fixed-nav-inner > ul > a {
 		align-items: center;
 		display: flex;}
-	.container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover { }
+	.container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover {
+		-webkit-box-shadow: inset 0px 0px 5px 5px #ABABAB;
+		   -moz-box-shadow: inset 0px 0px 5px 5px #ABABAB;
+			 -o-box-shadow: inset 0px 0px 5px 5px #ABABAB;
+				box-shadow: inset 0px 0px 5px 2px #d0d0d0; }
 	.container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.enabled::before {
 		content: "";
 		animation: breathing-enabled 1s linear infinite alternate }
