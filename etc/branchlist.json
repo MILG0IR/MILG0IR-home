@@ -1,21 +1,17 @@
+
 {
-	"Master": {
-		"name": "",
-		"description": "",
+	"master": {
+		"name": "Master",
+		"description": "This is the reccommended branch for using when installing for home use",
 		"message": "",
-		"latestversion": ""
+		"uri": "https://github.com/MILG0IR/MILG0IR-home-web/tree/master",
+		"version": "v0.1.0"
 	},
-	"Staged": {
-		"name": "",
-		"description": "",
-		"message": "",
-		"latestversion": ""
-	},
-	"Instant": {
-		"name": "Instant",
-		"description": "",
-		"url": "",
-		"message": "Highly unreccommended. No support will be given for this branch, Intended use by the developer - Will be removed.",
-		"latestversion": "UNRECORDED"
+	"staged": {
+		"name": "Staged",
+		"description": "This is the reccommended version for the latest features and bug fixes",
+		"message": "Warning, this version may comtain unnoticed bugs and/or glitches. Please report any that you notice.",
+		"uri": "https://github.com/MILG0IR/MILG0IR-home-web/tree/staged",
+		"version": "v0.1.1"
 	}
 }
