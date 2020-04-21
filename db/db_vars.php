@@ -1,11 +1,4 @@
 <?php
-	// find root
-		$toroot = "";
-		$i = count(explode('/',$_SERVER['DOCUMENT_URI'])) -2;
-		while($i >= 1) {
-			$toroot .= "../";
-			$i--;
-		}
 	// SET USERS IP
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
