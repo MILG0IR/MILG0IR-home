@@ -523,7 +523,7 @@
 					<!-- SETTINGS PAGES -->
 					<div class="settings-page" id="DEFAULT">
 						<h1>Whats New!</h1>
-						<div class="panel">
+						<div class="panel whats_new">
 							<?php
 								$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
 								$data = json_decode($json, true);
@@ -653,7 +653,7 @@
 					</div>
 					<div class="settings-page" id="customization">
 						<h1>Customization</h1>
-						<div class="panel">
+						<div class="panel customization">
 							<h3>Branding configuration</h3>
 						 </div>
 					</div>
@@ -681,7 +681,7 @@
 										$query = mysqli_query($db_conx, $sql);
 										foreach($query as $ref) {
 											$disabled_refs = array("");
-											if($ref['active'] == NULL) {
+											if($ref['active'] == "0") {
 												$ref_image = $mg_img['multimedia']['more']['image'];
 												$ref_click = "editPopup(\"reference\", \"".str_replace("\"", "\\\"", json_encode($ref))."\")";
 											} else {
@@ -701,7 +701,7 @@
 								</tbody>
 							</table>
 						 </div>
-						<div class="panel">Users</div>
+						<div class="panel users">Users</div>
 						<div class="panel ranks">
 							<h3>Ranks</h3>
 							<table class="table table-striped table-hover">

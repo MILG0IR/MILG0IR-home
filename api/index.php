@@ -536,17 +536,8 @@
 	// DEACTIVATE USER REFERENCE
 		elseif($api_type == "deactivate_user_reference") {
 			if(isset($id)){
-				$sql = "UPDATE `user_references` SET `active`=NULL WHERE `id`='$id'";
+				$sql = "UPDATE `user_references` SET `active`=0 WHERE `id`='$id' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
-				// Check to see if reference has been 
-				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`='1' LIMIT 1";
-				$query = mysqli_query($db_conx, $sql);
-				$numrows = mysqli_num_rows($query);
-				if($numrows > 0){
-					exit('ERR-LOU-2');
-				} else {
-					exit("success");
-				}
 			} else {
 				exit("ERR-REF-OTHER");
 			}
