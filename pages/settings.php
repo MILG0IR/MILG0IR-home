@@ -24,6 +24,11 @@
 	} else {
 		$page = "DEFAULT";
 	}
+	if(isset($_GET['scroll'])) {
+		$scroll = "scrollto('". $_GET['scroll'] ."')";
+	} else {
+		$scroll = "";
+	}
 ?>
 <!DOCTYPE html>
 	<html>
@@ -279,7 +284,7 @@
 					}
 			</style>
 		</head>
-		<body onLoad="checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>); changetab('<?php echo$page;?>');">
+		<body onLoad="checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>); changetab('<?php echo$page;?>');<?php echo$scroll;?>">
 			<!-- PRELOADER -->
 				<div class="preloader">
 					<div class="sk-fading-circle">
@@ -613,8 +618,8 @@
 						<h1>Database & Security</h1>
 						<div class="panel update">
 							<h3>Update</h3>
-							<h5 id="updatestatus"></h5>
-							<button class="update-button button-secondary" onclick="redirect('../update.php?download')"></button>
+							<h5 id="updatestatus">Checking for updates...</h5>
+							<button class="waves-light waves-effect waves-light update-button button-secondary" onclick="redirect('../update.php?download')">checking...</button>
 							<div class="log">
 								<?php
 									if($errors != NULL){
@@ -643,6 +648,24 @@
 						 </div>
 						<div class="panel update_settings">
 							<h3>Update settings</h3>
+							<?php
+								$branches_json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-web/instant/etc/branchlist.json");
+								$branches[] = json_decode($branches_json, true);
+								echo "<select>";
+								$i = 0;
+								foreach($branches as $branch) {
+									print_r($branch);
+									$branch_nam[$i] = $branch['name'];
+									$branch_des[$i] = $branch['description'];
+									$branch_msg[$i] = $branch['message'];
+									$branch_uri[$i] = $branch['uri'];
+									$branch_ver[$i] = $branch['version'];
+									echo "<option>" . $branch_nam . "</option>";
+									$i++;
+								}
+								echo "</select>";
+							?>
+							<button class="waves-light waves-effect waves-light">Save and reload</button>
 						 </div>
 						<div class="panel database">
 							<h3>Database configuration</h3>
@@ -694,14 +717,16 @@
 											echo "	<td>".$ref['made_by_user']."</td>";
 											echo "	<td>".$ref['made_by_time']."</td>";
 											echo "	<td>".$ref['active']."</td>";
-											echo "	<td><img src=\"".$ref_image."\" onClick='".$ref_click."' class=\"actions\"></td>";
+											echo "	<td><img src=\"".$ref_image."\" onClick='".$ref_click."' class=\"actions waves-light waves-effect waves-light\"></td>";
 											echo "</tr>";
 										}
 									?>
 								</tbody>
 							</table>
 						 </div>
-						<div class="panel users">Users</div>
+						<div class="panel users">
+							<h1>Users</h1>
+						 </div>
 						<div class="panel ranks">
 							<h3>Ranks</h3>
 							<table class="table table-striped table-hover">
@@ -734,7 +759,7 @@
 											echo "	<td><img src=\"".$rank['icon']."\"></td>";
 											echo "	<td>".$rank['name']."</td>";
 											echo "	<td>".$rank['description']."</td>";
-											echo "	<td><img src=\"".$rank_image."\" onClick='".$rank_click."' class=\"actions\"></td>";
+											echo "	<td><img src=\"".$rank_image."\" onClick='".$rank_click."' class=\"actions waves-light waves-effect waves-light\"></td>";
 											echo "</tr>";
 										}
 									?>
@@ -776,7 +801,7 @@
 											echo "	<td><img src=\"".$page['icon']."\"></td>";
 											echo "	<td>".$page['title']."</td>";
 											echo "	<td>".$page['description']."</td>";
-											echo "	<td><img src=\"".$page_image."\" onClick='".$page_click."' class=\"actions\"></td>";
+											echo "	<td><img src=\"".$page_image."\" onClick='".$page_click."' class=\"actions waves-light waves-effect waves-light\"></td>";
 											echo "</tr>";
 										}
 									?>

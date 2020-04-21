@@ -21,6 +21,18 @@
 		function emptyElement(x) {
 			_(x).innerHTML = "";
 		}
+		function scrollto(elem) {
+			document.querySelector('.'+elem).scrollIntoView({ behavior: 'smooth' })
+		}
+		function scrollby(x, y) {
+			window.scrollBy({ top: x, left: y, behavior: 'smooth' });
+		}
+		function elemscrollto(elem1, elem2) {
+			elem1.querySelector('.'+elem2).scrollIntoView({ behavior: 'smooth' })
+		}
+		function elemscrollby(elem, x, y) {
+			elem.scrollBy({ top: x, left: y, behavior: 'smooth' });
+		}
 	//--------------------------- Check functions ---------------------------//
 		function validatepassword(pass) {
 			if (pass.length < 8) {
@@ -187,8 +199,8 @@
 			});
 		}
 		function checkforupdate(version, device, branch) {
-			var status = $("#updatestatus");
-			var updateBTN = $(".update-button");
+			var status		= $("#updatestatus");
+			var updateBTN	= $(".update-button");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=check_for_update&version='+version+'&device='+device+'&branch='+branch,
@@ -263,7 +275,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data == "success") {
-					location.reload();
+					redirect("?page=users&scroll=reference_codes");
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -280,7 +292,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data == "success") {
-					location.reload();
+					redirect("?page=users&scroll=reference_codes");
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -300,7 +312,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data == "success") {
-					location.reload();
+					redirect("?page=users&scroll=ranks");
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -322,7 +334,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data == "success") {
-					location.reload();
+					redirect("?page=pages&scroll=pages")
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
