@@ -35,7 +35,7 @@
 						$query = mysqli_query($db_conx, $sql);
 						foreach($query as $row) {
 							echo '
-								<a href="#" class="waves-light" id="'.$row['title'].'-'.$row['id'].'" onClick="openpage('.$row['id'].')">
+								<a class="waves-light" id="'.$row['title'].'-'.$row['id'].'" onClick="openpage('.$row['id'].')">
 									<li><img src="'.$row['icon'].'"></li>
 									<li>'.$row['title'].'</li>
 								</a>';

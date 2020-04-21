@@ -263,7 +263,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data == "success") {
-					redirect("#users");
+					location.reload();
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -280,7 +280,7 @@
 				type: 'POST',
 			}).done(function(data) {
 				if(data == "success") {
-					window.location = window.location.href;
+					location.reload();
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);

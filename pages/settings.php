@@ -196,7 +196,6 @@
 						cursor: pointer; }
 				/** PAGES  */
 					/** dEFAULT */
-						.whatsnew > .update,
 						.settings-wrapper > .settings-page > .panel {
 							box-shadow: 0px 0px 20px 0px #00000080;
 							-ms-overflow-style: none;
@@ -209,29 +208,27 @@
 							padding: 1rem;
 							margin: 1rem;
 							width: 70%; }
-						.whatsnew > .update::-webkit-scrollbar,
 						.settings-wrapper > .settings-page > .panel::-webkit-scrollbar {
 							display: none; }
 					/** Whats New */
-						.whatsnew {
-							border-radius: 5px;
+						.settings-wrapper > .settings-page {
 							margin: 1rem;
 							padding: 1rem; }
-						.whatsnew > .update > .changelog_notes > .note {
+						.update > .changelog_notes > .note {
 							text-indent: 50px; }
-						.whatsnew > .update > .changelog_notes > .note::before {
+						.update > .changelog_notes > .note::before {
 							content: "# "; }
-						.whatsnew > .update > .changelog_changes > .change {
+						.update > .changelog_changes > .change {
 							text-indent: 50px; }
-						.whatsnew > .update > .changelog_changes > .change::before {
+						.update > .changelog_changes > .change::before {
 							content: "* "; }
-						.whatsnew > .update > .changelog_added > .addition {
+						.update > .changelog_added > .addition {
 							text-indent: 50px; }
-						.whatsnew > .update > .changelog_added > .addition::before {
+						.update > .changelog_added > .addition::before {
 							content: "+ "; }
-						.whatsnew > .update > .changelog_removed > .removal {
+						.update > .changelog_removed > .removal {
 							text-indent: 50px; }
-						.whatsnew > .update > .changelog_removed > .removal::before {
+						.update > .changelog_removed > .removal::before {
 							content: "- "; }
 				/** POPUP */
 					.popup { }
@@ -524,8 +521,8 @@
 				<div class="settings-wrapper">
 					<!-- SETTINGS PAGES -->
 					<div class="settings-page" id="DEFAULT">
-						<div class="whatsnew">
-							<h1>Whats New!</h1>
+						<h1>Whats New!</h1>
+						<div class="panel">
 							<?php
 								$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
 								$data = json_decode($json, true);
@@ -621,8 +618,9 @@
 						<div class="panel">Branding customization</div>
 					</div>
 					<div class="settings-page" id="users">
+						<h1>Users & Ranks</h1>
 						<div class="panel reference_codes">
-							<h1>References</h1>
+							<h3>References</h3>
 							<button onclick="createreference('<?php echo$user['username']?>')">Create reference code</button>
 							<h4 id="ref"></h4>
 							<p id="refstatus"></p>
@@ -665,7 +663,7 @@
 						 </div>
 						<div class="panel">Users</div>
 						<div class="panel ranks">
-							<h1>Ranks</h1>
+							<h3>Ranks</h3>
 							<table class="table table-striped table-hover">
 								<thead class="thead-dark">
 									<tr>
@@ -705,8 +703,9 @@
 						 </div>
 					</div>
 					<div class="settings-page" id="pages">
+						<h1>Categoried & Pages</h1>
 						<div class="panel pages">
-							<h1>Pages</h1>
+							<h3>Pages</h3>
 							<table class="table table-striped table-hover">
 								<thead class="thead-dark">
 									<tr>
