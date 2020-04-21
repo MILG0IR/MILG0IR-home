@@ -435,6 +435,7 @@
 						// User does not exist and the email will not be sent
 						exit('ERR-PWR-1');
 					}
+				//
 			}
 		}
 	// CHECK REFERENCE
@@ -527,7 +528,15 @@
 								VALUES(	'$code', '$username', now(), '1')";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
-					exit($code);
+					// Check to see if reference has been 
+					$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$code' AND `active`='1' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$numrows = mysqli_num_rows($query);
+					if($numrows > 0){
+						exit($code);
+					} else {
+						exit('ERR-REF-6');
+					}
 				} else {
 					exit("ERR-REF-OTHER");
 				}
@@ -538,6 +547,15 @@
 			if(isset($id)){
 				$sql = "UPDATE `user_references` SET `active`=0 WHERE `id`='$id' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
+				// Check to see if reference has been 
+				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`=0 LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$numrows = mysqli_num_rows($query);
+				if($numrows > 0){
+					exit("success");
+				} else {
+					exit('ERR-REF-4');
+				}
 			} else {
 				exit("ERR-REF-OTHER");
 			}
@@ -548,11 +566,11 @@
 				$sql = "UPDATE `user_references` SET `active`='1' WHERE `id`='$id'";
 				$query = mysqli_query($db_conx, $sql);
 				// Check to see if reference has been 
-				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`=NULL LIMIT 1";
+				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`=0 LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$numrows = mysqli_num_rows($query);
 				if($numrows > 0){
-					exit('ERR-LOU-2');
+					exit('ERR-REF-5');
 				} else {
 					exit("success");
 				}
@@ -560,7 +578,7 @@
 				exit("ERR-REF-OTHER");
 			}
 		}
-	// UPDATE RANK INFO						T.B.D - Error codes
+	// UPDATE RANK INFO
 		elseif($api_type == "update_rank_info") {
 			if(isset($id) && isset($name)) {
 				// Check for new ID if moved in ranks
@@ -582,13 +600,13 @@
 						if($confirm > 0) {
 							exit("success");
 						} else {
-							exit("ID: ".$id."<br> name: ".$name."<br> desc: ".$desc."<br> icon: ".$icon);
+							exit("ERR-RNK-1");
 						}
 				//
-			exit("-OTHER");
+			exit("ERR-RNK-OTHER");
 			}
 		}
-	// UPDATE PAGE INFO						T.B.D - Error codes
+	// UPDATE PAGE INFO	
 		elseif($api_type == "update_page_info") {
 			if(isset($id) && isset($title)) {
 				// Check for new ID if moved in ranks
@@ -610,10 +628,10 @@
 						if($confirm > 0) {
 							exit("success");
 						} else {
-							exit("ID: ".$id."<br> title: ".$title."<br> desc: ".$desc."<br> icon: ".$icon);
+							exit("ERR-PAG-1");
 						}
 				//
-			exit("-OTHER");
+			exit("ERR-PAG-OTHER");
 			}
 		}
 	// CHECK FOR MESSAGES					T.B.D
