@@ -1,0 +1,21 @@
+{
+	"Master": {
+		"name": "",
+		"description": "",
+		"message": "",
+		"latestversion": ""
+	},
+	"Staged": {
+		"name": "",
+		"description": "",
+		"message": "",
+		"latestversion": ""
+	},
+	"Instant": {
+		"name": "Instant",
+		"description": "",
+		"url": "",
+		"message": "Highly unreccommended. No support will be given for this branch, Intended use by the developer - Will be removed.",
+		"latestversion": "UNRECORDED"
+	}
+}

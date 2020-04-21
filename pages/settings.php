@@ -274,7 +274,7 @@
 					}
 			</style>
 		</head>
-		<body onLoad='checkforupdate(<?php echo "\"".$app_info['Version']."\", \"".$app_info['Device']."\", \"".$app_info['Branch']."\"" ?>);'>
+		<body onLoad="checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>); changetab('DEFAULT');">
 			<!-- PRELOADER -->
 				<div class="preloader">
 					<div class="sk-fading-circle">
@@ -294,17 +294,17 @@
 				</div>
 			<!-- SIDEBAR -->
 				<ul class="nav-menu__sidebar">
-					<li class="menu-item">
-						<a href="#security">Database & security</a>
+					<li class="menu-item" onClick="changetab('security')">
+						<a>Database & security</a>
 					</li>
-					<li class="menu-item ">
-						<a href="#customization">Customization</a>
+					<li class="menu-item" onClick="changetab('customization')">
+						<a>Customization</a>
 					</li>
-					<li class="menu-item">
-						<a href="#users">Users & Ranks</a>
+					<li class="menu-item" onClick="changetab('users')">
+						<a>Users & Ranks</a>
 					</li>
-					<li class="menu-item">
-						<a href="#pages">pages & categories</a>
+					<li class="menu-item" onClick="changetab('pages')">
+						<a>pages & categories</a>
 					</li>
 				</ul>
 			<!-- JS -->
@@ -515,6 +515,10 @@
 					}
 					function closePopup() {
 						$(".settings-popup").remove();
+					}
+					function changetab(tab) {
+						$(".settings-page").hide();
+						$('#'+tab).show();
 					}
 				</script>
 			<!-- MAIN CONTENT -->
