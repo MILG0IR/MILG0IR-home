@@ -189,7 +189,7 @@
 	.container-fluid > .fixed-nav > .fixed-nav-inner > ul > a:hover { }
 	.container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.enabled::before {
 		content: "";
-		animation: breathing-enabled 2s linear infinite alternate }
+		animation: breathing-enabled 1s linear infinite alternate }
 	.container-fluid > .fixed-nav > .fixed-nav-inner > ul > a.enabled {
 		align-items: center;
 		display: flex; }
@@ -224,29 +224,29 @@
 		opacity: 1;
 		transform: translateX(0.75rem); }
 	@-webkit-keyframes breathing-active {
-		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
-		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+		000% { box-shadow: -10px 0px 15px 15px rgb(217, 083, 110, 078) }
+		100% { box-shadow: -10px 0px 30px 30px rgb(217, 083, 110, 078) } }
 	@-moz-keyframes breathing-active {
-		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
-		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+		000% { box-shadow: -10px 0px 15px 15px rgb(217, 083, 110, 078) }
+		100% { box-shadow: -10px 0px 30px 30px rgb(217, 083, 110, 078) } }
 	@-o-keyframes breathing-active {
-		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
-		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+		000% { box-shadow: -10px 0px 15px 15px rgb(217, 083, 110, 078) }
+		100% { box-shadow: -10px 0px 30px 30px rgb(217, 083, 110, 078) } }
 	@keyframes breathing-active {
-		000% { box-shadow: -10px 0px 15px 15px #d9536ec7 }
-		100% { box-shadow: -10px 0px 30px 30px #d9536ec7 } }
+		000% { box-shadow: -10px 0px 15px 15px rgb(217, 083, 110, 078) }
+		100% { box-shadow: -10px 0px 30px 30px rgb(217, 083, 110, 078) } }
 	@-webkit-keyframes breathing-enabled {
-		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
-		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
+		000% { box-shadow: -20px 0px 15px 15px rgb(034, 000, 255, 078) }
+		100% { box-shadow: -15px 0px 15px 15px rgb(034, 000, 255, 078) } }
 	@-moz-keyframes breathing-enabled {
-		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
-		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
+		000% { box-shadow: -20px 0px 15px 15px rgb(034, 000, 255, 078) }
+		100% { box-shadow: -15px 0px 15px 15px rgb(034, 000, 255, 078) } }
 	@-o-keyframes breathing-enabled {
-		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
-		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
+		000% { box-shadow: -20px 0px 15px 15px rgb(034, 000, 255, 078) }
+		100% { box-shadow: -15px 0px 15px 15px rgb(034, 000, 255, 078) } }
 	@keyframes breathing-enabled {
-		000% { box-shadow: -20px 0px 15px 15px #ffa500c7 }
-		025% { box-shadow: -10px 0px 15px 15px #ffa500c7 } }
+		000% { box-shadow: -20px 0px 15px 15px rgb(034, 000, 255, 078) }
+		100% { box-shadow: -15px 0px 15px 15px rgb(034, 000, 255, 078) } }
 </style>
 <style name="CONTAINER">
 	.content {
