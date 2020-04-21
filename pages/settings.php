@@ -19,6 +19,11 @@
 		$log = json_decode($_GET['log'], true);
 		$errors = $_GET['errors'];
 	}
+	if(isset($_GET['page'])){
+		$page = $_GET['page'];
+	} else {
+		$page = "DEFAULT";
+	}
 ?>
 <!DOCTYPE html>
 	<html>
@@ -195,7 +200,7 @@
 						width: 20px;
 						cursor: pointer; }
 				/** PAGES  */
-					/** dEFAULT */
+					/** Default */
 						.settings-wrapper > .settings-page > .panel {
 							box-shadow: 0px 0px 20px 0px #00000080;
 							-ms-overflow-style: none;
@@ -274,7 +279,7 @@
 					}
 			</style>
 		</head>
-		<body onLoad="checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>); changetab('DEFAULT');">
+		<body onLoad="checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>); changetab('<?php echo$page?>');">
 			<!-- PRELOADER -->
 				<div class="preloader">
 					<div class="sk-fading-circle">
@@ -613,13 +618,52 @@
 						 </div>
 					</div>
 					<div class="settings-page" id="security">
-						<div class="panel">Update</div>
-						<div class="panel">Update settings</div>
-						<div class="panel">Database settings</div>
-						<div class="panel">Security settings</div>
+						<h1>Database & Security</h1>
+						<div class="panel update">
+							<h3>Update</h3>
+							<h5 id="updatestatus"></h5>
+							<button class="update-button button-secondary" onclick="redirect('../update.php?download')"></button>
+							<div class="log">
+								<?php
+									if($errors != NULL){
+										$log[] .= "";
+										$log[] .= "<span class='error'>This installation has been complete with " . $errors . " errors.</span>";
+									}
+									$arrlength = count($log)-1;
+									if($arrlength > 0) {
+										echo "";
+											echo "<pre>";
+											echo "<h4 class='title'>LOG:</h4>";
+											echo "</br>";
+											for($x = 0; $x < $arrlength; $x++) {
+												if($x < 10) {
+													echo "0" . $x . " - " . $log[$x];
+													echo "<br>";
+												} else {
+													echo $x . " - " . $log[$x];
+													echo "<br>";
+												}
+											}
+											echo "</pre>";
+									}
+								?>
+							</div>
+						 </div>
+						<div class="panel update_settings">
+							<h3>Update settings</h3>
+						 </div>
+						<div class="panel database">
+							<h3>Database configuration</h3>
+						 </div>
+						<div class="panel security">
+							<h3>Security settings</h3>
+						 </div>
 					</div>
 					<div class="settings-page" id="customization">
-						<div class="panel">Branding customization</div>
+						<h1>Customization</h1>
+						<div class="panel">
+							<h3>Branding configuration</h3>
+						 </div>
 					</div>
 					<div class="settings-page" id="users">
 						<h1>Users & Ranks</h1>

@@ -34,32 +34,5 @@
 			</style>
 		</head>
 		<body onLoad='checkforupdate(<?php echo "\"".$app_info['Version']."\", \"".$app_info['Device']."\", \"".$app_info['Branch']."\"" ?>);'>
-			<h1 id="updatestatus"></h1>
-			<button class="update-button button-secondary" onclick="redirect('../update.php?download')"></button>
-			<div class="log">
-				<?php
-					if($errors != NULL){
-						$log[] .= "";
-						$log[] .= "<span class='error'>This installation has been complete with " . $errors . " errors.</span>";
-					}
-					$arrlength = count($log)-1;
-					if($arrlength > 0) {
-						echo "";
-							echo "<pre>";
-							echo "<h4 class='title'>LOG:</h4>";
-							echo "</br>";
-							for($x = 0; $x < $arrlength; $x++) {
-								if($x < 10) {
-									echo "0" . $x . " - " . $log[$x];
-									echo "<br>";
-								} else {
-									echo $x . " - " . $log[$x];
-									echo "<br>";
-								}
-							}
-							echo "</pre>";
-					}
-				?>
-			</div>
 			<?php include_once($mg_dir['js']."js.php");	?>
 		</body>
