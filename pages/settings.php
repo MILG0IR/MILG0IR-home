@@ -279,7 +279,7 @@
 					}
 			</style>
 		</head>
-		<body onLoad="checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>); changetab('<?php echo$page?>');">
+		<body onLoad="checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>); changetab('<?php echo$page;?>');">
 			<!-- PRELOADER -->
 				<div class="preloader">
 					<div class="sk-fading-circle">
@@ -299,18 +299,10 @@
 				</div>
 			<!-- SIDEBAR -->
 				<ul class="nav-menu__sidebar">
-					<li class="menu-item" onClick="changetab('security')">
-						<a>Database & security</a>
-					</li>
-					<li class="menu-item" onClick="changetab('customization')">
-						<a>Customization</a>
-					</li>
-					<li class="menu-item" onClick="changetab('users')">
-						<a>Users & Ranks</a>
-					</li>
-					<li class="menu-item" onClick="changetab('pages')">
-						<a>pages & categories</a>
-					</li>
+					<li class="menu-item" onClick="changetab('security')"><a>Database & security</a></li>
+					<li class="menu-item" onClick="changetab('customization')"><a>Customization</a></li>
+					<li class="menu-item" onClick="changetab('users')"><a>Users & Ranks</a></li>
+					<li class="menu-item" onClick="changetab('pages')"><a>pages & categories</a></li>
 				</ul>
 			<!-- JS -->
 				<?php include_once($mg_dir['js']."js.php");	?>

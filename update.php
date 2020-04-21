@@ -161,6 +161,6 @@
 		//	
 		$l .= "}";
 	}
-	echo $URL = '/pages/settings.php?page=security?log='.$l.'&errors='.$e;
+	echo $URL = '/pages/settings.php?page=security&log='.$l.'&errors='.$e;
 	header('Location: '.$URL);
 ?>

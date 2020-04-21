@@ -250,7 +250,7 @@
 					$r = $reference;
 					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 				// CHECK IF THE REFERENCE CODE IS VALID
-					if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/",$reference)) {
+					if(preg_match("/[a-zA-Z]{2}[0-9]{1}-[0-9]{2}[a-zA-Z]{1}-[a-zA-Z]{3}-[0-9]{3}/",$reference)) {
 						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
 						$query = mysqli_query($db_conx, $sql);
 						$ref_check = mysqli_num_rows($query);
