@@ -769,7 +769,7 @@
 							<button onclick="createreference('<?php echo$user['username']?>')">Create reference code</button>
 							<h4 id="ref"></h4>
 							<p id="refstatus"></p>
-							<table class="table table-striped table-hover">
+							<table class="table table-unsortable table-striped table-hover">
 								<thead class="thead-dark">
 									<tr>
 										<th>ID</th>
@@ -808,7 +808,7 @@
 						 </div>
 						<div class="panel users">
 							<h3>Users</h3>
-							<table class="table table-striped table-hover">
+							<table class="table table-unsortable table-striped table-hover">
 								<thead class="thead-dark">
 									<tr>
 										<th>ID</th>
@@ -886,10 +886,9 @@
 								</tbody>
 							</table>
 						 </div>
-						 </div>
 						<div class="panel ranks">
 							<h3>Ranks</h3>
-							<table class="table table-striped table-hover">
+							<table class="table table-sortable table-striped table-hover">
 								<thead class="thead-dark">
 									<tr>
 										<th>ID</th>
@@ -906,32 +905,39 @@
 										foreach($query as $rank) {
 											$disabled_ranks = array("ADMINISTRATOR");
 											if(in_array($rank['name'],$disabled_ranks)) {
-												$rank_class = "filtered";
-												$rank_image = $mg_img['multimedia']['cancel']['image'];
-												$rank_click = "";
+												$rank_class = "row-disabled";
+												$rank_actions_image = $mg_img['multimedia']['cancel']['image'];
+												$rank_actions = "";
+												$rank_permissions_image = $mg_img['multimedia']['cancel']['image'];
+												$rank_permissions = "";
 											} else {
-												$rank_class = "unfiltered";
-												$rank_image = $mg_img['multimedia']['more']['image'];
-												$rank_click = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
+												$rank_class = "row-enabled";
+												$rank_actions_image = $mg_img['multimedia']['more']['image'];
+												$rank_actions = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
+												$rank_permissions_image = $mg_img['multimedia']['levels']['image'];
+												$rank_permissions = "alert(\"tbd\")";
 											};
 											echo "<tr id=\"".$rank['name']."\" class=\"".$rank_class."\">";
 											echo "	<td>".$rank['id']."</td>";
 											echo "	<td><img src=\"".$rank['icon']."\"></td>";
 											echo "	<td>".$rank['name']."</td>";
 											echo "	<td>".$rank['description']."</td>";
-											echo "	<td><img src=\"".$rank_image."\" onClick='".$rank_click."' class=\"actions waves-light waves-effect waves-light\"></td>";
+											echo "	<td>";
+											echo "		<img src=\"".$rank_actions_image."\" onClick='".$rank_actions."' class=\"actions waves-light waves-effect waves-light\">";
+											echo "		<img src=\"".$rank_permissions_image."\" onClick='".$rank_permissions."' class=\"actions waves-light waves-effect waves-light\">";
+											echo "	</td>";
 											echo "</tr>";
 										}
 									?>
 								</tbody>
-							</table>
+							 </table>
 						 </div>
 					</div>
 					<div class="settings-page" id="pages">
 						<h1>Categoried & Pages</h1>
 						<div class="panel pages">
 							<h3>Pages</h3>
-							<table class="table table-striped table-hover">
+							<table class="table table-sortable table-striped table-hover">
 								<thead class="thead-dark">
 									<tr>
 										<th>ID</th>
@@ -948,11 +954,11 @@
 										foreach($query as $page) {
 											$disabled_pages = array("Homepage", "Messages", "Profile", "Settings");
 											if(in_array($page['title'],$disabled_pages)) {
-												$page_class = "filtered";
+												$page_class = "row-disabled";
 												$page_image = $mg_img['multimedia']['cancel']['image'];
 												$page_click = "";
 											} else {
-												$page_class = "unfiltered";
+												$page_class = "row-enabled";
 												$page_image = $mg_img['multimedia']['info']['image'];
 												$page_click = "editPopup(\"page\", \"".str_replace("\"", "\\\"", json_encode($page))."\")";
 											};
@@ -966,10 +972,20 @@
 										}
 									?>
 								</tbody>
-							</table>
+							 </table>
 						 </div>
 						<div class="panel categories">Categories</div>
 					</div>
 					<div class="popup"></div>
 				</div>
+				<script>
+					$('.table-sortable').hover(
+						function() {
+							$(this).children('tbody').sortable({
+							placeholder: "ui-state-highlight",
+							items: "> tr:not(.row-disabled)"
+							}).disableSelection()
+						}
+					)
+				</script>
 		</body>
