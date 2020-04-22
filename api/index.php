@@ -285,7 +285,7 @@
 					}
 				// CRATE ROW IN `users` TABLE
 					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `change_passkey`, `enabled`)
-								VALUES('$u', '$e', '$p_hash', '0', '1')";
+								VALUES('$u', '$e', '$p_hash', 0, 1)";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
 				// GET THE USER'S UID
@@ -634,6 +634,7 @@
 			exit("ERR-PAG-OTHER");
 			}
 		}
+	// UPDATE USER SETTINGS
 	// CONFIRM PASSWORD
 		elseif($api_type == "confirm_password") {
 			if(isset($username) && isset($password)) {

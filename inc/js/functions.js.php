@@ -238,7 +238,10 @@
 					closePopup()
 					$('.'+element+' .divlock').remove()
 				} else {
-					status.text = "incorrect password"
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.html('<span class="error">' + codeJSON[2] + '</span>');
+					});
 				}
 			});
 		}

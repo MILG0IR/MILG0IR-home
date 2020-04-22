@@ -507,16 +507,14 @@
 								subtitle.setAttribute('class', 'form-subtitle');
 								subtitle.setAttribute('name', 'subtitle');
 								subtitle.textContent = json.subtitle;
-							var subtitle = document.createElement('p');
-								subtitle.setAttribute('class', 'form-status');
-								subtitle.setAttribute('name', 'status');
-								subtitle.textContent = json.subtitle;
+							var status = document.createElement('p');
+								status.setAttribute('class', 'form-status');
+								status.setAttribute('name', 'status');
 							var password = document.createElement('input');
 								password.setAttribute('class', 'form-input-password');
 								password.setAttribute('placeholder', 'Password');
 								password.setAttribute('name', 'password');
 								password.setAttribute('type', 'password');
-								password.textContent = json.subtitle;
 							var cancel = document.createElement('input');
 								cancel.setAttribute('class', 'form-removal-submit');
 								cancel.setAttribute('onClick', 'closePopup()');
@@ -536,6 +534,7 @@
 							form.append(header);
 							form.append(title);
 							form.append(subtitle);
+							form.append(status);
 							form.append(password);
 							form.append(cancel);
 							form.append(submit);
@@ -745,7 +744,7 @@
 								<img src="<?php echo$mg_img['communications']['padlock']['image']?>" onClick='editPopup("password", "{\"title\":\"WARNING:\",\"subtitle\":\"It is highly unreccommended to change this section, all accounts passwords will be reset apart from the administration account. Please click reset password when you next log in\",\"elem\":\"security\"}")'>
 							 </div>
 							<h3>Security settings</h3>
-							<select>
+							<select class="waves-light waves-effect waves-light">
 								<option disabled> Please select a Hash type </option>
 								<?php
 									foreach(hash_algos() as $algo) {
@@ -753,7 +752,7 @@
 									}
 								?>
 								</select>
-							<input type="text" placeholder="DB Username:" value="<?php echo $mg_security['salt'];?>">
+							<input type="text" placeholder="DB Username:" value="<?php echo $mg_security['salt'];?>" class="waves-light waves-effect waves-light">
 							<button class="waves-light waves-effect waves-light" onClick="alert('T.B.D')">Update and reload</button>
 						 </div>
 					</div>
@@ -809,6 +808,84 @@
 						 </div>
 						<div class="panel users">
 							<h3>Users</h3>
+							<table class="table table-striped table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th>ID</th>
+										<th>Avatar</th>
+										<th>Banner</th>
+										<th>Username</th>
+										<th>E-Mail</th>
+										<th>First name</th>
+										<th>Surname</th>
+										<th>Change password?</th>
+										<th>Enabled</th>
+										<th>Registered</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+										$i = 0;
+										$sql = "SELECT * FROM `users` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
+										$query = mysqli_query($db_conx, $sql);
+										foreach($query as $usr) {
+											$disabled_users = array("ADMINISTRATION", "Guest");
+											if(in_array($usr['username'],$disabled_users)) {
+												$usr_image = $mg_img['multimedia']['more']['image'];
+												$usr_click = "editPopup(\"user\", \"".str_replace("\"", "\\\"", json_encode($usr))."\")";
+											};
+											$usr_uid[$i] = $usr['uid'];
+											$usr_username[$i] = $usr['username'];
+											$usr_email[$i] = $usr['email'];
+											$usr_pass_change[$i] = $usr['change_passkey'];
+											$usr_enabled[$i] = $usr['enabled'];
+											$i++;
+										}
+										$i = 0;
+										$sql = "SELECT * FROM `user_preferences` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
+										$query = mysqli_query($db_conx, $sql);
+										foreach($query as $usr) {
+											$usr_lang[$i] = $usr['lang'];
+											$i++;
+										}
+										$i = 0;
+										$sql = "SELECT * FROM `user_data` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
+										$query = mysqli_query($db_conx, $sql);
+										foreach($query as $usr) {
+											$usr_rank[$i] = $usr['rank'];
+											$usr_firstname[$i] = $usr['firstname'];
+											$usr_surname[$i] = $usr['surname'];
+											$usr_avatar[$i] = $usr['avatar'];
+											$usr_banner[$i] = $usr['banner'];
+											$usr_registered[$i] = $usr['registered'];
+											$i++;
+										}
+
+
+										$x = 0;
+										while($x < $i) {
+											echo "<tr id=\"".$usr_uid[$x]."\">";
+											echo "	<td>".$usr_uid[$x]."</td>";
+											echo "	<td><img src=\"".$usr_avatar[$x]."\"></td>";
+											echo "	<td><img src=\"".$usr_banner[$x]."\"></td>";
+											echo "	<td>".$usr_username[$x]."</td>";
+											echo "	<td>".$usr_email[$x]."</td>";
+											echo "	<td>".$usr_firstname[$x]."</td>";
+											echo "	<td>".$usr_surname[$x]."</td>";
+											echo "	<td>".$usr_pass_change[$x]."</td>";
+											echo "	<td>".$usr_enabled[$x]."</td>";
+											echo "	<td>".$usr_registered[$x]."</td>";
+											echo "	<td><img src=\"".$usr_image."\" onClick='".$usr_click."' class=\"actions waves-light waves-effect waves-light\"></td>";
+											echo "</tr>";
+											$x++;
+										}
+										unset($i);
+										unset($x);
+									?>
+								</tbody>
+							</table>
+						 </div>
 						 </div>
 						<div class="panel ranks">
 							<h3>Ranks</h3>
