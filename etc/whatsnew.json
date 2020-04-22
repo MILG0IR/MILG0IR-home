@@ -4,9 +4,11 @@
 			"Type": "Patch",
 			"Version": "v0.1.2",
 			"Date": "Unreleased",
-			"Title": "",
+			"Title": "The settings update",
 			"Description": "This update is all about the ease of use. We have added a few new features and changed a few pre-existing ones to make the application easire to use.",
-			"Changelog-notes": [],
+			"Changelog-notes": [
+				"All updates are now done through the new settings UI - To update your application go to settings > DATABASE & SECURITY > update The system will automatically check for an elegible update within your branch"
+			],
 			"Changelog-changes": [
 				"Minor bug fixes and improvements.",
 				"Side navigation has custom images and names - No longer placeholders.",
