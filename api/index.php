@@ -634,6 +634,24 @@
 			exit("ERR-PAG-OTHER");
 			}
 		}
+	// CONFIRM PASSWORD
+		elseif($api_type == "confirm_password") {
+			if(isset($username) && isset($password)) {
+				$p = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
+				$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `username`='$username' AND `enabled`='1' LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$row = mysqli_fetch_row($query);
+				$db_pass_str = $row[2];
+				if($p == $db_pass_str){
+					exit('success');
+				} else {
+					exit('ERR-PCF-1');
+				}
+			} else {
+				exit('ERR-PCF-2');
+			}
+			exit('ERR-PCF-OTHER');
+		}
 	// CHECK FOR MESSAGES					T.B.D
 		#
 	// SEND MESSAGE							T.B.D

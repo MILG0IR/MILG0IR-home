@@ -222,6 +222,26 @@
 			re = new RegExp( regex );
        		return re.test(string);
 		}
+		function closePopup() {
+			$(".settings-popup").remove();
+		}
+		function unlockelement(element, username) {
+			var password = $(".form-input-password").val();
+			var status = $(".form-status");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=confirm_password&u='+username+'&p='+password,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success"){
+					closePopup()
+					$('.'+element+' .divlock').remove()
+				} else {
+					status.text = "incorrect password"
+				}
+			});
+		}
 	//--------------------------- * ---------------------------//
 		function signup() {
 			var u = _("username").value;

@@ -208,10 +208,12 @@
 					/** Default */
 						.settings-wrapper > .settings-page > .panel {
 							box-shadow: 0px 0px 20px 0px #00000080;
+							min-height: calc(100px + 1rem);
 							-ms-overflow-style: none;
 							list-style-type: none;
 							display: inline-block;
 							border-radius: 5px;
+							position: relative;
 							background: white;
 							text-align: left;
 							overflow: scroll;
@@ -220,10 +222,27 @@
 							width: 70%; }
 						.settings-wrapper > .settings-page > .panel::-webkit-scrollbar {
 							display: none; }
+						.settings-wrapper > .settings-page > .panel > .divlock {
+							background-image: linear-gradient(45deg, #f00 25%, #FFFFFF 25%, #FFFFFF 50%, #f30000 50%, #f00 75%, #FFFFFF 75%, #fff);
+							background-size: 100px 100px;
+							text-align: center;
+							position: absolute;
+							height: 100%;
+							z-index: 10;
+							width: 100%;
+							left: 0;
+							top: 0; }
+						.settings-wrapper > .settings-page > .panel > .divlock > img {
+							left: calc(50% - 50px);
+							top: calc(50% - 50px);
+							position: absolute;
+							height: 100px; }
 					/** Whats New */
 						.settings-wrapper > .settings-page {
 							margin: 1rem;
 							padding: 1rem; }
+						.settings-wrapper > .settings-page > .panel > .update {
+							width: max-content; }
 						.update > .changelog_notes > .note {
 							text-indent: 50px; }
 						.update > .changelog_notes > .note::before {
@@ -276,8 +295,7 @@
 						width: 5rem ; }
 				/** MOBILE TWEAKS */
 					@media only screen and (min-resolution: 117dpi) and (max-resolution: 119dpi), only screen and (min-resolution: 131dpi) and (max-resolution: 133dpi), only screen and (min-resolution: 145dpi) and (max-resolution: 154dpi), only screen and (min-resolution: 162dpi) and (max-resolution: 164dpi), only screen and (min-resolution: 169dpi) {
-						.whatsnew > .update,
-						.whatsnew > .update > h1,
+						.settings-wrapper > .settings-page > h1,
 						.settings-wrapper > .settings-page > .panel {
 							margin-right: 6rem;
 						}
@@ -312,7 +330,7 @@
 			<!-- JS -->
 				<?php include_once($mg_dir['js']."js.php");	?>
 				<script>
-					function editPopup(type, json) {
+					function editPopup(type, json = "{}") {
 						var json = jQuery.parseJSON(json);
 						if(type == "rank") {
 							if( $("#"+json.title).hasClass("filtered") ) {
@@ -471,9 +489,59 @@
 								form.append(cancel);
 								form.append(submit);
 							}
+						} else if(type == "password") {
+							closePopup();
+							var parent = $(".popup");
+							var span = document.createElement('span');
+								span.setAttribute('class', 'settings-popup');
+							var form = document.createElement('form');
+							var header = document.createElement('h2');
+								header.textContent = "Please enter your password to confirm";
+								header.setAttribute('class', 'form-header');
+								header.setAttribute('name', 'header');
+							var title = document.createElement('h4');
+								title.setAttribute('class', 'form-title');
+								title.setAttribute('name', 'title');
+								title.textContent = json.title;
+							var subtitle = document.createElement('h6');
+								subtitle.setAttribute('class', 'form-subtitle');
+								subtitle.setAttribute('name', 'subtitle');
+								subtitle.textContent = json.subtitle;
+							var subtitle = document.createElement('p');
+								subtitle.setAttribute('class', 'form-status');
+								subtitle.setAttribute('name', 'status');
+								subtitle.textContent = json.subtitle;
+							var password = document.createElement('input');
+								password.setAttribute('class', 'form-input-password');
+								password.setAttribute('placeholder', 'Password');
+								password.setAttribute('name', 'password');
+								password.setAttribute('type', 'password');
+								password.textContent = json.subtitle;
+							var cancel = document.createElement('input');
+								cancel.setAttribute('class', 'form-removal-submit');
+								cancel.setAttribute('onClick', 'closePopup()');
+								cancel.setAttribute('class', 'secondary');
+								cancel.setAttribute('value', "cancel");
+								cancel.setAttribute('type', 'button');
+								cancel.setAttribute('name', 'close');
+							var submit = document.createElement('input');
+								submit.setAttribute('onClick', 'unlockelement("'+json.elem+'", "<?php echo$user['username']?>")');
+								submit.setAttribute('class', 'form-removal-submit');
+								submit.setAttribute('value', "Reactivate");
+								submit.setAttribute('class', 'primary');
+								submit.setAttribute('name', 'submit');
+								submit.setAttribute('type', 'button');
+							parent.append(span);
+							span.append(form);
+							form.append(header);
+							form.append(title);
+							form.append(subtitle);
+							form.append(password);
+							form.append(cancel);
+							form.append(submit);
 						}
 					}
-					function removalPopup(type, json) {
+					function removalPopup(type, json = "{}") {
 						var json = jQuery.parseJSON(json);
 						if(type == "reference") {
 							if( $("#"+json.reference_code).hasClass("filtered") ) {
@@ -514,9 +582,6 @@
 								form.append(submit);
 							}
 						}
-					}
-					function closePopup() {
-						$(".settings-popup").remove();
 					}
 					function changetab(tab) {
 						$(".settings-page").hide();
@@ -665,13 +730,31 @@
 								}
 								echo "</select>";
 							?>
-							<button class="waves-light waves-effect waves-light">Save and reload</button>
+							<button class="waves-light waves-effect waves-light" onClick="alert('T.B.D')">Save and reload</button>
 						 </div>
 						<div class="panel database">
 							<h3>Database configuration</h3>
+							<input type="text" placeholder="DB Address:" value="<?php echo $db['db_address'];?>">
+							<input type="text" placeholder="DB Username:" value="<?php echo $db['db_user'];?>">
+							<input type="password" placeholder="DB Password:" value="<?php echo $db['db_pass'];?>">
+							<input type="text" disabled value="DB Schema: <?php echo $db['db_name'];?>">
+							<button class="waves-light waves-effect waves-light" onClick="alert('T.B.D')">Update and reload</button>
 						 </div>
 						<div class="panel security">
+							<div class="divlock">
+								<img src="<?php echo$mg_img['communications']['padlock']['image']?>" onClick='editPopup("password", "{\"title\":\"WARNING:\",\"subtitle\":\"It is highly unreccommended to change this section, all accounts passwords will be reset apart from the administration account. Please click reset password when you next log in\",\"elem\":\"security\"}")'>
+							 </div>
 							<h3>Security settings</h3>
+							<select>
+								<option disabled> Please select a Hash type </option>
+								<?php
+									foreach(hash_algos() as $algo) {
+										echo "<option value='$algo'". ($algo == $mg_security['hash'] ? 'selected' : '') .">$algo</option>";
+									}
+								?>
+								</select>
+							<input type="text" placeholder="DB Username:" value="<?php echo $mg_security['salt'];?>">
+							<button class="waves-light waves-effect waves-light" onClick="alert('T.B.D')">Update and reload</button>
 						 </div>
 					</div>
 					<div class="settings-page" id="customization">
@@ -725,7 +808,7 @@
 							</table>
 						 </div>
 						<div class="panel users">
-							<h1>Users</h1>
+							<h3>Users</h3>
 						 </div>
 						<div class="panel ranks">
 							<h3>Ranks</h3>

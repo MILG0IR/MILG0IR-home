@@ -77,10 +77,11 @@
 			$user['lang'] = $row[0];
 		}
 	// ENCRYPTION SETTINGS
-		$mg_security = array(
-			"hash"	=>	"sha512",
-			"salt"	=>	"hVxAuijVqBRC7HtaOq4Bb5QbF2pZ9dETjqEUIt7jzhejRRuLjQJ3w5rDsRYTEjyf4TY2S9naLea5wUCHOMqpkAP9HCq9cGt7OwD3uvAuFvndoH9QibYyZL3wbfI6kplA"
-		);
+		$sql="SELECT * FROM `var_security`";
+		$query = mysqli_query($db_conx, $sql);
+		while($row = mysqli_fetch_array($query)) {
+			$mg_security[$row['title']] = $row['value'];
+		}
 	// SET THE IMAGE VARIABLES FROM THE DB
 		$sql="SELECT * FROM `var_images`";
 		$query = mysqli_query($db_conx, $sql);
