@@ -404,15 +404,15 @@
 					}
 				}
 			// SEARCH FOR AND END THE SESSION
-				$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`='1' LIMIT 1";
+				$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`=1 LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$numrows = mysqli_num_rows($query);
 				if($numrows > 0){
 					$row = mysqli_fetch_row($query);
-					$sql = "UPDATE `user_sessions` SET `end_time`=now(), `active`='0' WHERE `session_id`='$row[0]'";
+					$sql = "UPDATE `user_sessions` SET `end_time`=now(), `active`=0 WHERE `session_id`='$row[0]'";
 					$query = mysqli_query($db_conx, $sql);
 					// confirm the session has been deleted
-					$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`='1' LIMIT 1";
+					$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`=1 LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$numrows = mysqli_num_rows($query);
 					if($numrows > 0){
