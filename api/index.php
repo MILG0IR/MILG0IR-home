@@ -421,9 +421,46 @@
 				}
 			exit('success');
 		}
-	// RESET PASSWORD
+	// RESET PASSWORD ~ FORGOT PASSWORD
 		elseif($api_type == "forgot_password") {
-			if(isset($email)) {
+			if(isset($email) && isset($password) && isset($reference)) {
+				// SEARCH FOR the user
+					$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$numrows = mysqli_num_rows($query);
+					if($numrows > 0){
+						$row = mysqli_fetch_row($query);
+						$useruid = $row[0];
+						$userstatus = true;
+					} else {
+						exit('ERR-PWR-1');
+					}
+				// Validate the Reference code
+					if(preg_match("/[a-zA-Z]{2}[0-9]{1}-[0-9]{2}[a-zA-Z]{1}-[a-zA-Z]{3}-[0-9]{3}/",$reference)) {
+						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$numrows = mysqli_num_rows($query);
+						if($numrows > 0){
+							$refstatus = true;
+						} else {
+							exit('ERR-PWR-2');
+						}
+					} else {
+						exit('ERR-PWR-3');
+					}
+				// Reset password
+					if($userstatus && $refstatus) {
+						$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
+						$sql = "UPDATE `users` SET `password`='$p_hash' WHERE `uid`='$useruid' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$id = $nid;
+					}
+				//
+			}
+		}
+	// RESET PASSWORD ~ PASSWORD RESET WITHIN PROFILE
+		elseif($api_type == "reset_password") {
+			if(isset($email) && isset($password)) {
 				// SEARCH FOR the user - if user exists send the email.
 					$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
@@ -652,6 +689,13 @@
 				exit('ERR-PCF-2');
 			}
 			exit('ERR-PCF-OTHER');
+		}
+	// GET REFERENCE DATA
+		if($api_type == "get_reference_data") {
+			$sql = "SELECT * FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
+			$query = mysqli_query($db_conx, $sql);
+			$row = mysqli_fetch_row($query);
+			exit(json_encode($row));
 		}
 	// CHECK FOR MESSAGES					T.B.D
 		#

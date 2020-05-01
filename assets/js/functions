@@ -1,0 +1,660 @@
+<script name="FUNCTIONS">
+	//--------------------------- Universal functions ---------------------------//
+		function _(x) {
+			return document.getElementById(x);
+		}
+		function redirect(uri) {
+			window.location = uri;
+		}
+		function restrict(elem) {
+			var tf = _(elem);
+			var rx = new RegExp;
+			if(elem == "email"){
+				rx = /[' "]/gi;
+			} else if(elem == "username"){
+				rx = /[^a-z0-9]/gi;
+			} else if(elem == "reference"){
+				rx = /[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/gi;
+			}
+			tf.value = tf.value.replace(rx, "");
+		}
+		function emptyElement(x) {
+			$("."+x).html("");
+		}
+		function scrollto(elem) {
+			document.querySelector(elem).scrollIntoView({ behavior: 'smooth' })
+		}
+		function scrollby(x, y) {
+			window.scrollBy({ top: x, left: y, behavior: 'smooth' });
+		}
+		function elemscrollto(elem1, elem2) {
+			elem1.querySelector('.'+elem2).scrollIntoView({ behavior: 'smooth' })
+		}
+		function elemscrollby(elem, x, y) {
+			elem.scrollBy({ top: x, left: y, behavior: 'smooth' });
+		}
+		function date_time(elem, seconds=false, shtDay=false, shtMonth=false) {
+			if(shtDay){
+				days = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+			} else {
+				days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+			}
+			date = new Date;
+			if(shtMonth){
+				months = new Array('Jnan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+			} else {
+				months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+			}
+			Y = date.getFullYear();
+			M = date.getMonth();
+			d = date.getDate();
+			D = date.getDay();
+			h = date.getHours();
+			if(h<10) { h = "0"+h; }
+			m = date.getMinutes();
+			if(m<10) { m = "0"+m; }
+			s = date.getSeconds();
+			if(s<10) { s = "0"+s; }
+			if(seconds) {
+				result = ''+days[D]+', '+months[M]+' '+d+' '+h+':'+m+':'+s;
+			} else {
+				result = ''+days[D]+', '+months[M]+' '+d+' '+h+':'+m;
+			}
+
+			$('.'+elem).html(result);
+			setTimeout('date_time("'+elem+'"'+', '+seconds+', '+shtDay+', '+shtMonth+');','1000');
+			return true;
+		}
+		function includeHTML() {
+			var z, i, elmnt, file, xhttp;
+			/*loop through a collection of all HTML elements:*/
+			z = document.getElementsByTagName("*");
+			for (i = 0; i < z.length; i++) {
+			elmnt = z[i];
+			/*search for elements with a certain atrribute:*/
+			file = elmnt.getAttribute("include-html");
+			status = elmnt.getAttribute("page-status");
+			if (file && status == "unloaded") {
+				/*make an HTTP request using the attribute value as the file name:*/
+				xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					if (this.status == 200) {
+						elmnt.innerHTML = this.responseText;
+						elmnt.setAttribute("page-status", "200 - success");
+					}
+					if (this.status == 404) {
+						elmnt.innerHTML = "Page not found.";
+						elmnt.setAttribute("page-status", "404 - Page not found");
+					}
+					/*remove the attribute, and call this function once more:*/
+					elmnt.removeAttribute("include-html");
+					includeHTML();
+				}
+				}      
+				xhttp.open("GET", file, true);
+				xhttp.send();
+				/*exit the function:*/
+				return;
+			}
+			}
+		};
+	//--------------------------- POPUP CONTROL ---------------------------//
+	//--------------------------- TOAST CONTROL ---------------------------//
+		function toast(type, heading, subheading) {
+			if(type == "success") {
+				var img = "<?php echo$mg_img['multimedia']['checked']['image']?>";
+			} else if(type == "info") {
+				var img = "<?php echo$mg_img['multimedia']['info']['image']?>";
+			} else if(type == "warn") {
+				var img = "<?php echo$mg_img['multimedia']['exclamation']['image']?>";
+			} else if(type == "error") {
+				var img = "<?php echo$mg_img['multimedia']['cancel']['image']?>";
+			} else {
+			}
+			var parent = $(".notify");
+			var toast = document.createElement('div');
+				toast.setAttribute('class', 'toast '+type);
+			var toast_icon = document.createElement('div');
+				toast_icon.setAttribute('class', 'toast-icon');
+			var toast_icon_image = document.createElement('img');
+				toast_icon_image.setAttribute('src', img);
+
+			var toast_content = document.createElement('div');
+				toast_content.setAttribute('class', 'toast-content');
+			var toast_content_title = document.createElement('p');
+				toast_content_title.setAttribute('class', 'toast-type');
+				toast_content_title.textContent = heading;
+			var toast_content_messagge = document.createElement('p');
+				toast_content_messagge.setAttribute('class', 'toast-message');
+				toast_content_messagge.textContent = subheading;
+				
+			var toast_close = document.createElement('div');
+				toast_close.setAttribute('class', 'toast-close');
+			var toast_close_svg = document.createElement('svg');
+				toast_close_svg.setAttribute('version', '1.1');
+				toast_close_svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+				toast_close_svg.setAttribute("viewBox", '0 0 15.642 15.642');
+				toast_close_svg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+				toast_close_svg.setAttribute('enable-background', 'new 0 0 15.642 15.642');
+			var toast_close_svg_path = document.createElement('path');
+				toast_close_svg_path.setAttribute('fill-rule', 'evenodd');
+				toast_close_svg_path.setAttribute('d', 'M8.882,7.821l6.541-6.541c0.293-0.293,0.293-0.768,0-1.061  c-0.293-0.293-0.768-0.293-1.061,0L7.821,6.76L1.28,0.22c-0.293-0.293-0.768-0.293-1.061,0c-0.293,0.293-0.293,0.768,0,1.061  l6.541,6.541L0.22,14.362c-0.293,0.293-0.293,0.768,0,1.061c0.147,0.146,0.338,0.22,0.53,0.22s0.384-0.073,0.53-0.22l6.541-6.541  l6.541,6.541c0.147,0.146,0.338,0.22,0.53,0.22c0.192,0,0.384-0.073,0.53-0.22c0.293-0.293,0.293-0.768,0-1.061L8.882,7.821z');
+			
+			parent.append(toast);
+			toast.append(toast_icon);
+			toast_icon.append(toast_icon_image);
+			toast.append(toast_content);
+			toast_content.append(toast_content_title);
+			toast_content.append(toast_content_messagge);
+			toast.append(toast_close);
+			toast_close.append(toast_close_svg);
+			toast_close_svg.append(toast_close_svg_path);
+			
+		}
+	//--------------------------- Check functions ---------------------------//
+		function getreferencedetails(reference) {
+			var output = $.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=get_reference_data&ref='+reference,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			})
+			return output;
+		}
+		function validatepassword(pass) {
+			if (pass.length < 8) {
+				return "ERR-PAS-1";
+			} else if (pass.match("#[0-9]+#")) {
+				// return "Password must include at least one number!";
+				return "ERR-PAS-2";
+			} else if (pass.match("#[a-zA-Z]+#")) {
+				// return "Password must include at least one letter!";
+				return "ERR-PAS-3";
+			} else {
+				return "INF-PAS-1";
+			}
+		}
+		function checkstring(str1, str2) {
+			if(str1 == str2) {
+				return "INF-STR-1";
+			} else {
+				return "ERR-STR-1";
+			}
+		}
+		function checkresponse(code) {
+			var output = $.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=search_code&code='+code,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			})
+			return output;
+		}
+		function checkusername() {
+			var u		= $("#sup-username").val();
+			var status	= $("#sup-usernamestatus");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=check_username&u='+u,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				checkresponse(data).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(data == "INF-UNC-1") {
+						status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else if(data == "INF-UNC-2") {
+						status.html('<span class="tooltip status info"><svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else {
+						status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					}
+				});
+			});
+		}
+		function checkemail() {
+			var e		= $("#sup-email").val();
+			var status	= $("#sup-emailstatus");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=check_email&e='+e,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				checkresponse(data).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(data == "INF-EMC-1") {
+						status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else if(data == "INF-EMC-2") {
+						status.html('<span class="tooltip status info"><svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else {
+						status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					}
+				});
+			});
+		}
+		function checkpassword() {
+			var p1		= $("#sup-pass1").val();
+			var p2		= $("#sup-pass2").val();
+			var pass1	= $("#sup-pass1status");
+			var pass2	= $("#sup-pass2status");
+			if(p1 != "" && p2 == "") {			// PASSWORD 1 IS SET // PASSWORD 2 IS NOT
+				// PASSWORD 1
+				var p1_status = validatepassword(p1);
+				checkresponse(p1_status).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(p1_status == "INF-PAS-1") {
+						pass1.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else {
+						pass1.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					}
+				});
+			} else if(p1 == "" && p2 != "") {	// PASSWORD 1 IS NOT // PASSWORD 2 IS SET
+				// PASSWORD 2
+				var p2_status = checkstring(p1, p2);
+				checkresponse(p2_status).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(p2_status == "INF-STR-1") {
+						pass2.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else {
+						pass2.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					}
+				});
+			} else if(p1 != "" && p2 != "") {	// PASSWORD 1 IS SET // PASSWORD 2 IS SET
+				// PASSWORD 1
+				var p1_status = validatepassword(p1);
+				checkresponse(p1_status).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(p1_status == "INF-PAS-1") {
+						pass1.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else {
+						pass1.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					}
+				});
+				// PASSWORD 2
+				var p2_status = checkstring(p1, p2);
+				checkresponse(p2_status).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(p2_status == "INF-STR-1") {
+						pass2.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else {
+						pass2.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					}
+				});
+			}
+		}
+		function checkreference() {
+			var reference = $("#sup-reference").val();
+			var status = $("#sup-referencestatus");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=check_reference&ref='+reference,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				checkresponse(data).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					if(data == "INF-REF-1") {
+						status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					} else {
+						status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+					}
+				});
+			});
+		}
+		function checkforupdate(version, device, branch) {
+			var status		= $("#updatestatus");
+			var updateBTN	= $(".update-button");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=check_for_update&version='+version+'&device='+device+'&branch='+branch,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				checkresponse(data).done(function(codeARRAY) {
+					var codeJSON = jQuery.parseJSON(codeARRAY);
+					status.html(codeJSON[2]);
+					if(data != 'INF-UPD-1') {
+						updateBTN.html("Download & install update")
+					} else (
+						updateBTN.html("Force reinstall")
+					)
+				});
+			});
+		}
+		function checkregex(string, regex) {
+			re = new RegExp( regex );
+       		return re.test(string);
+		}
+		function unlockelement(element, username) {
+			var password = $(".form-input-password").val();
+			var status = $(".form-status");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=confirm_password&u='+username+'&p='+password,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success"){
+					closePopup()
+					$('.'+element+' .divlock').remove()
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.html('<span class="error">' + codeJSON[2] + '</span>');
+					});
+				}
+			});
+		}
+		function toggleNav() {
+			$(".navbar-wrapper").toggleClass("navbar-open");
+			$(".burger").toggleClass("burger-active");
+		}
+		function userPanel(panel) {
+			if(panel == $('.header-user').attr('data-open-panel')) {
+				$('.header-user').attr('data-open-panel', '');
+			} else {
+				$('.header-user').attr('data-open-panel', panel);
+			}
+		}
+	//--------------------------- THEME CONTROL FUNCTIONS ---------------------------//
+		function changetheme(type, theme) {
+			if(type == "main" ) {
+				$('link[theme-type="main"]').attr("href","./themes/"+theme+".theme-main.css");
+			} else if(type == "nav" ) {
+				$('link[theme-type="navbar"]').attr("href","./themes/"+theme+".theme-nav.css");
+			}
+		}
+	//--------------------------- API CALLOUT FUNCTIONS ---------------------------//
+		function signup() {
+			var u = $('#sup-username').val();
+			var e = $('#sup-email').val();
+			var p1 = $('#sup-pass1').val();
+			var p2 = $('#sup-pass2').val();
+			var ref = $('#sup-reference').val();
+			var status = $('#sup-status');
+			if(p1 == p2) {
+				$.ajax({
+					url: '<?php echo$mg_dir['root']?>api/index.php',
+					data: '#=signup&u='+u+'&e='+e+'&p='+p1+'&ref='+ref,
+					contentType: 'application/x-www-form-urlencoded',
+					type: 'POST',
+				}).done(function(data) {
+					if(data.includes("success")){
+						window.location = "<?php echo$mg_dir['root']?>login.php";
+					} else {
+						checkresponse(data).done(function(codeARRAY) {
+							var codeJSON = jQuery.parseJSON(codeARRAY);
+							status.html('<span class="error">' + codeJSON[2] + '</span>');
+						});
+					}
+				});
+			}
+		}
+		function login(e=null, p=null) {
+			if(e == null) {
+				var e = $('#lin-email').val();
+			}
+			if(p == null) {
+				var p = $('#lin-password').val();
+			}
+			var status = $("#lin-status");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=login&e='+e+'&p='+p,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data.includes("success")){
+					window.location = "<?php echo$mg_dir['root']?>home.php";
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.html('<span class="status error">' + codeJSON[2] + '</span>');
+					});
+				}
+			});
+		}
+		function createreference(user) {
+			var status = _("refstatus");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=create_user_reference&u='+user,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(checkregex(data, /[a-z]{2}[0-9]{1}-[0-9]{2}[a-z]{1}-[a-z]{3}-[0-9]{3}/ig)){
+					popup("info", data, "This is a one time use code. If you would like to invite multiple users, Please create one per person.", "Close");
+					getreferencedetails(data).done(function(referenceARRAY) {
+						var referenceJSON = jQuery.parseJSON(referenceARRAY);
+						var parent = $(".table-references").find("tbody");
+						var row = document.createElement('tr');
+						var tabledata1 = document.createElement('td');
+							tabledata1.textContent = referenceJSON[0];
+						var tabledata2 = document.createElement('td');
+							tabledata2.textContent = referenceJSON[1];
+						var tabledata3 = document.createElement('td');
+							tabledata3.textContent = referenceJSON[2];
+						var tabledata4 = document.createElement('td');
+							tabledata4.textContent = referenceJSON[3];
+						var tabledata5 = document.createElement('td');
+							tabledata5.textContent = referenceJSON[4];
+						var tabledata6 = document.createElement('td');
+						var img = document.createElement('img');
+							img.setAttribute('onClick', "removalPopup(\"reference\", \"{\\\"id\\\":\\\"20\\\",\\\"reference_code\\\":\\\"yJ0-96D-iFE-744\\\",\\\"made_by_user\\\":\\\"rsmith\\\",\\\"made_by_time\\\":\\\"2020-04-22 23:07:44\\\",\\\"active\\\":\\\"1\\\"}\")");
+							img.setAttribute('src', "<?php echo$mg_img['multimedia']['garbage']['image']?>");
+							img.setAttribute('class', "actions waves-light waves-effect waves-light");
+						parent.append(row);
+						row.append(tabledata1);
+						row.append(tabledata2);
+						row.append(tabledata3);
+						row.append(tabledata4);
+						row.append(tabledata5);
+						row.append(tabledata6);
+						tabledata6.append(img);
+					});
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function deactivatereference(id) {
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=deactivate_user_reference&id='+id,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					redirect("?page=users&scroll=reference_codes");
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function reactivatereference(id) {
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=reactivate_user_reference&id='+id,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					redirect("?page=users&scroll=reference_codes");
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function updateranks(id) {
+			var name = $(".form-change-name").val();
+			var desc = $(".form-change-description").val();
+			var icon = $(".form-change-icon").attr("src");
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=update_rank_info&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					redirect("?page=users&scroll=ranks");
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function updatepages(id) {
+			var icon = $(".form-change-icon").attr("src");
+			var title = $(".form-change-title").val();
+			var desc = $(".form-change-description").val();
+			var uri_local = $(".form-change-uri_local").val();
+			var uri_remote = $(".form-change-uri_remote").val();
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=update_page_info&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					redirect("?page=pages&scroll=pages")
+				} else {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						status.innerHTML = '<span class="status error">' + codeJSON[2] + '</span>';
+					});
+				}
+			});
+		}
+		function forgotpassword() {
+			var e = $('#rsp-email').val();
+			var p1 = $('#rsp-pass1').val();
+			var p2 = $('#rsp-pass2').val();
+			var ref = $('#rsp-reference').val();
+			var status = $('#rsp-status');
+			if(p1 == p2) {
+				$.ajax({
+					url: '<?php echo$mg_dir['root']?>api/index.php',
+					data: '#=forgot_password&e='+e+'&p'+p1+'&ref'+ref,
+					contentType: 'application/x-www-form-urlencoded',
+					type: 'POST',
+				}).done(function(data) {
+					if(data.includes("success")){
+						status.html('<span class="success">Your password has been reset, Please go back to login.</span>');
+					} else {
+						checkresponse(data).done(function(codeARRAY) {
+							var codeJSON = jQuery.parseJSON(codeARRAY);
+							status.html('<span class="error">' + codeJSON[2] + '</span>');
+						});
+					}
+				});
+			} else {
+				status.html('<span class="error"> Your passwords do not match</span>');
+			}
+		}
+		function logout() {
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=logout',
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data.includes("success")){
+					redirect("<?php echo$mg_dir['root']?>login.php");
+				} else {
+					checkresponse(data);
+				}
+			});
+		}
+	//--------------------------- PAGE CONTROL ---------------------------//
+		function openpage(pid, hideNav) {
+			var screenwidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+			if(screenwidth < 512 && hideNav != false) {
+				toggleNav();
+			}
+
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=get_page_data&id='+pid,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				var pageJSON = jQuery.parseJSON(data);
+				var element = _(pageJSON[0])
+				if(typeof(element) != 'undefined' && element != null) {
+					// Display the chosen page and append the class'
+					$('.child').hide();
+					$('#'+pageJSON[0]).show();
+					$('.active').toggleClass("active");
+					$('.child-active').toggleClass("child-active");
+					$('#'+pageJSON[0]).toggleClass("child-active");
+					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
+				} else {
+					// Create the page
+					if(pageJSON[6] == "0") {
+						var child = document.createElement('div');
+						child.setAttribute('name', pageJSON[1]);
+						child.setAttribute('id', pageJSON[0]);
+						child.setAttribute('include-html', pageJSON[4]);
+						child.setAttribute('page-status', 'unloaded');
+						child.setAttribute('data-local-page', pageJSON[1]);
+						child.setAttribute('class', 'child');
+						_("parent").appendChild(child);
+						includeHTML();
+					} else if(pageJSON[6] == "1") {
+						var child = document.createElement('iframe');
+						child.setAttribute('name', pageJSON[1]);
+						child.setAttribute('id', pageJSON[0]);
+						child.setAttribute('src', pageJSON[4]);
+						child.setAttribute('class', 'child');
+						_("parent").appendChild(child);
+					} else {
+						window.open(pageJSON[4], '_blank');
+					}
+					// Display the chosen page and append the class'
+					$('.child').hide();
+					$('#'+pageJSON[0]).show();
+					$('.active').toggleClass("active");
+					$('.child-active').toggleClass("child-active");
+					$('#'+pageJSON[0]).toggleClass("child-active");
+					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
+					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
+				}
+			});
+		}
+		function reloadpage() {
+			var elem = $(".child-active");
+			if($(elem).is("div")) {
+				var pid = elem.attr("id");
+				elem.remove();
+				openpage(pid, false);
+			} else {
+				elem.attr( 'src', function ( i, val ) {
+					return val;
+				});
+			}
+		}
+		function closepage() {
+			var elem = $(".child-active");
+			if($(elem).is("div")) {
+				elem.remove();
+			} else {
+				var tab =  $("#" + elem.attr('name') + "-" + elem.attr('id'));
+				tab.removeClass("enabled");
+				elem.remove();
+			}
+			openpage(0, false);
+		}
+	//--------------------------- * ---------------------------//
+</script>

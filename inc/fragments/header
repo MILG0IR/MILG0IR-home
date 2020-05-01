@@ -1,0 +1,77 @@
+<?php
+	$main_theme = glob('themes/*.theme-main.css');
+	$main_nav = glob('themes/*.theme-nav.css');
+	$i = 0;
+	foreach($main_theme as $main){
+		$mg_themes['main'][$i] = substr($main, 7, -15);
+		$i++;
+	}
+	$i = 0;
+	foreach($main_nav as $nav){
+		$mg_themes['nav'][$i] = substr($nav, 7, -14);
+		$i++;
+	}
+	unset($i);
+?>
+<?php if($user_ok) { ?>
+	<div class="header-wrapper no-select">
+		<div class="header">
+			<div class="burger-wrap" onClick="toggleNav(); userPanel(null)">
+				<div class="burger">
+					<div class="nav-burger">
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+			 </div>
+			<p class="header-title">Dashboard</p>
+			<div class="header-controls">
+				<img onClick="reloadpage(); userPanel(null)" src="<?php echo$mg_img['multimedia']['refresh']['image']?>">
+				<img onClick="closepage(); userPanel(null)" src="<?php echo$mg_img['multimedia']['cancel']['image']?>">
+			 </div>
+			<p class="header-time"></p>
+			<div class="header-user">
+				<div class="header-notifications">
+				<img onClick="userPanel('notifications');" src="<?php echo $mg_img["multimedia"]["play"]["image"]?>">
+					<div class="notifications-panel"> </div>
+				</div>
+				<div class="header-profile">
+					<?php ($user['avatar']!= '' ) ? print('<img class="navbar-brand-image" src="'.$user['avatar'].'" onClick="userPanel(\'profile\');">') : print('<img onClick="userPanel(\'profile\');" src="'.$mg_img["multimedia"]["user"]["image"].'">'); ?>
+					<div class="profile-panel">
+						<h4>Welcome <?php print(ucfirst($user['username']))?></h4>
+						<fieldset>
+							<select onchange="changetheme('main', this.value)">
+								<?php
+									foreach($mg_themes['main'] as $main_theme) {
+										echo "<option value='$main_theme'>$main_theme</option>";
+									}
+								?>
+							</select>
+							<select onchange="changetheme('nav', this.value)">
+								<?php
+									foreach($mg_themes['nav'] as $nav_theme) {
+										echo "<option value='$nav_theme'>$nav_theme</option>";
+									}
+								?>
+							</select>
+						</fieldset>
+						<input onClick="logout()" type="button" value="Logout">
+					</div>
+				</div>
+			 </div>
+		</div>
+	</div>
+<?php } else { ?>
+	<div class="header-wrapper no-select">
+		<div class="header">
+			<p class="header-title" href="javascript:void(0)">Dashboard</p>
+			<p class="header-time"></p>
+			<div class="header-user">
+				<div class="header-profile">
+					<i class="fa fa-sign-in" aria-hidden="true" onClick="redirect('<?php print($mg_rdir['login'])?>');"></i>
+					<div class="profile-panel"> </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+<?php } ?>

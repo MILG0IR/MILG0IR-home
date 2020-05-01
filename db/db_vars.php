@@ -1,4 +1,4 @@
-<?php
+<?php		# VARIABLES
 	// SET USERS IP
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -119,18 +119,38 @@
 			"pages"			=>	$toroot."pages/",				// Relative path to `pages` dir
 			"userdata"		=>	$toroot."userdata/",			// Relative path to `userdata` dir
 
-			"js"			=>	$toroot."inc/js/",				// Relative path to `js` dir
-			"css"			=>	$toroot."inc/css/",				// Relative path to `css` dir
+			"js"			=>	$toroot."assets/js/",			// Relative path to `js` dir
+			"css"			=>	$toroot."assets/css/",			// Relative path to `css` dir
 			"forms"			=>	$toroot."inc/forms/",			// Relative path to `forms` dir
-			"fonts"			=>	$toroot."inc/fonts/",			// Relative path to `fonts` dir
-			"templates"		=>	$toroot."inc/page_templates/",		// Relative path to `templates` dir
+			"fragments"		=>	$toroot."inc/fragments/",	// Relative path to `fragments` dir
+			"main_themes"	=>	$toroot."themes/",				// Relative path to `themes` dir
 			
 			"error"			=>	$toroot."error/",				// Relative path to `error` file
 		); 
+	// REDIRECTION LOCATIONS
+		$mg_rdir = array(
+			"login" => $toroot."login.php",
+			"forgot_pass" => $toroot."forgot_password.php",
+			"home" => $toroot."home.php"
+		);
 	// FILE INFO
 		$mg_file = array(
 			"name"		=> $_SERVER['DOCUMENT_URI'],
 			"location"	=> $_SERVER['SCRIPT_FILENAME']
 		);
+	// GET FULL URL
+		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+			$mg['complete_uri'] = "https://";   
+		else  
+			$mg['complete_uri'] = "http://";   
+		$mg['complete_uri'].= $_SERVER['HTTP_HOST'];    
+		$mg['complete_uri'].= $_SERVER['REQUEST_URI'];    
 	//
+?>
+<?php		# FUNCTIONS
+	function getTitle($url) {
+		$data = file_get_contents($url);
+		$title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
+		return $title;
+	}
 ?>

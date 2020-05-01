@@ -18,7 +18,9 @@
 		<head>
 			<meta charset="UTF-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<?php include_once($mg_dir['css']."css.php");	?>
+			<?php include_once($mg_dir['assets']."header"); ?>
+			<?php include_once($mg_dir['js']."functions"); ?>
+			<?php include_once($mg_dir['css']."css.php"); ?>
 			<style>
 				.preloader {
 					background: #00000080; }
@@ -149,6 +151,9 @@
 						<div class="sk-circle12 sk-circle"></div>
 					</div>
 				</div>
-			<!-- JS -->
-				<?php include_once($mg_dir['js']."js.php");	?>
+			<script>
+				$(document).ready(function() {
+					$(".preloader").hide();
+				});
+			</script>
 		</body>

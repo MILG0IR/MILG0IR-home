@@ -1,0 +1,22 @@
+
+<div class="pages-content-full" data-local-page="forgot_password">
+	<div class="panel">
+		<form id="forgotpass" onsubmit="return false;">
+			<header>
+				<h2>Reset password</h2>
+				<p>To reset your password please fill out the form below</p>
+				<p id="rsp-status"></p>
+			 </header>
+			<input onfocus="emptyElement('rsp-status')" onblur="checkemail()" onkeyup="restrict('rsp-email')" type="text" id="rsp-email" maxlength="88" placeholder="Email Address:" autocomplete="email">
+			<p class="output" id="rsp-emailstatus"></p>
+			<input onfocus="emptyElement('rsp-status')" onblur="checkpassword()" type="password" id="rsp-pass1" maxlength="32" placeholder="Password:" autocomplete="new-password">
+			<p class="output" id="rsp-pass1status"></p>
+			<input onfocus="emptyElement('rsp-status')" onblur="checkpassword()" type="password" id="rsp-pass2" maxlength="32" placeholder="Confirm Password:" autocomplete="new-password">
+			<p class="output" id="rsp-pass2status"></p>
+			<input onfocus="emptyElement('rsp-status')" onblur="checkreference()" onkeyup="restrict('rsp-reference')" type="text" id="rsp-reference" maxlength="15" placeholder="reference code:" autocomplete="">
+			<p class="output" id="rsp-referencestatus"></p>
+			<input type="button" value="Reset password" onclick="forgotpassword()">
+			<a href="<?php echo$mg_rdir['login']?>">Back to login</a>
+		</form>
+	 </div>
+</div>

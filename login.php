@@ -6,26 +6,43 @@
 	}
 ?>
 <!DOCTYPE html>
-	<html>
+	<html lang="en">
 		<head>
-			<meta charset="UTF-8">
-			<title>Login | <?php echo$mg_branding['slogan']['value']?></title>
-			<link rel="icon" href="<?php echo$mg_branding['favicon']['value']?>" type="image/x-icon">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>Homepage | <?php echo$mg_branding['slogan']['value']?></title>
+			<link type="image/x-icon" rel="icon" href="<?php echo$mg_branding['favicon']['value']?>">
+			<?php include_once($mg_dir['assets']."header") ?>
+			<?php include_once($mg_dir['js']."functions") ?>
 			<?php include_once($mg_dir['css']."css.php");	?>
-		</head>
-		<body>
-			<!-- PRELOADER -->
-				<div class="preloader">
-					<?php include_once($mg_dir['templates']."preloader.php") ?>
-				</div>
-			<!-- HEADER -->
-				<?php include_once($mg_dir['templates']."header.php") ?>
-			<!-- JS -->
-				<?php include_once($mg_dir['js']."js.php"); ?>
-			<!-- CONTENT -->
-				<div class="content">
-					<?php include_once($mg_dir['forms']."login.php")?>
-				</div>
-		</body>
-	</html>
+			<link rel="stylesheet" type="text/css" theme-type="navbar" href="<?php print($mg_dir['themes'])?>1.theme-nav.css">
+			<link rel="stylesheet" type="text/css" theme-type="main" href="<?php print_r($mg_dir['themes'])?>dark.theme-main.css">
+		 </head>
+		<body data-nav-theme="1" data-main-theme="dark">
+			<script name="PRE">
+				changetheme('main', $("body").data("main-theme"));
+				changetheme('nav', $("body").data("nav-theme"));
+			 </script>
+			<div class="main-content">
+				<?php include_once($mg_dir['fragments']."preloader") ?>
+				<?php include_once($mg_dir['fragments']."header") ?>
+				<?php include_once($mg_dir['forms']."login") ?>
+			 </div>
+			<script name="POST">
+				PullToRefresh.init({
+					mainElement: '.main-content',
+					triggerElement: '.header',
+					onRefresh: function (done) {
+						setTimeout(function () {
+							window.location.reload(false);
+							done();
+						}, 0);
+					}
+				});
+				$(document).ready(function() {
+					$(".preloader-wrapper").hide();
+					date_time('header-time', false, true, true);
+				});
+			 </script>
+		 </body>
+	 </html>
