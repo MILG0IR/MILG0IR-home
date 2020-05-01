@@ -20,7 +20,7 @@
 			(!$ulist) ?: print('<span>Or continue as..</span>');
 			(!$ulist) ?: print('<div class="users">');
 			foreach($query as $row) {
-				echo '<div><a onClick="login(\''.$row['username'].'\')" target="_blank">GUEST</a></div>';
+				echo '<div onClick="login(\''.$row['username'].'\')" ><atarget="_blank">GUEST</a></div>';
 			}
 			(!$ulist) ?: print('</div>');
 		?>
