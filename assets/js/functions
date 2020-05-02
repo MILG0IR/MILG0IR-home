@@ -33,6 +33,9 @@
 		function elemscrollby(elem, x, y) {
 			elem.scrollBy({ top: x, left: y, behavior: 'smooth' });
 		}
+		function scrolltobottom(elem, behaviour) {
+			document.querySelector(elem).scroll({ top: document.querySelector(elem).scrollHeight, left: 0, behavior: behaviour });
+		}
 		function date_time(elem, seconds=false, shtDay=false, shtMonth=false) {
 			if(shtDay){
 				days = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
@@ -56,9 +59,9 @@
 			s = date.getSeconds();
 			if(s<10) { s = "0"+s; }
 			if(seconds) {
-				result = ''+days[D]+', '+months[M]+' '+d+' '+h+':'+m+':'+s;
+				result = ''+days[D]+', '+d+' '+months[M]+' - '+h+':'+m+':'+s;
 			} else {
-				result = ''+days[D]+', '+months[M]+' '+d+' '+h+':'+m;
+				result = ''+days[D]+', '+d+' '+months[M]+' - '+h+':'+m;
 			}
 
 			$('.'+elem).html(result);
@@ -131,16 +134,10 @@
 				
 			var toast_close = document.createElement('div');
 				toast_close.setAttribute('class', 'toast-close');
-			var toast_close_svg = document.createElement('svg');
-				toast_close_svg.setAttribute('version', '1.1');
-				toast_close_svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-				toast_close_svg.setAttribute("viewBox", '0 0 15.642 15.642');
-				toast_close_svg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-				toast_close_svg.setAttribute('enable-background', 'new 0 0 15.642 15.642');
-			var toast_close_svg_path = document.createElement('path');
-				toast_close_svg_path.setAttribute('fill-rule', 'evenodd');
-				toast_close_svg_path.setAttribute('d', 'M8.882,7.821l6.541-6.541c0.293-0.293,0.293-0.768,0-1.061  c-0.293-0.293-0.768-0.293-1.061,0L7.821,6.76L1.28,0.22c-0.293-0.293-0.768-0.293-1.061,0c-0.293,0.293-0.293,0.768,0,1.061  l6.541,6.541L0.22,14.362c-0.293,0.293-0.293,0.768,0,1.061c0.147,0.146,0.338,0.22,0.53,0.22s0.384-0.073,0.53-0.22l6.541-6.541  l6.541,6.541c0.147,0.146,0.338,0.22,0.53,0.22c0.192,0,0.384-0.073,0.53-0.22c0.293-0.293,0.293-0.768,0-1.061L8.882,7.821z');
-			
+				toast_close.setAttribute('onClick', 'parent = $(this).parent().fadeOut("slow", function() {$(this).remove();})');
+			var toast_close_image = document.createElement('img');
+				toast_close_image.setAttribute('src', '<?php print($mg_img['multimedia']['close']['image']) ?>');
+
 			parent.append(toast);
 			toast.append(toast_icon);
 			toast_icon.append(toast_icon_image);
@@ -148,9 +145,26 @@
 			toast_content.append(toast_content_title);
 			toast_content.append(toast_content_messagge);
 			toast.append(toast_close);
-			toast_close.append(toast_close_svg);
-			toast_close_svg.append(toast_close_svg_path);
-			
+			toast_close.append(toast_close_image);
+		}
+	//--------------------------- THEME CONTROL FUNCTIONS ---------------------------//
+		function changetheme(type, theme) {
+			if(type == "main" ) {
+				$('link[theme-type="main"]').attr("href","./themes/"+theme+".theme-main.css");
+			} else if(type == "nav" ) {
+				$('link[theme-type="navbar"]').attr("href","./themes/"+theme+".theme-nav.css");
+			}
+		}
+	//--------------------------- Chat functions ----------------------------//
+		function getChat(u2) {
+			var u1 = '<?php print($user['uid'])?>';
+			return true;
+		}
+		function sendChat() {
+			var u1 = '<?php print($user['uid'])?>';
+			var u2 = '' // GET FROM BUTTON ATTRIBUTE TBD;
+			var msg = '';
+			return true;
 		}
 	//--------------------------- Check functions ---------------------------//
 		function getreferencedetails(reference) {
@@ -357,14 +371,6 @@
 				$('.header-user').attr('data-open-panel', panel);
 			}
 		}
-	//--------------------------- THEME CONTROL FUNCTIONS ---------------------------//
-		function changetheme(type, theme) {
-			if(type == "main" ) {
-				$('link[theme-type="main"]').attr("href","./themes/"+theme+".theme-main.css");
-			} else if(type == "nav" ) {
-				$('link[theme-type="navbar"]').attr("href","./themes/"+theme+".theme-nav.css");
-			}
-		}
 	//--------------------------- API CALLOUT FUNCTIONS ---------------------------//
 		function signup() {
 			var u = $('#sup-username').val();
@@ -397,6 +403,9 @@
 			}
 			if(p == null) {
 				var p = $('#lin-password').val();
+			}
+			if(e == 'Guest') {
+				var p = '';
 			}
 			var status = $("#lin-status");
 			$.ajax({

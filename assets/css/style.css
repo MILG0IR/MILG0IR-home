@@ -119,13 +119,14 @@
 		padding-right:60px; }
 	.notify .toast-close {
 		position: absolute;
-		right: 22px;
+		right: 10px;
 		top: 50%;
-		width: 14px;
-		cursor:pointer;
-		height: 14px;
-		fill:#878787;
+		width: 30px;
+		cursor: pointer;
+		height: 30px;
 		transform: translateY(-50%); }
+	.notify .toast-close img {
+		width: 30px; }
 	.notify .toast.success .toast-icon,
 	.notify .toast.success:before {
 		background-color:var(--toast-success); }
@@ -148,8 +149,7 @@
 		font-size: 110%;
 		cursor: pointer;
 		padding: 1rem;
-		border: none;
-	}
+		border: none; }
 	div[data-local-page="forgot_password"] .panel form input[type="text"],
 	div[data-local-page="forgot_password"] .panel form input[type="password"] {
 		border-color: var(--main-input-border);
@@ -861,6 +861,16 @@
 			width: 90%;
 			left: 5%;
 			padding: 1rem; }
+		div[data-local-page="Settings"] .content .panel header {
+			margin: 1rem;
+			text-align: left;
+			position: relative;
+		    height: 5rem; }
+		div[data-local-page="Settings"] .content .panel header h1 {
+			margin: 0px;
+			float: left; }
+		div[data-local-page="Settings"] .content .panel header input {
+			float: right; }
 		div[data-local-page="Settings"] .content .panel#whats-new .update {
 			padding: 1rem;
 			text-align: left; }

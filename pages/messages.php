@@ -13,147 +13,399 @@
 ?><?php
 	include_once("../db/db_conx.php");
 ?>
-<!DOCTYPE html>
-	<html>
-		<head>
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<?php include_once($mg_dir['assets']."header"); ?>
-			<?php include_once($mg_dir['js']."functions"); ?>
-			<?php include_once($mg_dir['css']."css.php"); ?>
-			<style>
-				.preloader {
-					background: #00000080; }
-				.preloader .sk-fading-circle {
-					position: absolute;
-					top: calc(50% - 20px);
-					left: calc(50% - 25px);
-					width: 50px;
-					height: 40px;
-					text-align: center;
-					font-size: 10px;}
-				.preloader .sk-fading-circle .sk-circle {
-					width: 100%;
-					height: 100%;
-					position: absolute;
-					left: 0;
-					top: 0; }
-				.preloader .sk-fading-circle .sk-circle:before {
-					content: '';
-					display: block;
-					margin: 0 auto;
-					width: 15%;
-					height: 15%;
-					background-color: #333;
-					border-radius: 100%;
-					-webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
-							animation: sk-circleFadeDelay 1.2s infinite ease-in-out both; }
-				.preloader .sk-fading-circle .sk-circle2 {
-					-webkit-transform: rotate(30deg);
-						-ms-transform: rotate(30deg);
-							transform: rotate(30deg); }
-				.preloader .sk-fading-circle .sk-circle3 {
-					-webkit-transform: rotate(60deg);
-						-ms-transform: rotate(60deg);
-							transform: rotate(60deg); }
-				.preloader .sk-fading-circle .sk-circle4 {
-					-webkit-transform: rotate(90deg);
-						-ms-transform: rotate(90deg);
-							transform: rotate(90deg); }
-				.preloader .sk-fading-circle .sk-circle5 {
-					-webkit-transform: rotate(120deg);
-						-ms-transform: rotate(120deg);
-							transform: rotate(120deg); }
-				.preloader .sk-fading-circle .sk-circle6 {
-					-webkit-transform: rotate(150deg);
-						-ms-transform: rotate(150deg);
-							transform: rotate(150deg); }
-				.preloader .sk-fading-circle .sk-circle7 {
-					-webkit-transform: rotate(180deg);
-						-ms-transform: rotate(180deg);
-							transform: rotate(180deg); }
-				.preloader .sk-fading-circle .sk-circle8 {
-					-webkit-transform: rotate(210deg);
-						-ms-transform: rotate(210deg);
-							transform: rotate(210deg); }
-				.preloader .sk-fading-circle .sk-circle9 {
-					-webkit-transform: rotate(240deg);
-						-ms-transform: rotate(240deg);
-							transform: rotate(240deg); }
-				.preloader .sk-fading-circle .sk-circle10 {
-					-webkit-transform: rotate(270deg);
-						-ms-transform: rotate(270deg);
-							transform: rotate(270deg); }
-				.preloader .sk-fading-circle .sk-circle11 {
-					-webkit-transform: rotate(300deg);
-						-ms-transform: rotate(300deg);
-							transform: rotate(300deg); }
-				.preloader .sk-fading-circle .sk-circle12 {
-					-webkit-transform: rotate(330deg);
-						-ms-transform: rotate(330deg);
-							transform: rotate(330deg); }
-				.preloader .sk-fading-circle .sk-circle2:before {
-					-webkit-animation-delay: -1.1s;
-							animation-delay: -1.1s; }
-				.preloader .sk-fading-circle .sk-circle3:before {
-					-webkit-animation-delay: -1s;
-							animation-delay: -1s; }
-				.preloader .sk-fading-circle .sk-circle4:before {
-					-webkit-animation-delay: -0.9s;
-							animation-delay: -0.9s; }
-				.preloader .sk-fading-circle .sk-circle5:before {
-					-webkit-animation-delay: -0.8s;
-							animation-delay: -0.8s; }
-				.preloader .sk-fading-circle .sk-circle6:before {
-					-webkit-animation-delay: -0.7s;
-							animation-delay: -0.7s; }
-				.preloader .sk-fading-circle .sk-circle7:before {
-					-webkit-animation-delay: -0.6s;
-							animation-delay: -0.6s; }
-				.preloader .sk-fading-circle .sk-circle8:before {
-					-webkit-animation-delay: -0.5s;
-							animation-delay: -0.5s; }
-				.preloader .sk-fading-circle .sk-circle9:before {
-					-webkit-animation-delay: -0.4s;
-							animation-delay: -0.4s; }
-				.preloader .sk-fading-circle .sk-circle10:before {
-					-webkit-animation-delay: -0.3s;
-							animation-delay: -0.3s; }
-				.preloader .sk-fading-circle .sk-circle11:before {
-					-webkit-animation-delay: -0.2s;
-							animation-delay: -0.2s; }
-				.preloader .sk-fading-circle .sk-circle12:before {
-					-webkit-animation-delay: -0.1s;
-							animation-delay: -0.1s; }
-				@-webkit-keyframes sk-circleFadeDelay {
-					0%, 39%, 100% { opacity: 0; }
-					40% { opacity: 1; } }
-				@keyframes sk-circleFadeDelay {
-					0%, 39%, 100% { opacity: 0; }
-					40% { opacity: 1; } }
-			</style>
-		</head>
-		<body>
-			<!-- PRELOADER -->
-				<div class="preloader">
-					<div class="sk-fading-circle">
-						<div class="sk-circle1 sk-circle"></div>
-						<div class="sk-circle2 sk-circle"></div>
-						<div class="sk-circle3 sk-circle"></div>
-						<div class="sk-circle4 sk-circle"></div>
-						<div class="sk-circle5 sk-circle"></div>
-						<div class="sk-circle6 sk-circle"></div>
-						<div class="sk-circle7 sk-circle"></div>
-						<div class="sk-circle8 sk-circle"></div>
-						<div class="sk-circle9 sk-circle"></div>
-						<div class="sk-circle10 sk-circle"></div>
-						<div class="sk-circle11 sk-circle"></div>
-						<div class="sk-circle12 sk-circle"></div>
-					</div>
-				</div>
-			<script>
-				$(document).ready(function() {
-					$(".preloader").hide();
-				});
-			</script>
-		</body>
+<style>
+	:root {
+		--discussions-header-background: rgba(43, 53, 83, 1);
+		--discussions-background: rgba(39, 41, 61, 1);
+		--discussions-border: rgba(43, 53, 83, 1);;
+		--discussions-active: blue;
+
+		--chat-header-background: rgba(43, 53, 83, 1);
+		--chat-background: rgba(39, 41, 61, 1);
+		--chat-user-bubble: rgba(227, 239, 253, 1);
+		--chat-user-text: rgba(51, 51, 51, 1);
+		--chat-other-bubble: rgba(246, 246, 246, 1);
+		--chat-other-text: rgba(51, 51, 51, 1);
+		--chat-border: rgba(43, 53, 83, 1);
+		--chat-emoji-icon-background: transparent;
+		--chat-emoji-icon-color: rgba(192, 192, 192, 1);
+		--chat-send-icon-background: rgba(79, 110, 189, 1);
+		--chat-send-icon-color: rgba(192, 192, 192, 1);
+		--chat-alert-background: rgba(45, 45, 65, 1);
+		--chat-alert-border: rgba(60, 70, 105, 1);
+		--chat-alert-color: rgba(60, 70, 105, 1);
+	}
+	div[data-local-page="Messages"] {
+		position: relative;
+		height: 100%;
+		width: 100%; }
+	div[data-local-page="Messages"] .clickable {
+		cursor: pointer; }
+	div[data-local-page="Messages"] .timestamp {
+		margin-bottom:10px;
+		margin-left: 85px;
+		font-size: 10px;
+		color:lightgrey;
+	}
+	/**/
+		div[data-local-page="Messages"] .discussions {
+			border-right: solid 1px var(--discussions-border);
+			background: var(--discussions-background);
+			overflow: hidden scroll;
+			scrollbar-width: none;
+			position: absolute;
+			display: block;
+			height: 100%;
+			width: 25%; }
+		div[data-local-page="Messages"] .discussions::-webkit-scrollbar {
+				display: none; }
+	/* --------------- DISCUSSIONS HEADER --------------- */
+		div[data-local-page="Messages"] .discussions-header {
+			background: var(--discussions-header-background);
+			justify-content: center;
+			align-items: center;
+			position: sticky;
+			color: #E0E0E0;
+			display: flex;
+			top: 0; }
+		div[data-local-page="Messages"] .discussions-header .searchbar {
+			border: 1px solid #EEEEEE;
+			background: #FFF;
+			border-radius: 50px;
+			align-items: center;
+			padding: 0 20px;
+			cursor: pointer;
+			display: flex;
+			height: 40px;
+			width: 70%; }
+		div[data-local-page="Messages"] .discussions-header .searchbar input {
+			font-family: 'Montserrat', sans-serif;
+			margin-left: 15px;
+			height: 38px;
+			border: none;
+			width: 100%; }
+		div[data-local-page="Messages"] .discussions-header .searchbar input *:-ms-input-placeholder,
+		div[data-local-page="Messages"] .discussions-header .searchbar *::-webkit-input-placeholder,
+		div[data-local-page="Messages"] .discussions-header .searchbar input *::-moz-placeholder,
+		div[data-local-page="Messages"] .discussions-header .searchbar input *:-moz-placeholder {
+			color: #E0E0E0;
+		}
+	/* --------------- DISCUSSIONS --------------- */
+		div[data-local-page="Messages"] .discussions-header,
+		div[data-local-page="Messages"] .discussions .discussion {
+			border-bottom: solid 1px var(--discussions-border);
+			color: var(--main-text);
+			align-items: center;
+			cursor: pointer;
+			display: flex;
+			height: 90px;
+			width: 100%; }
+		div[data-local-page="Messages"] .discussions .discussion .photo {
+			margin-left:20px;
+			display: block;
+			width: 45px;
+			height: 45px;
+			background: #E6E7ED;
+			   -moz-border-radius: 50px;
+			-webkit-border-radius: 50px;
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat; }
+		div[data-local-page="Messages"] .discussions .discussion .photo .online {
+			position: relative;
+			top: 30px;
+			left: 35px;
+			width: 13px;
+			height: 13px;
+			background: #8BC34A;
+			border-radius: 13px;
+			border: 3px solid var(--discussions-background); }
+		div[data-local-page="Messages"] .discussions .discussion .contact {
+			height: 43px;
+			width:50%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis; }
+		div[data-local-page="Messages"] .discussions .discussion .name {
+			margin: 0 0 0 20px;
+			font-family:'Montserrat', sans-serif;
+			font-size: 11pt; }
+		div[data-local-page="Messages"] .discussions .discussion .message {
+			margin: 6px 0 0 20px;
+			font-family:'Montserrat', sans-serif;
+			font-size: 9pt; }
+		div[data-local-page="Messages"] .discussions .message-active {
+				border-right: solid 5px var(--discussions-active);
+				height: 90px; }
+	/**/
+		div[data-local-page="Messages"] .chat {
+			background: var(--main-panel-background);
+			position: absolute;
+			display: block;
+			height: 100%;
+			width: 75%;
+			left: 25%;
+			top: 0px; }
+	/* --------------- CHAT HEADER --------------- */
+		div[data-local-page="Messages"] .header-chat {
+			box-shadow: 0px 3px 2px var(--main-shadow);
+			background: var(--main-panel-accent);
+			align-items: center;
+			color: var(--main-text);
+			height: 90px;
+			display:flex; }
+		div[data-local-page="Messages"] .chat .header-chat .icon {
+			margin-left: 30px;
+			font-size: 14pt; }
+		div[data-local-page="Messages"] .chat .header-chat .name {
+			margin: 0 0 0 20px;
+			text-transform: uppercase;
+			font-family:'Montserrat', sans-serif;
+			font-size: 13pt; }
+		div[data-local-page="Messages"] .chat .header-chat .right {
+			position: absolute;
+			right: 40px; }
+	/* --------------- CHAT --------------- */
+		div[data-local-page="Messages"] .chat .messages-chat {
+			height: calc(100% - 171px);
+			overflow: hidden scroll;
+			position: absolute;
+			padding: 25px 35px;
+			width: 100%; }
+		div[data-local-page="Messages"] .chat .messages-chat::-webkit-scrollbar {
+				display: none; }
+		div[data-local-page="Messages"] .chat .messages-chat .alert {
+			width: fit-content;
+			text-align: center;
+			color: var(--chat-alert-color);
+			background: var(--chat-alert-background);
+			border: solid 1px var(--chat-alert-border);
+			border-radius: 25px;
+			padding: 5px 10px 5px 10px;
+			margin: 2rem auto;
+		 }
+		div[data-local-page="Messages"] .chat .messages-chat .message {
+			display:flex;
+			align-items: center;
+			margin-bottom: 8px; }
+		div[data-local-page="Messages"] .chat .messages-chat .message .photo {
+			display: block;
+			width: 45px;
+			height: 45px;
+			background: #E6E7ED;
+			   -moz-border-radius: 50px;
+			-webkit-border-radius: 50px;
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat; }
+		div[data-local-page="Messages"] .chat .messages-chat .message .response {
+			float: right;
+			margin-right: 0px !important;
+			margin-left:auto; }
+		div[data-local-page="Messages"] .chat .messages-chat .received .text {
+			background: var(--chat-other-bubble);
+			color: var(--chat-other-text);
+			border-radius: 12px;
+			margin: 0 35px;
+			padding: 15px; }
+		div[data-local-page="Messages"] .chat .messages-chat .response-time {
+			margin-right: 40px !important;
+			margin-bottom:10px;
+			margin-left: 85px;
+			font-size: 10px;
+			color:lightgrey;
+			float: right; }
+		div[data-local-page="Messages"] .chat .messages-chat .response .text {
+			background: var(--chat-user-bubble);
+			color: var(--chat-user-text);
+			border-radius: 12px;
+			margin: 0 35px;
+			padding: 15px; }
+		div[data-local-page="Messages"] .chat .messages-chat .received-time {
+			margin-bottom:10px;
+			margin-left: 85px;
+			font-size: 10px;
+			color:lightgrey; }
+	/* --------------- CHAT FOOTER --------------- */
+		div[data-local-page="Messages"] .chat .footer {
+			box-shadow: 0px -3px 2px var(--main-shadow);
+			border-top: 3px solid var(--chat-border);
+			background: transparent;
+			align-items: center;
+			position:absolute;
+			display: flex;
+			height: 81px;
+			width: 100%;
+			bottom: 0; }
+		div[data-local-page="Messages"] .chat .footer .emoji {
+			transform: translate(-50%);
+			margin-left: 5%;
+			font-size: 14pt;
+			color: var(--chat-emoji-icon-color); }
+		div[data-local-page="Messages"] .chat .footer .write-message {
+			position: absolute;
+			margin-left: 10%;
+			padding: 10px;
+			height: 5rem;
+			border: none;
+			width: 80%; }
+		div[data-local-page="Messages"] .chat .footer .send {
+			background: var(--chat-send-icon-background);
+			color: var(--chat-send-icon-color);
+			padding: 12px 12px 12px 12px;
+			transform: translate(50%);
+			border-radius: 25px;
+			text-align: center;
+			position: absolute;
+			font-size: 14pt;
+			height: 50px;
+			width: 50px;
+			right: 5%; }
+		div[data-local-page="Messages"] .chat .footer-chat input *::-webkit-input-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *:-ms-input-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *::-moz-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *:-moz-placeholder {
+			color: var(--main-text);
+			font-size: 13pt; }
+	/* ========== ========== ========== ========== ========== */
+</style>
+<section class="discussions">
+	<div class="discussions-header">
+		<div class="searchbar">
+			<i class="fa fa-search" aria-hidden="true"></i>
+			<input type="text" placeholder="Search..."></input>
+		</div>
+	</div>
+	
+	<div onClick="scrolltobottom('.messages-chat')" class="discussion message-active">
+		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+		<div class="contact">
+			<p class="name">Megan Leib</p>
+			<p class="message">9 pm at the bar if possible 😳</p>
+		</div>
+		<div class="timestamp">12 sec</div>
+	</div>
+	<div class="discussion">
+		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+		<div class="contact">
+			<p class="name">Dave Corlew</p>
+			<p class="message">Let's meet for a coffee or something today ?</p>
+		</div>
+		<div class="timestamp">3 min</div>
+	</div>
+	<div class="discussion">
+		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"></div>
+		<div class="contact">
+			<p class="name">Jerome Seiber</p>
+			<p class="message">I've sent you the annual report</p>
+		</div>
+		<div class="timestamp">42 min</div>
+	</div>
+	<div class="discussion">
+		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+		<div class="contact">
+			<p class="name">Thomas Dbtn</p>
+			<p class="message">See you tomorrow ! 🙂</p>
+		</div>
+		<div class="timestamp">2 hour</div>
+	</div>
+	<div class="discussion">
+		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"></div>
+		<div class="contact">
+			<p class="name">Elsie Amador</p>
+			<p class="message">What the f**k is going on ?</p>
+		</div>
+		<div class="timestamp">1 day</div>
+	</div>
+	<div class="discussion">
+		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"></div>
+		<div class="contact">
+			<p class="name">Billy Southard</p>
+			<p class="message">Ahahah 😂</p>
+		</div>
+		<div class="timestamp">4 days</div>
+	</div>
+	<div class="discussion">
+		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+		<div class="contact">
+			<p class="name">Paul Walker</p>
+			<p class="message">You can't see me</p>
+		</div>
+		<div class="timestamp">1 week</div>
+	</div>
+</section>
+<section class="chat">
+	<div class="header-chat">
+		<i class="icon fa fa-user-o" aria-hidden="true"></i>
+		<p class="name">Megan Leib</p>
+		<i class="icon clickable fa fa-ellipsis-h" aria-hidden="true"></i>
+	</div>
+	<div class="messages-chat">
+		<div class="message">
+			<div class="received">
+				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+				<p class="text">Hi, how are you ?</p>
+			</div>
+		</div>
+		<div class="message">
+			<div class="received">
+				<p class="text">What are you doing tonight ? Want to go take a drink ?</p>
+			</div>
+			<p class="received-time">14h58</p>
+		</div>
+		<div class="message">
+			<div class="response">
+				<p class="text">Hey Megan ! It's been a while 😃</p>
+			</div>
+		</div>
+		<div class="message">
+			<div class="response">
+				<p class="text">When can we meet ?</p>
+				<p class="response-time time">15h04</p>
+			</div>
+		</div>
+		<div class="message">
+			<div class="received">
+				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+				<p class="text">9 pm at the bar if possible 😳</p>
+			</div>
+			<p class="received-time">15h09</p>
+		</div>
+		<div class="message">
+			<div class="received">
+				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+				<p class="text">Hi, how are you ?</p>
+			</div>
+		</div>
+		<div class="alert">Jesus has left the chat</div>
+		<div class="message">
+			<div class="received">
+				<p class="text">What are you doing tonight ? Want to go take a drink ?</p>
+			</div>
+			<p class="received-time">14h58</p>
+		</div>
+		<div class="message">
+			<div class="response">
+				<p class="text">Hey Megan ! It's been a while 😃</p>
+			</div>
+		</div>
+		<div class="message">
+			<div class="response">
+				<p class="text">When can we meet ?</p>
+				<p class="response-time time">15h04</p>
+			</div>
+		</div>
+		<div class="message">
+			<div class="received">
+				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
+				<p class="text">9 pm at the bar if possible 😳</p>
+			</div>
+			<p class="received-time">15h09</p>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="emoji"><i class="fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i></div>
+		<input type="text" class="write-message" placeholder="Type your message here"></input>
+		<div class="send"><i class="fa fa-paper-plane-o clickable" aria-hidden="true"></i></div>
+	</div>
+</section>

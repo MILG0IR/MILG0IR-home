@@ -30,22 +30,7 @@
 				<div id="parent" class="pages-content"  onclick="userPanel(null)"></div>
 			</div>
 			<div class="popup"></div>
-			<div class="notify">
-				<div class="toast success" onclick="toast('warn', 'heading', 'subheading')">
-					<div class="toast-icon">
-						<img src="<?php print($mg_img['multimedia']['exclamation']['image']) ?>"></img>
-					</div>
-					<div class="toast-content">
-						<p class="toast-type">Success</p>
-						<p class="toast-message">Anyone with access can view your invited visitors.</p>
-					</div>
-					<div class="toast-close">
-						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 15.642 15.642" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15.642 15.642">
-							<path fill-rule="evenodd" d="M8.882,7.821l6.541-6.541c0.293-0.293,0.293-0.768,0-1.061  c-0.293-0.293-0.768-0.293-1.061,0L7.821,6.76L1.28,0.22c-0.293-0.293-0.768-0.293-1.061,0c-0.293,0.293-0.293,0.768,0,1.061  l6.541,6.541L0.22,14.362c-0.293,0.293-0.293,0.768,0,1.061c0.147,0.146,0.338,0.22,0.53,0.22s0.384-0.073,0.53-0.22l6.541-6.541  l6.541,6.541c0.147,0.146,0.338,0.22,0.53,0.22c0.192,0,0.384-0.073,0.53-0.22c0.293-0.293,0.293-0.768,0-1.061L8.882,7.821z"></path>
-						</svg>
-					</div>
-				</div>
-			</div>
+			<div class="notify"></div>
 			<script name="POST">
 				PullToRefresh.init({
 					mainElement: '.main-content',
@@ -60,12 +45,6 @@
 				$(document).ready(function() {
 					$(".preloader-wrapper").hide();
 					date_time('header-time', false, true, true);
-
-					jQuery('.toast-close').click(function(e){
-						e.preventDefault();
-						var parent = $(this).parent('.toast');
-						parent.fadeOut("slow", function() { $(this).remove(); } );
-					});
 				});
 			</script>
 		</body>

@@ -28,7 +28,10 @@
 </div>
 <div class="content">
 	<div class="panel" id="pages">
-		<h1>Pages!</h1>
+		<header>
+			<h1>Pages!</h1>
+			<input type="button" value="New page">
+		</header>
 		<div class="table">
 			<div class="thead">
 				<div class="tr">
@@ -48,18 +51,18 @@
 						if(in_array($page['title'],$disabled_pages)) {
 							$page_class = "row-disabled";
 							$page_image = $mg_img['multimedia']['cancel']['image'];
-							$page_click = "";
+							$page_click = "toast('warn', 'warning', 'You are not able to edit core pages.')";
 						} else {
 							$page_class = "row-enabled";
 							$page_image = $mg_img['multimedia']['info']['image'];
-							$page_click = "editPopup(\"page\", \"".str_replace("\"", "\\\"", json_encode($page))."\")";
+							$page_click = "editPopup('page', '".str_replace("'", "\\'", json_encode($page))."')";
 						};
 						echo "<div class=\"tr\" id=\"".$page['title']."\">";
 						echo "	<div class=\"td\">".$page['id']."</div>";
 						echo "	<div class=\"td\"><img src=\"".$page['icon']."\"></div>";
 						echo "	<div class=\"td\">".$page['title']."</div>";
 						echo "	<div class=\"td\">".$page['description']."</div>";
-						echo "	<div class=\"td\"><img src=\"".$page_image."\" onClick='".$page_click."' class=\"action\"></div>";
+						echo "	<div class=\"td\"><img src=\"".$page_image."\" onClick=\"".$page_click."\" class=\"action\"></div>";
 						echo "</div>";
 					}
 				?>
@@ -67,10 +70,16 @@
 		</div>
 	</div>
 	<div class="panel" id="categories">
-		<h1>Categories!</h1>
+		<header>
+            <h1>Categories!</h1>
+			<input type="button" value="New Category">
+		</header>
 	</div>
 	<div class="panel" id="users">
-		<h1>Users!</h1>
+		<header>
+            <h1>Users!</h1>
+			<input type="button" value="New User">
+		</header>
 		<div class="table">
 			<div class="thead">
 				<div class="tr">
@@ -155,7 +164,10 @@
 		</div>
 	</div>
 	<div class="panel" id="groups">
-		<h1>Ranks!</h1>
+		<header>
+            <h1>Ranks!</h1>
+			<input type="button" value="New Rank">
+		</header>
 		<div class="table">
 			<div class="thead">
 				<div class="tr">
@@ -205,19 +217,29 @@
 		</div>
 	</div>
 	<div class="panel" id="customization">
-		<h1>Customization!</h1>
+		<header>
+            <h1>Customization!</h1>
+		</header>
 	</div>
 	<div class="panel" id="update">
-		<h1>Update!</h1>
+		<header>
+            <h1>Update!</h1>
+		</header>
 	</div>
 	<div class="panel" id="database">
-		<h1>Database!</h1>
+		<header>
+            <h1>Database!</h1>
+		</header>
 	</div>
 	<div class="panel" id="security">
-		<h1>Security!</h1>
+		<header>
+            <h1>Security!</h1>
+		</header>
 	</div>
 	<div class="panel" id="whats-new">
-		<h1>Whats New!</h1>
+		<header>
+            <h1>Whats New!</h1>
+		</header>
 		<?php
 			$json = file_get_contents("https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/whatsnew.json");
 			$data = json_decode($json, true);
