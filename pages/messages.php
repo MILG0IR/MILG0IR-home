@@ -14,27 +14,6 @@
 	include_once("../db/db_conx.php");
 ?>
 <style>
-	:root {
-		--discussions-header-background: rgba(43, 53, 83, 1);
-		--discussions-background: rgba(39, 41, 61, 1);
-		--discussions-border: rgba(43, 53, 83, 1);;
-		--discussions-active: blue;
-
-		--chat-header-background: rgba(43, 53, 83, 1);
-		--chat-background: rgba(39, 41, 61, 1);
-		--chat-user-bubble: rgba(227, 239, 253, 1);
-		--chat-user-text: rgba(51, 51, 51, 1);
-		--chat-other-bubble: rgba(246, 246, 246, 1);
-		--chat-other-text: rgba(51, 51, 51, 1);
-		--chat-border: rgba(43, 53, 83, 1);
-		--chat-emoji-icon-background: transparent;
-		--chat-emoji-icon-color: rgba(192, 192, 192, 1);
-		--chat-send-icon-background: rgba(79, 110, 189, 1);
-		--chat-send-icon-color: rgba(192, 192, 192, 1);
-		--chat-alert-background: rgba(45, 45, 65, 1);
-		--chat-alert-border: rgba(60, 70, 105, 1);
-		--chat-alert-color: rgba(60, 70, 105, 1);
-	}
 	div[data-local-page="Messages"] {
 		position: relative;
 		height: 100%;
@@ -65,12 +44,13 @@
 			justify-content: center;
 			align-items: center;
 			position: sticky;
-			color: #E0E0E0;
+			color: var(--discussions-header-color);
 			display: flex;
 			top: 0; }
 		div[data-local-page="Messages"] .discussions-header .searchbar {
-			border: 1px solid #EEEEEE;
-			background: #FFF;
+			border: 1px solid var(--discussions-header-search-border);
+			background: var(--discussions-header-search-background);
+			color: var(--discussions-header-search-color);
 			border-radius: 50px;
 			align-items: center;
 			padding: 0 20px;
@@ -88,7 +68,7 @@
 		div[data-local-page="Messages"] .discussions-header .searchbar *::-webkit-input-placeholder,
 		div[data-local-page="Messages"] .discussions-header .searchbar input *::-moz-placeholder,
 		div[data-local-page="Messages"] .discussions-header .searchbar input *:-moz-placeholder {
-			color: #E0E0E0;
+			color: var(--discussions-header-search-placeholder-color);
 		}
 	/* --------------- DISCUSSIONS --------------- */
 		div[data-local-page="Messages"] .discussions-header,
@@ -105,7 +85,7 @@
 			display: block;
 			width: 45px;
 			height: 45px;
-			background: #E6E7ED;
+			background: var(--image-placeholder);
 			   -moz-border-radius: 50px;
 			-webkit-border-radius: 50px;
 			background-position: center;
@@ -117,7 +97,7 @@
 			left: 35px;
 			width: 13px;
 			height: 13px;
-			background: #8BC34A;
+			background: var(--discussions-online);
 			border-radius: 13px;
 			border: 3px solid var(--discussions-background); }
 		div[data-local-page="Messages"] .discussions .discussion .contact {
@@ -188,11 +168,11 @@
 			display:flex;
 			align-items: center;
 			margin-bottom: 8px; }
-		div[data-local-page="Messages"] .chat .messages-chat .message .photo {
+		div[data-local-page="Messages"] .chat .messages-chat .message .photo {--discussions-header-image-placeholder
 			display: block;
 			width: 45px;
 			height: 45px;
-			background: #E6E7ED;
+			background: var(--image-placeholder);
 			   -moz-border-radius: 50px;
 			-webkit-border-radius: 50px;
 			background-position: center;
@@ -268,6 +248,12 @@
 			color: var(--main-text);
 			font-size: 13pt; }
 	/* ========== ========== ========== ========== ========== */
+	@media screen and (max-width: 768px) {
+		div[data-local-page="Messages"] .discussions,
+		div[data-local-page="Messages"] .chat {
+			width: 100%;
+		}
+	}
 </style>
 <section class="discussions">
 	<div class="discussions-header">
@@ -276,63 +262,24 @@
 			<input type="text" placeholder="Search..."></input>
 		</div>
 	</div>
-	
-	<div onClick="scrolltobottom('.messages-chat')" class="discussion message-active">
-		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-		<div class="contact">
-			<p class="name">Megan Leib</p>
-			<p class="message">9 pm at the bar if possible 😳</p>
-		</div>
-		<div class="timestamp">12 sec</div>
-	</div>
-	<div class="discussion">
-		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-		<div class="contact">
-			<p class="name">Dave Corlew</p>
-			<p class="message">Let's meet for a coffee or something today ?</p>
-		</div>
-		<div class="timestamp">3 min</div>
-	</div>
-	<div class="discussion">
-		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"></div>
-		<div class="contact">
-			<p class="name">Jerome Seiber</p>
-			<p class="message">I've sent you the annual report</p>
-		</div>
-		<div class="timestamp">42 min</div>
-	</div>
-	<div class="discussion">
-		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-		<div class="contact">
-			<p class="name">Thomas Dbtn</p>
-			<p class="message">See you tomorrow ! 🙂</p>
-		</div>
-		<div class="timestamp">2 hour</div>
-	</div>
-	<div class="discussion">
-		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"></div>
-		<div class="contact">
-			<p class="name">Elsie Amador</p>
-			<p class="message">What the f**k is going on ?</p>
-		</div>
-		<div class="timestamp">1 day</div>
-	</div>
-	<div class="discussion">
-		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"></div>
-		<div class="contact">
-			<p class="name">Billy Southard</p>
-			<p class="message">Ahahah 😂</p>
-		</div>
-		<div class="timestamp">4 days</div>
-	</div>
-	<div class="discussion">
-		<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-		<div class="contact">
-			<p class="name">Paul Walker</p>
-			<p class="message">You can't see me</p>
-		</div>
-		<div class="timestamp">1 week</div>
-	</div>
+	<?
+		$sql = "SELECT * FROM `users`;";
+		$query = mysqli_query($db_conx, $sql);
+		foreach($query as $row) {
+			if($row['uid'] != $user['uid']) {
+				echo "
+				<div class='discussion'>
+					<div class='photo' style='background-image: url(https://via.placeholder.com/45);'><div class='online'></div></div>
+					<div class='contact'>
+						<p class='name'>".$row['firstname']." ".$row['surname']."</p>
+						<p class='message'></p>
+					</div>
+					<div class='timestamp'>".$row['last_online']."</div>
+				</div>
+				";
+			}
+		}
+	?>
 </section>
 <section class="chat">
 	<div class="header-chat">

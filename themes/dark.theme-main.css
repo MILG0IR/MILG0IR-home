@@ -25,7 +25,13 @@
 		--whatsnew-removal: rgba(114, 238, 114, 1);
 		--whatsnew-change: rgba(238, 114, 114, 1);
 	/* CHAT*/
+		--image-placeholder: rgba(230,231,237, 1);
+
 		--discussions-header-background: rgba(43, 53, 83, 1);
+		--discussions-header-search-background: rgba(255, 255, 255, 1);
+		--discussions-header-search-border: rgba(238, 238, 238, 1) ;
+		--discussions-header-search-color: rgba(41, 41, 41, 1);
+		--discussions-header-search-placeholder-color: rgba(224, 224, 224, 1);
 		--discussions-background: rgba(39, 41, 61, 1);
 		--discussions-border: rgba(43, 53, 83, 1);;
 		--discussions-active: blue;
@@ -44,4 +50,5 @@
 		--chat-alert-background: rgba(45, 45, 65, 1);
 		--chat-alert-border: rgba(60, 70, 105, 1);
 		--chat-alert-color: rgba(60, 70, 105, 1);
+		--discussions-online: rgba(139,195,74, 1);
 }

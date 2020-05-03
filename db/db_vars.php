@@ -56,25 +56,18 @@
 			$row = mysqli_fetch_row($query);
 			$user['uid'] = $row[0];
 			$user['username'] = $row[1];
-			$user['email'] = $row[2];
-			$user['password'] = $row[3];
-			$user['change_passkey'] = $row[4];
-			$user['enabled'] = $row[5];
-
-			$sql = "SELECT * FROM `user_data` WHERE `uid`='$row[0]' LIMIT 1";
-			$query = mysqli_query($db_conx, $sql);
-			$row = mysqli_fetch_row($query);
-			$user['rank'] = $row[0];
-			$user['firstname'] = $row[1];
-			$user['surname'] = $row[2];
-			$user['avatar'] = $row[3];
-			$user['banner'] = $row[4];
-			$user['registered'] = $row[5];
-
-			$sql = "SELECT * FROM `user_preferences` WHERE `uid`='$row[0]' LIMIT 1";
-			$query = mysqli_query($db_conx, $sql);
-			$row = mysqli_fetch_row($query);
-			$user['lang'] = $row[0];
+			$user['rank'] = $row[2];
+			$user['email'] = $row[3];
+			$user['password'] = $row[4];
+			$user['firstname'] = $row[5];
+			$user['surname'] = $row[6];
+			$user['avatar'] = $row[7];
+			$user['banner'] = $row[8];
+			$user['last_online'] = $row[9];
+			$user['registered'] = $row[10];
+			$user['lang'] = $row[11];
+			$user['change_passkey'] = $row[12];
+			$user['enabled'] = $row[13];
 		}
 	// ENCRYPTION SETTINGS
 		$sql="SELECT * FROM `var_security`";
