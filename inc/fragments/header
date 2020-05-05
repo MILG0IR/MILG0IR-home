@@ -26,17 +26,17 @@
 			 </div>
 			<p class="header-title">Dashboard</p>
 			<div class="header-controls">
-				<img onClick="reloadpage(); userPanel(null)" src="<?php echo$mg_img['multimedia']['refresh']['image']?>">
-				<img onClick="closepage(); userPanel(null)" src="<?php echo$mg_img['multimedia']['cancel']['image']?>">
+				<img onClick="reloadpage(); userPanel(null)" src="<?php echo$mg_img['UI']['refresh']['image']?>">
+				<img onClick="closepage(); userPanel(null)" src="<?php echo$mg_img['UI']['cancel']['image']?>">
 			 </div>
 			<p class="header-time"></p>
 			<div class="header-user">
 				<div class="header-notifications">
-				<img onClick="userPanel('notifications');" src="<?php echo $mg_img["multimedia"]["play"]["image"]?>">
+				<img onClick="userPanel('notifications');" src="<?php echo $mg_img["UI"]["pin"]["image"]?>">
 					<div class="notifications-panel"> </div>
 				</div>
 				<div class="header-profile">
-					<?php ($userdata['avatar']!= '' ) ? print('<img class="navbar-brand-image" src="'.$userdata['avatar'].'" onClick="userPanel(\'profile\');">') : print('<img onClick="userPanel(\'profile\');" src="'.$mg_img["multimedia"]["user"]["image"].'">'); ?>
+					<?php ($userdata['avatar']!= '' ) ? print('<img class="navbar-brand-image" src="'.$userdata['avatar'].'" onClick="userPanel(\'profile\');">') : print('<img onClick="userPanel(\'profile\');" src="'.$mg_img["UI"]["user"]["image"].'">'); ?>
 					<div class="profile-panel">
 						<h4>Welcome <?php print(ucfirst($userdata['username']))?></h4>
 						<fieldset>

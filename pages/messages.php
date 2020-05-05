@@ -302,7 +302,7 @@
 	}
 	@media screen and (min-width: 512px) {
 	}
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 740px) {
 		div[data-local-page="Messages"] .header-chat {
 			height: 4.5rem; }
 		div[data-local-page="Messages"] .chat .header-chat .icon-more {

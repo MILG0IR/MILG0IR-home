@@ -26,6 +26,8 @@
 		width: 100%; }
 	div[data-local-page="Settings"] .nav {
 		text-align: center;
+		display: flow-root;
+		font-size: 1.5rem;
 		position: sticky;
 		margin: auto;
 		padding: 1em;
@@ -67,11 +69,12 @@
 		box-shadow: 0 0 6px 2px var(--main-shadow);
 		color: var(--main-text);
 		position: relative;
-		border: none;
 		min-height: 10rem;
+		margin-bottom: 2rem;
+		padding: 1rem;
+		border: none;
 		width: 90%;
-		left: 5%;
-		padding: 1rem; }
+		left: 5%; }
 	div[data-local-page="Settings"] .content .panel header {
 		margin: 1rem;
 		text-align: left;
@@ -175,7 +178,7 @@
 	}
 	@media screen and (min-width: 512px) {
 	}
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 740px) {
 		div[data-local-page="Settings"] .content .panel {
 			width: 78%;
 			left: 11%; }
@@ -229,11 +232,11 @@
 						$disabled_pages = array("Homepage", "Messages", "Profile", "Settings");
 						if(in_array($page['title'],$disabled_pages)) {
 							$page_class = "row-disabled";
-							$page_image = $mg_img['multimedia']['cancel']['image'];
+							$page_image = $mg_img['UI']['cancel']['image'];
 							$page_click = "toast('warn', 'warning', 'You are not able to edit core pages.')";
 						} else {
 							$page_class = "row-enabled";
-							$page_image = $mg_img['multimedia']['info']['image'];
+							$page_image = $mg_img['UI']['info']['image'];
 							$page_click = "editPopup('page', '".str_replace("'", "\\'", json_encode($page))."')";
 						};
 						echo "<div class=\"tr\" id=\"".$page['title']."\">";
@@ -285,11 +288,11 @@
 						foreach($query as $usr) {
 							if(in_array($usr['username'],$disabled_users)) {
 								$usr_class[$i] = "disabled";
-								$usr_image[$i] = $mg_img['multimedia']['cancel']['image'];
+								$usr_image[$i] = $mg_img['UI']['cancel']['image'];
 								$usr_click[$i] = "";
 							} else {
 								$usr_class[$i] = "enabled";
-								$usr_image[$i] = $mg_img['multimedia']['more']['image'];
+								$usr_image[$i] = $mg_img['UI']['more']['image'];
 								$usr_click[$i] = "editPopup(\"user\", \"".str_replace("\"", "\\\"", json_encode($usr))."\")";
 							}
 							$usr_uid[$i] = $usr['uid'];
@@ -367,16 +370,16 @@
 							if(in_array($rank['name'],$disabled_ranks)) {
 								$rank_sortable = "unsortable";
 								$rank_class = "disabled";
-								$rank_actions_image = $mg_img['multimedia']['cancel']['image'];
+								$rank_actions_image = $mg_img['UI']['cancel']['image'];
 								$rank_actions = "";
-								$rank_permissions_image = $mg_img['multimedia']['cancel']['image'];
+								$rank_permissions_image = $mg_img['UI']['cancel']['image'];
 								$rank_permissions = "";
 							} else {
 								$rank_sortable = "sortable";
 								$rank_class = "enabled";
-								$rank_actions_image = $mg_img['multimedia']['more']['image'];
+								$rank_actions_image = $mg_img['UI']['more']['image'];
 								$rank_actions = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
-								$rank_permissions_image = $mg_img['multimedia']['levels']['image'];
+								$rank_permissions_image = $mg_img['UI']['levels']['image'];
 								$rank_permissions = "alert(\"tbd\")";
 							};
 						// PRINT ALL RANKS

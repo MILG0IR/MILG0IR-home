@@ -1,5 +1,7 @@
 <script name="FUNCTIONS">
-	//--------------------------- Universal functions ---------------------------// // -- &_=key  -- change to API key -- //
+	var api_key = "key";
+	var toRoot = "<?php echo$mg_dir['root']?>"
+	//--------------------------- Universal functions ---------------------------//
 		function _(x) {
 			return document.getElementById(x);
 		}
@@ -99,7 +101,7 @@
 			}
 			}
 		}
-		function initGrid(elem) {			// T.B.D
+		function initGrid(elem) {
 			var attr = $(elem).attr('data-local-page');
 			if(typeof attr !== typeof undefined && attr !== false) {
 				sleep(100);
@@ -152,17 +154,17 @@
 	//--------------------------- Ajax functions ---------------------------//
 		function getreferencedetails(reference) {
 			var output = $.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=get_reference_data&_=key&ref='+reference,
+				url: toRoot+'api/index.php',
+				data: '#=get_reference_data&_='+api_key+'+&ref='+reference,
 				contentType: 'application/x-www-form-urlencoded',
-				type: 'POST',
+				type: 'POST'
 			})
 			return output;
 		}
 		function checkresponse(code) {
 			var output = $.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=search_code&_=key&code='+code,
+				url: toRoot+'api/index.php',
+				data: '#=search_code&_='+api_key+'+&code='+code,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			})
@@ -170,8 +172,8 @@
 		}
 		function getUsername(user) {
 			var output = $.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=search_username&_=key&uid='+user,
+				url: toRoot+'api/index.php',
+				data: '#=search_username&_='+api_key+'+&uid='+user,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			})
@@ -181,8 +183,8 @@
 			var u		= $("#sup-username").val();
 			var status	= $("#sup-usernamestatus");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_username&_=key&u='+u,
+				url: toRoot+'api/index.php',
+				data: '#=check_username&_='+api_key+'+&u='+u,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -202,8 +204,8 @@
 			var e		= $("#sup-email").val();
 			var status	= $("#sup-emailstatus");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_email&_=key&e='+e,
+				url: toRoot+'api/index.php',
+				data: '#=check_email&_='+api_key+'+&e='+e,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -273,8 +275,8 @@
 			var reference = $("#sup-reference").val();
 			var status = $("#sup-referencestatus");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_reference&_=key&ref='+reference,
+				url: toRoot+'api/index.php',
+				data: '#=check_reference&_='+api_key+'+&ref='+reference,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -292,8 +294,8 @@
 			var status		= $("#updatestatus");
 			var updateBTN	= $(".update-button");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_for_update&_=key&version='+version+'&device='+device+'&branch='+branch,
+				url: toRoot+'api/index.php',
+				data: '#=check_for_update&_='+api_key+'+&version='+version+'&device='+device+'&branch='+branch,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -312,8 +314,8 @@
 			var password = $(".form-input-password").val();
 			var status = $(".form-status");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=confirm_password&_=key&u='+username+'&p='+password,
+				url: toRoot+'api/index.php',
+				data: '#=confirm_password&_='+api_key+'+&u='+username+'&p='+password,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -338,13 +340,13 @@
 			var status = $('#sup-status');
 			if(p1 == p2) {
 				$.ajax({
-					url: '<?php echo$mg_dir['root']?>api/index.php',
-					data: '#=signup&_=key&u='+u+'&e='+e+'&p='+p1+'&ref='+ref,
+					url: toRoot+'api/index.php',
+					data: '#=signup&_='+api_key+'+&u='+u+'&e='+e+'&p='+p1+'&ref='+ref,
 					contentType: 'application/x-www-form-urlencoded',
 					type: 'POST',
 				}).done(function(data) {
 					if(data.includes("success")){
-						window.location = "<?php echo$mg_dir['root']?>login.php";
+						toast(success, 'WELCOME!', 'Your account has been created successfully')
 					} else {
 						checkresponse(data).done(function(codeARRAY) {
 							var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -366,13 +368,13 @@
 			}
 			var status = $("#lin-status");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=login&_=key&e='+e+'&p='+p,
+				url: toRoot+'api/index.php',
+				data: '#=login&_='+api_key+'+&e='+e+'&p='+p,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
 				if(data.includes("success")){
-					window.location = "<?php echo$mg_dir['root']?>home.php";
+					window.location = "home.php";
 				} else {
 					checkresponse(data).done(function(codeARRAY) {
 						var codeJSON = jQuery.parseJSON(codeARRAY);
@@ -384,8 +386,8 @@
 		function createreference(user) {
 			var status = _("refstatus");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=create_user_reference&_=key&u='+user,
+				url: toRoot+'api/index.php',
+				data: '#=create_user_reference&_='+api_key+'+&u='+user,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -408,7 +410,7 @@
 						var tabledata6 = document.createElement('td');
 						var img = document.createElement('img');
 							img.setAttribute('onClick', "removalPopup(\"reference\", \"{\\\"id\\\":\\\"20\\\",\\\"reference_code\\\":\\\"yJ0-96D-iFE-744\\\",\\\"made_by_user\\\":\\\"rsmith\\\",\\\"made_by_time\\\":\\\"2020-04-22 23:07:44\\\",\\\"active\\\":\\\"1\\\"}\")");
-							img.setAttribute('src', "<?php echo$mg_img['multimedia']['garbage']['image']?>");
+							img.setAttribute('src', "<?php echo$mg_img['UI']['garbage']['image']?>");
 							img.setAttribute('class', "actions waves-light waves-effect waves-light");
 						parent.append(row);
 						row.append(tabledata1);
@@ -429,8 +431,8 @@
 		}
 		function deactivatereference(id) {
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=deactivate_user_reference&_=key&id='+id,
+				url: toRoot+'api/index.php',
+				data: '#=deactivate_user_reference&_='+api_key+'+&id='+id,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -446,8 +448,8 @@
 		}
 		function reactivatereference(id) {
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=reactivate_user_reference&_=key&id='+id,
+				url: toRoot+'api/index.php',
+				data: '#=reactivate_user_reference&_='+api_key+'+&id='+id,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -466,8 +468,8 @@
 			var desc = $(".form-change-description").val();
 			var icon = $(".form-change-icon").attr("src");
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=update_rank_info&_=key&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
+				url: toRoot+'api/index.php',
+				data: '#=update_rank_info&_='+api_key+'+&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -488,8 +490,8 @@
 			var uri_local = $(".form-change-uri_local").val();
 			var uri_remote = $(".form-change-uri_remote").val();
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=update_page_info&_=key&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
+				url: toRoot+'api/index.php',
+				data: '#=update_page_info&_='+api_key+'+&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -511,8 +513,8 @@
 			var status = $('#rsp-status');
 			if(p1 == p2) {
 				$.ajax({
-					url: '<?php echo$mg_dir['root']?>api/index.php',
-					data: '#=forgot_password&_=key&e='+e+'&p'+p1+'&ref'+ref,
+					url: toRoot+'api/index.php',
+					data: '#=forgot_password&_='+api_key+'+&e='+e+'&p'+p1+'&ref'+ref,
 					contentType: 'application/x-www-form-urlencoded',
 					type: 'POST',
 				}).done(function(data) {
@@ -531,13 +533,13 @@
 		}
 		function logout() {
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=logout&_=key',
+				url: toRoot+'api/index.php',
+				data: '#=logout&_='+api_key+'+',
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
 				if(data.includes("success")){
-					redirect("<?php echo$mg_dir['root']?>login.php");
+					redirect("login.php");
 				} else {
 					checkresponse(data);
 				}
@@ -547,16 +549,17 @@
 	//--------------------------- TOAST CONTROL ---------------------------//
 		function toast(type, heading, subheading, onClick) {
 			if(type == "success") {
-				var img = "<?php echo$mg_img['multimedia']['checked']['image']?>";
+				var img = "<?php echo$mg_img['UI']['checked']['image']?>";
 			} else if(type == "info") {
-				var img = "<?php echo$mg_img['multimedia']['info']['image']?>";
+				var img = "<?php echo$mg_img['UI']['info']['image']?>";
 			} else if(type == "warn") {
-				var img = "<?php echo$mg_img['multimedia']['exclamation']['image']?>";
+				var img = "<?php echo$mg_img['UI']['exclamation']['image']?>";
 			} else if(type == "error") {
-				var img = "<?php echo$mg_img['multimedia']['cancel']['image']?>";
+				var img = "<?php echo$mg_img['UI']['cancel']['image']?>";
 			} else if(type == "messaging") {
-				var img = "<?php echo$mg_img['multimedia']['cancel']['image']?>";
+				var img = "<?php echo$mg_img['UI']['cancel']['image']?>";
 			} else {
+				var img = "";
 			}
 			var parent = $(".notify");
 			var toast = document.createElement('div');
@@ -580,7 +583,7 @@
 				toast_close.setAttribute('class', 'toast-close');
 				toast_close.setAttribute('onClick', 'parent = $(this).parent().fadeOut("slow", function() {$(this).remove();})');
 			var toast_close_image = document.createElement('img');
-				toast_close_image.setAttribute('src', '<?php print($mg_img['multimedia']['close']['image']) ?>');
+				toast_close_image.setAttribute('src', '<?php print($mg_img['UI']['close']['image']) ?>');
 
 			parent.append(toast);
 			toast.append(toast_icon);
@@ -600,15 +603,15 @@
 			}
 		}
 	//--------------------------- PAGE CONTROL ---------------------------//
-		function openpage(pid, hideNav) {
+		function openpage(pid, hideNav = false) {
 			var screenwidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 			if(screenwidth < 512 && hideNav != false) {
 				toggleNav();
 			}
 
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=get_page_data&_=key&id='+pid,
+				url: toRoot+'api/index.php',
+				data: '#=get_page_data&_='+api_key+'+&id='+pid,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -632,6 +635,9 @@
 						child.setAttribute('page-status', 'unloaded');
 						child.setAttribute('data-local-page', pageJSON[1]);
 						child.setAttribute('class', 'child');
+						if(pageJSON[1] == "Homepage") {
+							child.setAttribute('data-includes-grid', 'true');
+						}
 						_("parent").appendChild(child);
 						includeHTML();
 					} else if(pageJSON[6] == "1") {
@@ -652,9 +658,11 @@
 					$('#'+pageJSON[0]).toggleClass("child-active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
-					setTitle(pageJSON[1]);
-					initGrid('.child-active');
+					setTimeout(() => { 
+						initGrid('[data-includes-grid="true"]');
+					}, 1000);
 				}
+				setTitle(pageJSON[1]);
 			});
 		}
 		function reloadpage() {
@@ -694,8 +702,8 @@
 		}
 		function setChatRead(u1, u2) {
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=mark_chat_as_read&_=key&u1='+u1+'&u2='+u2,
+				url: toRoot+'api/index.php',
+				data: '#=mark_chat_as_read&_='+api_key+'+&u1='+u1+'&u2='+u2,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			})
@@ -703,8 +711,8 @@
 		function getChat(u2, type = null) {
 			var u1 = $('.header-chat').attr('data-chat-user1');
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=get_messages&_=key&u1='+u1+'&u2='+u2,
+				url: toRoot+'api/index.php',
+				data: '#=get_messages&_='+api_key+'+&u1='+u1+'&u2='+u2,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(msgJSON) {
@@ -783,8 +791,8 @@
 			var msg = $('.write-message').val();
 			var msgBox = $('.write-message');
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=send_message&_=key&u1='+u1+'&u2='+u2+'&msg='+msg,
+				url: toRoot+'api/index.php',
+				data: '#=send_message&_='+api_key+'+&u1='+u1+'&u2='+u2+'&msg='+msg,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -799,8 +807,8 @@
 		function checkForNewChats(type) {
 			var u1 = $('body').attr('data-uid');
 			$.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=get_messages_unread&_=key&u1='+u1,
+				url: toRoot+'api/index.php',
+				data: '#=get_messages_unread&_='+api_key+'+&u1='+u1,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(msgJSON) {
@@ -822,6 +830,8 @@
 					});
 				}
 			});
+		}
+		function updateEmoji() {
 		}
 	//--------------------------- * ---------------------------//
 </script>

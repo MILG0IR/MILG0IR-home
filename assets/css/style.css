@@ -22,17 +22,6 @@
 				--gray:rgba(93, 95, 108, 1);
 				--gray-dark:rgba(50, 50, 93, 1);
 				--gray-light:rgba(112, 112, 141, 1);
-			/* ---------- MENU DEFAULTS ---------- */
-				--success:rgba(0, 242, 195, 1);
-				--info:rgba(29, 140, 248, 1);
-				--warning:rgba(255, 141, 114, 1);
-				--danger:rgba(253, 93, 147, 1);
-			/* ---------- OTHERS ---------- */
-				--dark-seperator:rgba(206, 212, 218, 0.5);
-				--light-seperator:rgba(33, 37, 41, 0.5);
-
-				--darker:rgba(0, 0, 0, 1);
-				--lighter:rgba(233, 236, 239, 1);
 		/* ---------- BREAKPOINTS ---------- */
 			--breakpoint-xs:0;
 			--breakpoint-sm:576px;
@@ -43,26 +32,82 @@
 			--font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 			--font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
 			--font-family-default: Poppins,sans-serif;
-
-
-
-
-			--chat-notify-color: rgba(60, 70, 105, 1);
-			--chat-notify-stripe: rgba(60, 70, 105, 1);
-			--chat-notify-background: rgba(39, 41, 61, 1);
-
+		/* ---------- DEFAULT MENU ---------- */
+			--menu-colour: rgba(186, 84, 245, 1);
+			--menu-accent: rgba(225, 78, 202, 1);
+			--menu-spacing: 0.5rem;
+			--submenu-indent: 1rem;
+		/* ---------- DEFAULT THEME ---------- */
+			--main-background: rgba(29, 29, 44, 1);
+			--main-text: rgb(255, 255, 255);
+			--main-accent: rgba(225, 78, 202, 1);
+			--main-accent-shade: rgba(225, 78, 202, 1);
+			--main-panel-background: rgba(39, 41, 61, 1);
+			--main-panel-accent: rgba(43, 53, 83, 1);
+			--main-input-border: rgba(173, 216, 230, 1);
+			--main-input-border-active: rgba(0, 0, 255, 1);
+			--main-shadow: rgba(0, 0, 0, 0.3);
+			--invert-icons: 1;
+			--image-placeholder: rgba(230,231,237, 1);
+			--status-success: rgba(0, 128, 0, 1);
+			--status-info: rgba(0, 0, 255, 1);
+			--status-error: rgba(255, 0, 0, 1);
+			--toast-success: rgba(43, 222, 63, 1);
+			--toast-info: rgba(29, 114, 243, 1);
+			--toast-warning: rgba(255, 192, 7, 1);
+			--toast-error: rgba(255, 0, 0, 1);
+			--whatsnew-note: rgba(128, 128, 128, 1);
+			--whatsnew-addition: rgba(114, 238, 114, 1);
+			--whatsnew-removal: rgba(238, 114, 114, 1);
+			--whatsnew-change: rgba(173, 216, 230, 1);
+			--discussions-header-background: rgba(43, 53, 83, 1);
+			--discussions-header-search-background: rgba(255, 255, 255, 1);
+			--discussions-header-search-border: rgba(238, 238, 238, 1);
+			--discussions-header-search-color: rgba(41, 41, 41, 1);
+			--discussions-header-search-placeholder-color: rgba(224, 224, 224, 1);
+			--discussions-background: rgba(39, 41, 61, 1);
+			--discussions-border: rgba(43, 53, 83, 1);
+			--discussions-online: rgba(139,195,74, 1);
+			--discussions-active: blue;
 			--chat-welcome-title: rgba(186, 84, 245, 1);
 			--chat-welcome-subtitle: rgba(225, 78, 202, 1);
 			--chat-welcome-tile-background: rgba(239, 239, 239, 1);
 			--chat-welcome-tile-title: rgba(102, 153, 204, 1);
 			--chat-welcome-tile-subtitle: rgba(57, 115, 172, 1);
+			--chat-header-background: rgba(43, 53, 83, 1);
+			--chat-background: rgba(39, 41, 61, 1);
+			--chat-user-bubble: rgba(227, 239, 253, 1);
+			--chat-user-text: rgba(51, 51, 51, 1);
+			--chat-other-bubble: rgba(246, 246, 246, 1);
+			--chat-other-text: rgba(51, 51, 51, 1);
+			--chat-border: rgba(43, 53, 83, 1);
+			--chat-input-color: rgba(240, 248, 255, 1);
+			--chat-emoji-icon-background: transparent;
+			--chat-emoji-icon-color: rgba(192, 192, 192, 1);
+			--chat-send-icon-background: rgba(79, 110, 189, 1);
+			--chat-send-icon-color: rgba(192, 192, 192, 1);
+			--chat-alert-background: rgba(45, 45, 65, 1);
+			--chat-alert-border: rgba(60, 70, 105, 1);
+			--chat-alert-color: rgba(60, 70, 105, 1);
+			--chat-notify-color: rgba(60, 70, 105, 1);
+			--chat-notify-stripe: rgba(60, 70, 105, 1);
+			--chat-notify-background: rgba(39, 41, 61, 1);
 	}
-	html, body {
-		font-family: var(--font-family-default);
-		background: var(--main-background); }
+	html {
+	  box-sizing: border-box;
+	  -ms-overflow-style: scrollbar;
+	  font-size: 10px;
+	  font-family: var(--font-family-default);
+	  background: var(--main-background); }
 	html, body, * {
 		padding: 0;
 		margin: 0;}
+	
+	*,
+	*::before,
+	*::after {
+	  box-sizing: inherit;
+	}
 	.no-select * {
 		color: var(--main-text)!important;
 		text-align: left;
@@ -158,6 +203,9 @@
 	.notify .toast.error .toast-icon,
 	.notify .toast.error:before {
 		background-color:var(--toast-error); }
+	.notify .toast.message .toast-icon,
+	.notify .toast.message:before {
+		background-color:var(--toast-message); }
 /* -------------------- MAIN CONTENT -------------------- */
 	input[type="button"] {
 		background: var(--main-panel-accent)!important;
@@ -190,6 +238,7 @@
 			height: 100%; }
 		.header-time,
 		.header-title {
+			font-size: 1.5rem;
 			display: none; }
 		.header-title:hover {
 			text-decoration: none; }
@@ -249,6 +298,7 @@
 		.navbar-wrapper {
 			background: linear-gradient(0deg,var(--menu-colour),var(--menu-accent))!important;
 			box-shadow: 0 2px 22px -2px rgba(0,0,0,.1), 0 4px 20px -2px rgba(0,0,0,.15);
+			height: calc(100% - (5rem + 2px));
 			transition: 0.3s ease-in-out;
 			padding: 1rem 1rem 0rem 1rem;
 			height: calc(100% - 4rem);
@@ -504,7 +554,7 @@
 	}
 	@media screen and (min-width: 512px) { /* -------------------- SM MOBILE LANDSCAPE -------------------- */
 	}
-	@media screen and (min-width: 768px) { /* -------------------- MD MOBILE LANDSCAPE -------------------- */
+	@media screen and (min-width: 740px) { /* -------------------- MD MOBILE LANDSCAPE -------------------- */
 		.navbar-wrapper {
 			transform: unset;
 			width: 7rem; }
@@ -713,7 +763,7 @@
 	}
 	@media screen and (min-width: 512px) {
 	}
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 740px) {
 		div[data-local-page="Login"] {
 			height: auto; }
 		div[data-local-page="Login"] .panel {
@@ -916,7 +966,7 @@
 	}
 	@media screen and (min-width: 512px) {
 	}
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 740px) {
 		div[data-local-page="forgot_password"] {
 			height: auto; }
 		div[data-local-page="forgot_password"] .panel {

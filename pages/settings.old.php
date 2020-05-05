@@ -776,10 +776,10 @@
 										foreach($query as $ref) {
 											$disabled_refs = array("");
 											if($ref['active'] == "0") {
-												$ref_image = $mg_img['multimedia']['more']['image'];
+												$ref_image = $mg_img['UI']['more']['image'];
 												$ref_click = "editPopup(\"reference\", \"".str_replace("\"", "\\\"", json_encode($ref))."\")";
 											} else {
-												$ref_image = $mg_img['multimedia']['garbage']['image'];
+												$ref_image = $mg_img['UI']['garbage']['image'];
 												$ref_click = "removalPopup(\"reference\", \"".str_replace("\"", "\\\"", json_encode($ref))."\")";
 											};
 											echo "<tr id=\"".$ref['reference_code']."\">";
@@ -821,7 +821,7 @@
 										foreach($query as $usr) {
 											$disabled_users = array("ADMINISTRATION", "Guest");
 											if(in_array($usr['username'],$disabled_users)) {
-												$usr_image = $mg_img['multimedia']['more']['image'];
+												$usr_image = $mg_img['UI']['more']['image'];
 												$usr_click = "editPopup(\"user\", \"".str_replace("\"", "\\\"", json_encode($usr))."\")";
 											};
 											$usr_uid[$i] = $usr['uid'];
@@ -896,15 +896,15 @@
 											$disabled_ranks = array("ADMINISTRATOR", "GUEST");
 											if(in_array($rank['name'],$disabled_ranks)) {
 												$rank_class = "row-disabled";
-												$rank_actions_image = $mg_img['multimedia']['cancel']['image'];
+												$rank_actions_image = $mg_img['UI']['cancel']['image'];
 												$rank_actions = "";
-												$rank_permissions_image = $mg_img['multimedia']['cancel']['image'];
+												$rank_permissions_image = $mg_img['UI']['cancel']['image'];
 												$rank_permissions = "";
 											} else {
 												$rank_class = "row-enabled";
-												$rank_actions_image = $mg_img['multimedia']['more']['image'];
+												$rank_actions_image = $mg_img['UI']['more']['image'];
 												$rank_actions = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
-												$rank_permissions_image = $mg_img['multimedia']['levels']['image'];
+												$rank_permissions_image = $mg_img['UI']['levels']['image'];
 												$rank_permissions = "alert(\"tbd\")";
 											};
 											echo "<tr id=\"".$rank['name']."\" class=\"".$rank_class."\">";
@@ -946,11 +946,11 @@
 											$disabled_pages = array("Homepage", "Messages", "Profile", "Settings");
 											if(in_array($page['title'],$disabled_pages)) {
 												$page_class = "row-disabled";
-												$page_image = $mg_img['multimedia']['cancel']['image'];
+												$page_image = $mg_img['UI']['cancel']['image'];
 												$page_click = "";
 											} else {
 												$page_class = "row-enabled";
-												$page_image = $mg_img['multimedia']['info']['image'];
+												$page_image = $mg_img['UI']['info']['image'];
 												$page_click = "editPopup(\"page\", \"".str_replace("\"", "\\\"", json_encode($page))."\")";
 											};
 											echo "<tr id=\"".$page['title']."\" class=\"".$page_class."\">";

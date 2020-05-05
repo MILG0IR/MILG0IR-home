@@ -24,7 +24,8 @@
 		text-align: center;
 		position: relative; }
 	div[data-local-page="Homepage"] .title h1 {
-		}
+		font-size: 3rem;
+		margin-top: 2rem; }
 	div[data-local-page="Homepage"] .grid {
 		position: relative;
 		overflow: hidden;
