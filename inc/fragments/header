@@ -36,9 +36,9 @@
 					<div class="notifications-panel"> </div>
 				</div>
 				<div class="header-profile">
-					<?php ($user['avatar']!= '' ) ? print('<img class="navbar-brand-image" src="'.$user['avatar'].'" onClick="userPanel(\'profile\');">') : print('<img onClick="userPanel(\'profile\');" src="'.$mg_img["multimedia"]["user"]["image"].'">'); ?>
+					<?php ($userdata['avatar']!= '' ) ? print('<img class="navbar-brand-image" src="'.$userdata['avatar'].'" onClick="userPanel(\'profile\');">') : print('<img onClick="userPanel(\'profile\');" src="'.$mg_img["multimedia"]["user"]["image"].'">'); ?>
 					<div class="profile-panel">
-						<h4>Welcome <?php print(ucfirst($user['username']))?></h4>
+						<h4>Welcome <?php print(ucfirst($userdata['username']))?></h4>
 						<fieldset>
 							<select onchange="changetheme('main', this.value)">
 								<?php

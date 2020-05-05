@@ -13,6 +13,185 @@
 ?><?php
 	include_once("../db/db_conx.php");
 ?>
+<style>
+	div[data-local-page="Settings"] {
+		background: var(--main-background);
+		position: relative;
+	}
+	div[data-local-page="Settings"] .nav::before {
+		background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-accent) 1%, var(--main-panel-accent) 99%, var(--main-background) 100%);
+		box-shadow: 0 -3px 10px 2px var(--main-shadow);
+		content: "";
+		height: 1px;
+		width: 100%; }
+	div[data-local-page="Settings"] .nav {
+		text-align: center;
+		position: sticky;
+		margin: auto;
+		padding: 1em;
+		z-index: 10;
+		width: 94%;
+		right: 0;
+		left: 0;
+		top: 0; }
+	div[data-local-page="Settings"] .nav::after {
+		background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-accent) 1%, var(--main-panel-accent) 99%, var(--main-background) 100%);
+		box-shadow: 0 3px 10px 2px var(--main-shadow);
+		content: "";
+		height: 1px;
+		width: 100%; }
+	div[data-local-page="Settings"] .menu {
+		background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-background) 1%, var(--main-panel-background) 99%, var(--main-background) 100%);
+		list-style: none;
+		overflow: hidden;
+		max-height: 0;
+		float: left;
+		width: 100%;
+		margin: 0; }
+	div[data-local-page="Settings"] .menu .menu-item {
+		padding: 1em; }
+	div[data-local-page="Settings"] .menu .menu-item a {
+		color: var(--main-text);
+		text-decoration: none; }
+	div[data-local-page="Settings"] .menu .menu-item a.active {
+		text-shadow: 0 0 10px var(--menu-accent); }
+	div[data-local-page="Settings"] .content {
+		text-align: center;
+		position: relative;
+		margin: auto;
+		padding: 1em;
+		z-index: 1;
+		width: 100%; }
+	div[data-local-page="Settings"] .content .panel {
+		background: var(--main-panel-background);
+		box-shadow: 0 0 6px 2px var(--main-shadow);
+		color: var(--main-text);
+		position: relative;
+		border: none;
+		min-height: 10rem;
+		width: 90%;
+		left: 5%;
+		padding: 1rem; }
+	div[data-local-page="Settings"] .content .panel header {
+		margin: 1rem;
+		text-align: left;
+		position: relative;
+		height: 5rem; }
+	div[data-local-page="Settings"] .content .panel header h1 {
+		margin: 0px;
+		float: left; }
+	div[data-local-page="Settings"] .content .panel header input {
+		float: right; }
+	div[data-local-page="Settings"] .content .panel#whats-new .update {
+		padding: 1rem;
+		text-align: left; }
+	div[data-local-page="Settings"] .content .panel#whats-new .update div {
+		padding-left: 1rem; }
+	div[data-local-page="Settings"] .content .panel#whats-new .update .note::before {
+		color: var(--whatsnew-note);
+		font-weight: bold;
+		content: "# "; }
+	div[data-local-page="Settings"] .content .panel#whats-new .update .addition::before {
+		color: var(--whatsnew-addition);
+		font-weight: bold;
+		content: "+ "; }
+	div[data-local-page="Settings"] .content .panel#whats-new .update .removal::before {
+		color: var(--whatsnew-removal);
+		font-weight: bold;
+		content: "- "; }
+	div[data-local-page="Settings"] .content .panel#whats-new .update .change::before {
+			color: var(--whatsnew-change);
+			font-weight: bold;
+			content: "* "; }
+	@media screen and (min-width: 256px) {
+		div[data-local-page="Settings"] .menu
+		div[data-local-page="Settings"] .menu {
+			background: var(--main-panel-background);
+			max-height: 100%;
+			overflow: visible; }
+		div[data-local-page="Settings"] .title {
+			background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-background) 1%, var(--main-panel-background) 99%, var(--main-background) 100%);
+			padding: 0.75em 1em 0.75em 1em;
+			color: var(--main-text);
+			font-size: 1.25em;
+			text-align: left;
+			width: 100%;
+			float: left;
+			margin: 0; }
+		div[data-local-page="Settings"] .title-icon {
+			-webkit-transition: background 1.111s;
+			transition: background 1.111s;
+			position: relative;
+			margin-top: 0.5em;
+			float: right; }
+		div[data-local-page="Settings"] .title-icon,
+		div[data-local-page="Settings"] .title-icon::before,
+		div[data-local-page="Settings"] .title-icon::after {
+			background: var(--main-text);
+			height: 0.25rem;
+			width: 1.75rem; }
+		div[data-local-page="Settings"] .title-icon::before,
+		div[data-local-page="Settings"] .title-icon::after {
+			transition: transform 0.666s, top 0.666s, -webkit-transform 0.666s; 
+			-webkit-transition: top 0.666s, -webkit-transform 0.666s;
+			transition: top 0.666s, -webkit-transform 0.666s;
+			transition: transform 0.666s, top 0.666s;
+			position: absolute;
+			content: "";
+			left: 0; }
+		div[data-local-page="Settings"] .title-icon::before {
+			top: -0.5rem; }
+		div[data-local-page="Settings"] .title-icon::after {
+			top: 0.5rem; }
+		div[data-local-page="Settings"] .title-check {
+			position: absolute;
+			display: none;
+			left: -666px; }
+		div[data-local-page="Settings"] .title-check ~ .menu {
+			max-height: 0;
+			-webkit-transition: max-height 0.666s;
+			transition: max-height 0.666s; }
+		div[data-local-page="Settings"] .title-check:checked ~ .menu {
+			max-height: 100%;
+			-webkit-transition: max-height 1.111s;
+			transition: max-height 1.111s; }
+		div[data-local-page="Settings"] .title-check:checked ~ .title .title-icon {
+			background: transparent;
+			-webkit-transition: background 0.666s;
+			transition: background 0.666s; }
+		div[data-local-page="Settings"] .title-check:checked ~ .title .title-icon::before,
+		div[data-local-page="Settings"] .title-check:checked ~ .title .title-icon::after {
+			transition: transform 0.666s, top 0.666s;
+			transition: top 0.666s, -webkit-transform 0.666s;
+			transition: transform 0.666s, top 0.666s, -webkit-transform 0.666s;
+			-webkit-transition: top 0.666s, -webkit-transform 0.666s;
+			top: 0; }
+		div[data-local-page="Settings"] .title-check:checked ~ .title .title-icon::before {
+					transform: rotate(-135deg);
+			-webkit-transform: rotate(-135deg); }
+		div[data-local-page="Settings"] .title-check:checked ~ .title .title-icon::after {
+					transform: rotate(135deg);
+			-webkit-transform: rotate(135deg); }
+	}
+	@media screen and (min-width: 512px) {
+	}
+	@media screen and (min-width: 768px) {
+		div[data-local-page="Settings"] .content .panel {
+			width: 78%;
+			left: 11%; }
+	}
+	@media screen and (min-width: 1200px) {
+		div[data-local-page="Settings"] .menu .menu-item {
+			display: inline-block; }
+		div[data-local-page="Settings"] .title {
+			display: none; }
+		div[data-local-page="Settings"] .title-check ~ .menu {
+			max-height: 100%; }
+		div[data-local-page="Settings"] .nav {
+			width: 80%;
+		}
+	}
+</style>
 <div class="nav">
 	<input class="title-check" type="checkbox" id="navTitleCheck"/>
 	<label class="title" for="navTitleCheck">menu

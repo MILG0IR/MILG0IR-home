@@ -1,7 +1,10 @@
 <script name="FUNCTIONS">
-	//--------------------------- Universal functions ---------------------------//
+	//--------------------------- Universal functions ---------------------------// // -- &_=key  -- change to API key -- //
 		function _(x) {
 			return document.getElementById(x);
+		}
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
 		}
 		function redirect(uri) {
 			window.location = uri;
@@ -66,19 +69,15 @@
 
 			$('.'+elem).html(result);
 			setTimeout('date_time("'+elem+'"'+', '+seconds+', '+shtDay+', '+shtMonth+');','1000');
-			return true;
 		}
 		function includeHTML() {
 			var z, i, elmnt, file, xhttp;
-			/*loop through a collection of all HTML elements:*/
 			z = document.getElementsByTagName("*");
 			for (i = 0; i < z.length; i++) {
 			elmnt = z[i];
-			/*search for elements with a certain atrribute:*/
 			file = elmnt.getAttribute("include-html");
 			status = elmnt.getAttribute("page-status");
 			if (file && status == "unloaded") {
-				/*make an HTTP request using the attribute value as the file name:*/
 				xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 				if (this.readyState == 4) {
@@ -90,91 +89,27 @@
 						elmnt.innerHTML = "Page not found.";
 						elmnt.setAttribute("page-status", "404 - Page not found");
 					}
-					/*remove the attribute, and call this function once more:*/
 					elmnt.removeAttribute("include-html");
 					includeHTML();
 				}
-				}      
+				}
 				xhttp.open("GET", file, true);
 				xhttp.send();
-				/*exit the function:*/
 				return;
 			}
 			}
-		};
-	//--------------------------- POPUP CONTROL ---------------------------//
-	//--------------------------- TOAST CONTROL ---------------------------//
-		function toast(type, heading, subheading) {
-			if(type == "success") {
-				var img = "<?php echo$mg_img['multimedia']['checked']['image']?>";
-			} else if(type == "info") {
-				var img = "<?php echo$mg_img['multimedia']['info']['image']?>";
-			} else if(type == "warn") {
-				var img = "<?php echo$mg_img['multimedia']['exclamation']['image']?>";
-			} else if(type == "error") {
-				var img = "<?php echo$mg_img['multimedia']['cancel']['image']?>";
-			} else {
+		}
+		function initGrid(elem) {			// T.B.D
+			var attr = $(elem).attr('data-local-page');
+			if(typeof attr !== typeof undefined && attr !== false) {
+				sleep(100);
+				var grid = new Muuri('.grid', {
+					layoutDuration: 400,
+					layoutEasing: 'ease',
+					dragEnabled: true,
+					dragSortInterval: 50
+				});
 			}
-			var parent = $(".notify");
-			var toast = document.createElement('div');
-				toast.setAttribute('class', 'toast '+type);
-			var toast_icon = document.createElement('div');
-				toast_icon.setAttribute('class', 'toast-icon');
-			var toast_icon_image = document.createElement('img');
-				toast_icon_image.setAttribute('src', img);
-
-			var toast_content = document.createElement('div');
-				toast_content.setAttribute('class', 'toast-content');
-			var toast_content_title = document.createElement('p');
-				toast_content_title.setAttribute('class', 'toast-type');
-				toast_content_title.textContent = heading;
-			var toast_content_messagge = document.createElement('p');
-				toast_content_messagge.setAttribute('class', 'toast-message');
-				toast_content_messagge.textContent = subheading;
-				
-			var toast_close = document.createElement('div');
-				toast_close.setAttribute('class', 'toast-close');
-				toast_close.setAttribute('onClick', 'parent = $(this).parent().fadeOut("slow", function() {$(this).remove();})');
-			var toast_close_image = document.createElement('img');
-				toast_close_image.setAttribute('src', '<?php print($mg_img['multimedia']['close']['image']) ?>');
-
-			parent.append(toast);
-			toast.append(toast_icon);
-			toast_icon.append(toast_icon_image);
-			toast.append(toast_content);
-			toast_content.append(toast_content_title);
-			toast_content.append(toast_content_messagge);
-			toast.append(toast_close);
-			toast_close.append(toast_close_image);
-		}
-	//--------------------------- THEME CONTROL FUNCTIONS ---------------------------//
-		function changetheme(type, theme) {
-			if(type == "main" ) {
-				$('link[theme-type="main"]').attr("href","./themes/"+theme+".theme-main.css");
-			} else if(type == "nav" ) {
-				$('link[theme-type="navbar"]').attr("href","./themes/"+theme+".theme-nav.css");
-			}
-		}
-	//--------------------------- Chat functions ----------------------------//
-		function getChat(u2) {
-			var u1 = '<?php print($user['uid'])?>';
-			return true;
-		}
-		function sendChat() {
-			var u1 = '<?php print($user['uid'])?>';
-			var u2 = '' // GET FROM BUTTON ATTRIBUTE TBD;
-			var msg = '';
-			return true;
-		}
-	//--------------------------- Check functions ---------------------------//
-		function getreferencedetails(reference) {
-			var output = $.ajax({
-				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=get_reference_data&ref='+reference,
-				contentType: 'application/x-www-form-urlencoded',
-				type: 'POST',
-			})
-			return output;
 		}
 		function validatepassword(pass) {
 			if (pass.length < 8) {
@@ -196,10 +131,35 @@
 				return "ERR-STR-1";
 			}
 		}
+		function checkregex(string, regex) {
+			re = new RegExp( regex );
+			return re.test(string);
+		}
+		function toggleNav() {
+			$(".navbar-wrapper").toggleClass("navbar-open");
+			$(".burger").toggleClass("burger-active");
+		}
+		function userPanel(panel) {
+			if(panel == $('.header-user').attr('data-open-panel')) {
+				$('.header-user').attr('data-open-panel', '');
+			} else {
+				$('.header-user').attr('data-open-panel', panel);
+			}
+		}
+	//--------------------------- Ajax functions ---------------------------//
+		function getreferencedetails(reference) {
+			var output = $.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=get_reference_data&_=key&ref='+reference,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			})
+			return output;
+		}
 		function checkresponse(code) {
 			var output = $.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=search_code&code='+code,
+				data: '#=search_code&_=key&code='+code,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			})
@@ -210,7 +170,7 @@
 			var status	= $("#sup-usernamestatus");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_username&u='+u,
+				data: '#=check_username&_=key&u='+u,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -231,7 +191,7 @@
 			var status	= $("#sup-emailstatus");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_email&e='+e,
+				data: '#=check_email&_=key&e='+e,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -302,7 +262,7 @@
 			var status = $("#sup-referencestatus");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_reference&ref='+reference,
+				data: '#=check_reference&_=key&ref='+reference,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -321,7 +281,7 @@
 			var updateBTN	= $(".update-button");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=check_for_update&version='+version+'&device='+device+'&branch='+branch,
+				data: '#=check_for_update&_=key&version='+version+'&device='+device+'&branch='+branch,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -336,16 +296,12 @@
 				});
 			});
 		}
-		function checkregex(string, regex) {
-			re = new RegExp( regex );
-       		return re.test(string);
-		}
 		function unlockelement(element, username) {
 			var password = $(".form-input-password").val();
 			var status = $(".form-status");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=confirm_password&u='+username+'&p='+password,
+				data: '#=confirm_password&_=key&u='+username+'&p='+password,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -360,17 +316,6 @@
 				}
 			});
 		}
-		function toggleNav() {
-			$(".navbar-wrapper").toggleClass("navbar-open");
-			$(".burger").toggleClass("burger-active");
-		}
-		function userPanel(panel) {
-			if(panel == $('.header-user').attr('data-open-panel')) {
-				$('.header-user').attr('data-open-panel', '');
-			} else {
-				$('.header-user').attr('data-open-panel', panel);
-			}
-		}
 	//--------------------------- API CALLOUT FUNCTIONS ---------------------------//
 		function signup() {
 			var u = $('#sup-username').val();
@@ -382,7 +327,7 @@
 			if(p1 == p2) {
 				$.ajax({
 					url: '<?php echo$mg_dir['root']?>api/index.php',
-					data: '#=signup&u='+u+'&e='+e+'&p='+p1+'&ref='+ref,
+					data: '#=signup&_=key&u='+u+'&e='+e+'&p='+p1+'&ref='+ref,
 					contentType: 'application/x-www-form-urlencoded',
 					type: 'POST',
 				}).done(function(data) {
@@ -410,7 +355,7 @@
 			var status = $("#lin-status");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=login&e='+e+'&p='+p,
+				data: '#=login&_=key&e='+e+'&p='+p,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -428,7 +373,7 @@
 			var status = _("refstatus");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=create_user_reference&u='+user,
+				data: '#=create_user_reference&_=key&u='+user,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -473,7 +418,7 @@
 		function deactivatereference(id) {
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=deactivate_user_reference&id='+id,
+				data: '#=deactivate_user_reference&_=key&id='+id,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -490,7 +435,7 @@
 		function reactivatereference(id) {
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=reactivate_user_reference&id='+id,
+				data: '#=reactivate_user_reference&_=key&id='+id,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -510,7 +455,7 @@
 			var icon = $(".form-change-icon").attr("src");
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=update_rank_info&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
+				data: '#=update_rank_info&_=key&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -532,7 +477,7 @@
 			var uri_remote = $(".form-change-uri_remote").val();
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=update_page_info&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
+				data: '#=update_page_info&_=key&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -555,7 +500,7 @@
 			if(p1 == p2) {
 				$.ajax({
 					url: '<?php echo$mg_dir['root']?>api/index.php',
-					data: '#=forgot_password&e='+e+'&p'+p1+'&ref'+ref,
+					data: '#=forgot_password&_=key&e='+e+'&p'+p1+'&ref'+ref,
 					contentType: 'application/x-www-form-urlencoded',
 					type: 'POST',
 				}).done(function(data) {
@@ -575,7 +520,7 @@
 		function logout() {
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=logout',
+				data: '#=logout&_=key',
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -586,6 +531,59 @@
 				}
 			});
 		}
+	//--------------------------- POPUP CONTROL ---------------------------//
+	//--------------------------- TOAST CONTROL ---------------------------//
+		function toast(type, heading, subheading) {
+			if(type == "success") {
+				var img = "<?php echo$mg_img['multimedia']['checked']['image']?>";
+			} else if(type == "info") {
+				var img = "<?php echo$mg_img['multimedia']['info']['image']?>";
+			} else if(type == "warn") {
+				var img = "<?php echo$mg_img['multimedia']['exclamation']['image']?>";
+			} else if(type == "error") {
+				var img = "<?php echo$mg_img['multimedia']['cancel']['image']?>";
+			} else {
+			}
+			var parent = $(".notify");
+			var toast = document.createElement('div');
+				toast.setAttribute('class', 'toast '+type);
+			var toast_icon = document.createElement('div');
+				toast_icon.setAttribute('class', 'toast-icon');
+			var toast_icon_image = document.createElement('img');
+				toast_icon_image.setAttribute('src', img);
+
+			var toast_content = document.createElement('div');
+				toast_content.setAttribute('class', 'toast-content');
+			var toast_content_title = document.createElement('p');
+				toast_content_title.setAttribute('class', 'toast-type');
+				toast_content_title.textContent = heading;
+			var toast_content_messagge = document.createElement('p');
+				toast_content_messagge.setAttribute('class', 'toast-message');
+				toast_content_messagge.textContent = subheading;
+				
+			var toast_close = document.createElement('div');
+				toast_close.setAttribute('class', 'toast-close');
+				toast_close.setAttribute('onClick', 'parent = $(this).parent().fadeOut("slow", function() {$(this).remove();})');
+			var toast_close_image = document.createElement('img');
+				toast_close_image.setAttribute('src', '<?php print($mg_img['multimedia']['close']['image']) ?>');
+
+			parent.append(toast);
+			toast.append(toast_icon);
+			toast_icon.append(toast_icon_image);
+			toast.append(toast_content);
+			toast_content.append(toast_content_title);
+			toast_content.append(toast_content_messagge);
+			toast.append(toast_close);
+			toast_close.append(toast_close_image);
+		}
+	//--------------------------- THEME CONTROL FUNCTIONS ---------------------------//
+		function changetheme(type, theme) {
+			if(type == "main" ) {
+				$('link[theme-type="main"]').attr("href","./themes/"+theme+".theme-main.css");
+			} else if(type == "nav" ) {
+				$('link[theme-type="navbar"]').attr("href","./themes/"+theme+".theme-nav.css");
+			}
+		}
 	//--------------------------- PAGE CONTROL ---------------------------//
 		function openpage(pid, hideNav) {
 			var screenwidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
@@ -595,7 +593,7 @@
 
 			$.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
-				data: '#=get_page_data&id='+pid,
+				data: '#=get_page_data&_=key&id='+pid,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -631,7 +629,7 @@
 					} else {
 						window.open(pageJSON[4], '_blank');
 					}
-					// Display the chosen page and append the class'
+					// Display the chosen page and append the class
 					$('.child').hide();
 					$('#'+pageJSON[0]).show();
 					$('.active').toggleClass("active");
@@ -639,6 +637,8 @@
 					$('#'+pageJSON[0]).toggleClass("child-active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
+
+					initGrid('.child-active');
 				}
 			});
 		}
@@ -659,11 +659,118 @@
 			if($(elem).is("div")) {
 				elem.remove();
 			} else {
-				var tab =  $("#" + elem.attr('name') + "-" + elem.attr('id'));
+				var tab = $("#" + elem.attr('name') + "-" + elem.attr('id'));
 				tab.removeClass("enabled");
 				elem.remove();
 			}
 			openpage(0, false);
+		}
+	//--------------------------- Chat functions ----------------------------//
+		function searchfriends() {
+			var elem = $(".searchfriends");
+			var elements = $('.discussions');
+			elements.children('.discussion').each(function () {
+				if (!$(this).attr('data-chat-username').toUpperCase().includes(elem.val().toUpperCase()) && !$(this).attr('data-chat-name').toUpperCase().includes(elem.val().toUpperCase()) ) {
+					$(this).fadeOut(100);
+				} else {
+					$(this).fadeIn(100);
+				}
+			});
+		}
+		function getChat(u2, type = null) {
+			var u1 = $('.header-chat').attr('data-chat-user1');
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=get_messages&_=key&u1='+u1+'&u2='+u2,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(msgJSON) {
+				if(checkregex(msgJSON, /[A-Z]{3}-[A-Z]{3}-/g)){
+					checkresponse(msgJSON).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+					});
+				} else {
+					var parent = $('.messages-chat');
+					parent.html('');
+					var msgARRAY = jQuery.parseJSON(msgJSON);
+					msgARRAY.forEach(function(row, i) {
+						if(row.user1 == u1) {
+							var message = document.createElement('div');
+								message.setAttribute('class', "message");
+							var response = document.createElement('div');
+								response.setAttribute('class', "response");
+							var text = document.createElement('p');
+								text.setAttribute('class', "text");
+								text.textContent = row.message;
+							var timestamp = document.createElement('p');
+								timestamp.setAttribute('class', "response-time");
+								timestamp.textContent = row.timestamp;
+
+							parent.append(message);
+							message.append(response);
+							response.append(text);
+							response.append(timestamp);
+						} else {
+							var message = document.createElement('div');
+								message.setAttribute('class', "message");
+							var received = document.createElement('div');
+								received.setAttribute('class', "received");
+							var text = document.createElement('p');
+								text.setAttribute('class', "text");
+								text.textContent = row.message;
+							var timestamp = document.createElement('p');
+								timestamp.setAttribute('class', "received-time");
+								timestamp.textContent = row.timestamp;
+
+							parent.append(message);
+							message.append(received);
+							received.append(text);
+							received.append(timestamp);
+						}
+					});
+				}
+				if(type != "update") {
+					$('.header-chat').attr('data-chat-user2', $('#'+u2+'.discussion').attr('id'));
+					$('.header-chat').children('.name').text($('#'+u2+'.discussion').attr('data-chat-name'));
+					$('.chat').addClass('open');
+					$('.chat').show();
+					$('.welcome').hide();
+				}
+				scrolltobottom('.messages-chat');
+				if ($('.discussions-header').attr('data-chats-status') != "updating") {
+					$('.discussions-header').attr("data-chats-status", "updating")
+					 updateChats()
+				}
+			});
+		}
+		function updateChats() {
+			var updateChatInterval = setInterval(function(){
+				if($('div[data-local-page="Messages"]').length > 0) {
+					var u2 = $('.header-chat').attr('data-chat-user2');
+					getChat(u2, "update");
+				} else {
+					clearInterval(updateChatInterval)
+				}
+			}, 1500);
+		}
+		function sendChat() {
+			var u1 = $('.header-chat').attr('data-chat-user1');
+			var u2 = $('.header-chat').attr('data-chat-user2');
+			var msg = $('.write-message').val();
+			var msgBox = $('.write-message');
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=send_message&_=key&u1='+u1+'&u2='+u2+'&msg='+msg,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(data) {
+				if(data == "success") {
+					msgBox.val('');
+					getChat(u2);
+				} else {
+					toast('error', 'Unable to send', 'We were unable to send your message, Please try again later')
+				}
+			});
 		}
 	//--------------------------- * ---------------------------//
 </script>

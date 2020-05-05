@@ -2,7 +2,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pulltorefreshjs/0.1.20/index.umd.js" integrity="sha256-xuQzN96uMRdoZgvt365uzyZVPtt3uRZeeX1RvC3Klio=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js" integrity="sha256-IylDNWjip7FK2TJUYck237qBTBeSiwnSFDCjLG686D4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js" integrity="sha256-ImIFrmJd7ymGlVw2MbtI96BNPW4NfcKqM3d1Go665Ig=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/12.0.4/2/twemoji.min.js" integrity="sha256-Pbqu2FUGGcJj9IWMiV6JVz6q2BjlGeVrwFW/aXFE5xk=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.2/web-animations.min.js" integrity="sha256-jZSPoJvWdpyDRRHRaGnqmpz1DN1L1XLEKpb/7iTLdro=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha256-eVNjHw5UeU0jUqPPpZHAkU1z4U+QFBBY488WvueTm88=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/muuri/0.5.4/muuri.min.js" integrity="sha256-y90OsT+X0MvywswW0wtpdXrU3XI0jxLR5assu76umvw=" crossorigin="anonymous"></script>
+
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

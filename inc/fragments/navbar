@@ -5,9 +5,10 @@
 			$sql = "SELECT * FROM `var_pages` ORDER BY CHAR_LENGTH(`id`), `id` asc;";
 			$query = mysqli_query($db_conx, $sql);
 			foreach($query as $row) {
+				($row['id']!='0')?$class="":$class="enabled active";
 				echo '
 					<li>
-						<a class="" id="'.$row['title'].'-'.$row['id'].'" onClick="openpage('.$row['id'].', true)">
+						<a class="'.$class.'" id="'.$row['title'].'-'.$row['id'].'" onClick="openpage('.$row['id'].', true)">
 							<img class="navbar-brand-image" src="'.$row['icon'].'">
 							<p class="navbar-brand">'.$row['title'].'</p>
 						</a>

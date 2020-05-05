@@ -15,17 +15,20 @@
 ?>
 <style>
 	div[data-local-page="Messages"] {
+		background: var(--main-background);
 		position: relative;
 		height: 100%;
 		width: 100%; }
 	div[data-local-page="Messages"] .clickable {
 		cursor: pointer; }
 	div[data-local-page="Messages"] .timestamp {
-		margin-bottom:10px;
-		margin-left: 85px;
-		font-size: 10px;
-		color:lightgrey;
-	}
+		border: solid 1px var(--chat-alert-border);
+		background: var(--chat-alert-background);
+		color: var(--chat-alert-color);
+		padding: 5px 10px 5px 10px;
+		border-radius: 25px;
+		margin: 0px auto;
+		font-size: 10px; }
 	/**/
 		div[data-local-page="Messages"] .discussions {
 			border-right: solid 1px var(--discussions-border);
@@ -35,11 +38,12 @@
 			position: absolute;
 			display: block;
 			height: 100%;
-			width: 25%; }
+			width: 100%; }
 		div[data-local-page="Messages"] .discussions::-webkit-scrollbar {
 				display: none; }
 	/* --------------- DISCUSSIONS HEADER --------------- */
 		div[data-local-page="Messages"] .discussions-header {
+			box-shadow: 0px 3px 2px var(--main-shadow);
 			background: var(--discussions-header-background);
 			justify-content: center;
 			align-items: center;
@@ -78,7 +82,7 @@
 			align-items: center;
 			cursor: pointer;
 			display: flex;
-			height: 90px;
+			height: 9rem;
 			width: 100%; }
 		div[data-local-page="Messages"] .discussions .discussion .photo {
 			margin-left:20px;
@@ -86,8 +90,7 @@
 			width: 45px;
 			height: 45px;
 			background: var(--image-placeholder);
-			   -moz-border-radius: 50px;
-			-webkit-border-radius: 50px;
+			border-radius: 50px;
 			background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat; }
@@ -120,26 +123,67 @@
 	/**/
 		div[data-local-page="Messages"] .chat {
 			background: var(--main-panel-background);
+			transition: left 0.2s ease-in;
 			position: absolute;
 			display: block;
 			height: 100%;
-			width: 75%;
-			left: 25%;
+			width: 100%;
+			left: 100%;
 			top: 0px; }
+		div[data-local-page="Messages"] .chat.open {
+			left: 0%; }
+		div[data-local-page="Messages"] .welcome {
+			display: none; }
+	/* --------------- WELCOME --------------- */
+		div[data-local-page="Messages"] .welcome > .title {
+			color: var(--chat-welcome-title)!important;
+			color: var(--main-text);
+			text-align: center;
+			font-weight: bold;
+			margin-top: 10rem; }
+		div[data-local-page="Messages"] .welcome > .subtitle {
+			color: var(--chat-welcome-subtitle);
+			margin-top: 4rem;
+			text-align: center; }
+		div[data-local-page="Messages"] .welcome .grid {
+			display: flex;
+			margin: 10rem auto;
+			width: fit-content; }
+		div[data-local-page="Messages"] .welcome .grid .tile {
+			background: var(--chat-welcome-tile-background);
+			box-shadow: 0px 0px 11px 4px var(--main-shadow);
+			border-radius: 3px;
+			padding: 1.5rem;
+			width: 25rem;
+			margin: 1rem; }
+		div[data-local-page="Messages"] .welcome .grid .tile > .image {
+			max-height: 22rem;
+			max-width: 22rem; }
+		div[data-local-page="Messages"] .welcome .grid .tile > .title {
+			color: var(--chat-welcome-tile-title);
+			font-weight: bold; }
+		div[data-local-page="Messages"] .welcome .grid .tile > .subtitle {
+			color: var(--chat-welcome-tile-subtitle); }
 	/* --------------- CHAT HEADER --------------- */
 		div[data-local-page="Messages"] .header-chat {
 			box-shadow: 0px 3px 2px var(--main-shadow);
 			background: var(--main-panel-accent);
 			align-items: center;
 			color: var(--main-text);
-			height: 90px;
+			height: 6rem;
 			display:flex; }
-		div[data-local-page="Messages"] .chat .header-chat .icon {
+		div[data-local-page="Messages"] .chat .header-chat .icon-back {
 			margin-left: 30px;
-			font-size: 14pt; }
+			font-size: 14pt;
+			display: inline-block; }
+		div[data-local-page="Messages"] .chat .header-chat .icon-more {
+			right: 3rem;
+			font-size: 14pt;
+			display: initial;
+			position: absolute; }
 		div[data-local-page="Messages"] .chat .header-chat .name {
 			margin: 0 0 0 20px;
-			text-transform: uppercase;
+			text-transform: capitalize;
 			font-family:'Montserrat', sans-serif;
 			font-size: 13pt; }
 		div[data-local-page="Messages"] .chat .header-chat .right {
@@ -147,10 +191,10 @@
 			right: 40px; }
 	/* --------------- CHAT --------------- */
 		div[data-local-page="Messages"] .chat .messages-chat {
-			height: calc(100% - 171px);
+			height: calc(100% - (6rem + 8rem));
 			overflow: hidden scroll;
 			position: absolute;
-			padding: 25px 35px;
+			padding: 0rem 2rem 1rem 2rem;
 			width: 100%; }
 		div[data-local-page="Messages"] .chat .messages-chat::-webkit-scrollbar {
 				display: none; }
@@ -162,19 +206,38 @@
 			border: solid 1px var(--chat-alert-border);
 			border-radius: 25px;
 			padding: 5px 10px 5px 10px;
-			margin: 2rem auto;
-		 }
+			margin: 2rem auto; }
+		div[data-local-page="Messages"] .chat .messages-chat .notif {
+			width: 100%;
+			text-align: center;
+			color: var(--chat-notify-color);
+			background: var(--chat-notify-background);
+			border-radius: 25px;
+			position: relative;
+			padding: 5px 10px 5px 10px;
+			margin: 2rem auto; }
+		div[data-local-page="Messages"] .chat .messages-chat .notif::before,
+		div[data-local-page="Messages"] .chat .messages-chat .notif::after {
+			content: "";
+			width: 40%;
+			height: 2px;
+			background: var(--chat-notify-stripe);
+			position: absolute;
+			top: 50%; }
+		div[data-local-page="Messages"] .chat .messages-chat .notif::before {
+			left: 0%; }
+		div[data-local-page="Messages"] .chat .messages-chat .notif::after {
+			right: 0%; }
 		div[data-local-page="Messages"] .chat .messages-chat .message {
 			display:flex;
 			align-items: center;
 			margin-bottom: 8px; }
-		div[data-local-page="Messages"] .chat .messages-chat .message .photo {--discussions-header-image-placeholder
+		div[data-local-page="Messages"] .chat .messages-chat .message .photo {
 			display: block;
 			width: 45px;
 			height: 45px;
 			background: var(--image-placeholder);
-			   -moz-border-radius: 50px;
-			-webkit-border-radius: 50px;
+			border-radius: 50px;
 			background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat; }
@@ -185,8 +248,7 @@
 		div[data-local-page="Messages"] .chat .messages-chat .received .text {
 			background: var(--chat-other-bubble);
 			color: var(--chat-other-text);
-			border-radius: 12px;
-			margin: 0 35px;
+			border-radius: 12px 12px 12px 0px;
 			padding: 15px; }
 		div[data-local-page="Messages"] .chat .messages-chat .response-time {
 			margin-right: 40px !important;
@@ -198,12 +260,10 @@
 		div[data-local-page="Messages"] .chat .messages-chat .response .text {
 			background: var(--chat-user-bubble);
 			color: var(--chat-user-text);
-			border-radius: 12px;
-			margin: 0 35px;
+			border-radius: 12px 12px 0px 12px;
 			padding: 15px; }
 		div[data-local-page="Messages"] .chat .messages-chat .received-time {
 			margin-bottom:10px;
-			margin-left: 85px;
 			font-size: 10px;
 			color:lightgrey; }
 	/* --------------- CHAT FOOTER --------------- */
@@ -214,21 +274,87 @@
 			align-items: center;
 			position:absolute;
 			display: flex;
-			height: 81px;
+			height: 8rem;
 			width: 100%;
 			bottom: 0; }
 		div[data-local-page="Messages"] .chat .footer .emoji {
-			transform: translate(-50%);
-			margin-left: 5%;
-			font-size: 14pt;
-			color: var(--chat-emoji-icon-color); }
+			display: none; }
 		div[data-local-page="Messages"] .chat .footer .write-message {
+			color: var(--chat-input-color);
+			border-bottom: solid 1px #ccc;
+			background: transparent;
 			position: absolute;
-			margin-left: 10%;
+			margin-left: 5%;
 			padding: 10px;
 			height: 5rem;
 			border: none;
+			width: 90%; }
+		div[data-local-page="Messages"] .chat .footer .write-message:focus {
+			border-bottom: 1px solid #4285F4;
+			box-shadow: 0 1px 0 0 #4285F4; }
+		div[data-local-page="Messages"] .chat .footer .send {
+			display: none; }
+		div[data-local-page="Messages"] .chat .footer-chat input *::-webkit-input-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *:-ms-input-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *::-moz-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *:-moz-placeholder {
+			color: var(--main-text);
+			font-size: 13pt; }
+	@media screen and (min-width: 256px) {
+	}
+	@media screen and (min-width: 512px) {
+	}
+	@media screen and (min-width: 768px) {
+		div[data-local-page="Messages"] .header-chat {
+			height: 4.5rem; }
+		div[data-local-page="Messages"] .chat .header-chat .icon-more {
+			right: 2.25; }
+		div[data-local-page="Messages"] .chat .messages-chat {
+			padding: 1rem 3rem 1rem 3rem;
+			height: calc(100% - (4.5rem + 8rem)); }
+		div[data-local-page="Messages"] .chat .footer .write-message {
+			margin-left: 10%;
 			width: 80%; }
+		div[data-local-page="Messages"] .chat .footer-chat input *::-webkit-input-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *:-ms-input-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *::-moz-placeholder,
+		div[data-local-page="Messages"] .chat .footer-chat input *:-moz-placeholder {
+			color: var(--main-text);
+			font-size: 13pt; }
+	}
+	@media screen and (min-width: 1200px) {
+		div[data-local-page="Messages"] .welcome {
+			background: var(--main-panel-background);
+			position: absolute;
+			display: block;
+			height: 100%;
+			width: 75%;
+			left: 25%;
+			top: 0px; }
+		div[data-local-page="Messages"] .chat .header-chat .icon-back {
+			display: none; }
+		div[data-local-page="Messages"] .discussions {
+			width: 25%;
+			left: unset; }
+		div[data-local-page="Messages"] .header-chat {
+			height: 9rem }
+		div[data-local-page="Messages"] .chat .header-chat .icon-more {
+			right: 4.5; }
+		div[data-local-page="Messages"] .chat .messages-chat {
+			height: calc(100% - (9rem + 8rem)); }
+		div[data-local-page="Messages"] .chat {
+			display: none;
+			width: 75%;
+			left: 25%; }
+		div[data-local-page="Messages"] .chat.open {
+			display: block;
+			left: 25%; }
+		div[data-local-page="Messages"] .chat .footer .emoji {
+			display: block;
+			color: var(--chat-emoji-icon-color);
+			transform: translate(-50%);
+			margin-left: 5%;
+			font-size: 14pt; }
 		div[data-local-page="Messages"] .chat .footer .send {
 			background: var(--chat-send-icon-background);
 			color: var(--chat-send-icon-color);
@@ -238,121 +364,92 @@
 			text-align: center;
 			position: absolute;
 			font-size: 14pt;
+			display: block;
 			height: 50px;
 			width: 50px;
 			right: 5%; }
-		div[data-local-page="Messages"] .chat .footer-chat input *::-webkit-input-placeholder,
-		div[data-local-page="Messages"] .chat .footer-chat input *:-ms-input-placeholder,
-		div[data-local-page="Messages"] .chat .footer-chat input *::-moz-placeholder,
-		div[data-local-page="Messages"] .chat .footer-chat input *:-moz-placeholder {
-			color: var(--main-text);
-			font-size: 13pt; }
-	/* ========== ========== ========== ========== ========== */
-	@media screen and (max-width: 768px) {
-		div[data-local-page="Messages"] .discussions,
-		div[data-local-page="Messages"] .chat {
-			width: 100%;
-		}
 	}
 </style>
 <section class="discussions">
 	<div class="discussions-header">
 		<div class="searchbar">
 			<i class="fa fa-search" aria-hidden="true"></i>
-			<input type="text" placeholder="Search..."></input>
+			<input type="text" placeholder="Search..." class="searchfriends" onKeyUp="searchfriends()"></input>
 		</div>
 	</div>
 	<?
-		$sql = "SELECT * FROM `users`;";
+		$UserID = $userdata['uid'];
+		$list_order = array();
+		$sql = "SELECT * FROM `users` WHERE `enabled`='1';";
 		$query = mysqli_query($db_conx, $sql);
-		foreach($query as $row) {
-			if($row['uid'] != $user['uid']) {
-				echo "
-				<div class='discussion'>
-					<div class='photo' style='background-image: url(https://via.placeholder.com/45);'><div class='online'></div></div>
-					<div class='contact'>
-						<p class='name'>".$row['firstname']." ".$row['surname']."</p>
-						<p class='message'></p>
-					</div>
-					<div class='timestamp'>".$row['last_online']."</div>
-				</div>
-				";
+		while($user2 = mysqli_fetch_assoc($query)) {
+			if($user2['uid'] != $userdata['uid']) {
+				$User2ID = $user2['uid'];
+				$msql = "SELECT `message`, `timestamp` FROM `var_messages` WHERE `user1`='$UserID' AND `user2`='$User2ID' OR `user1`='$User2ID' AND `user2`='$UserID' ORDER BY `timestamp` DESC LIMIT 1";
+				$result = mysqli_query($db_conx, $msql);
+				$message = mysqli_fetch_row($result);
+
+				$users[$i]['uid'] = $user2['uid'];
+				$users[$i]['avatar'] = $user2['avatar'];
+				$users[$i]['username'] = $user2['username'];
+				$users[$i]['firstname'] = $user2['firstname'];
+				$users[$i]['surname'] = $user2['surname'];
+				$users[$i]['message'] = $message[0];
+				($message[1] == null)?$users[$i]['last_messaged'] = "never":$users[$i]['last_messaged'] = $message[1];
+				$i++;
 			}
+		}
+		foreach($users as $user) {
+			$list_order[] = $user['uid'].preg_replace('/[^0-9]/', '', $user['last_messaged']);
+			$discusions[$user['uid'].preg_replace('/[^0-9]/', '', $user['last_messaged'])] = "
+				<div class='discussion' id='".$user['uid']."' onClick='getChat(\"".$user['uid']."\");' data-chat-username='".$user['username']."' data-chat-name='".$user['firstname']." ".$user['surname']."'>
+					<div class='photo' style='background-image: url(".$user['avatar'].");'><div class='".$user['uid']."-online'></div></div>
+					<div class='contact'>
+						<p class='name'>".$user['firstname']." ".$user['surname']."</p>
+						<p class='message'>".$user['message']."</p>
+					</div>
+					<div class='timestamp'>".$user['last_messaged']."</div>
+				</div>
+			";
+		}
+		arsort($list_order);
+
+		foreach($list_order as $row) {
+			echo $discusions[$row];
 		}
 	?>
 </section>
+<section class="welcome">
+    <h1 class="title">Welcome</h1>
+	<h4 class="subtitle">To start, tap a user you would like to talk to on the left.</h4>
+	<div class="grid">
+		<div class="tile">
+			<img class="image" src=""></img>
+			<h class="title">Title</h>
+			<p class="subtitle">Subtitle</p>
+		</div>
+		<div class="tile">
+			<img class="image" src=""></img>
+			<h class="title">Get the group started</h>
+			<p class="subtitle">Easily find your friends and get the group started, even without their phone numbers.</p>
+		</div>
+		<div class="tile">
+			<img class="image" src=""></img>
+			<h class="title">Title</h>
+			<p class="subtitle">Subtitle</p>
+		</div>
+	</div>
+</section>
 <section class="chat">
-	<div class="header-chat">
-		<i class="icon fa fa-user-o" aria-hidden="true"></i>
-		<p class="name">Megan Leib</p>
-		<i class="icon clickable fa fa-ellipsis-h" aria-hidden="true"></i>
+	<div class="header-chat" data-chat-user1="<?php print($userdata['uid'])?>">
+		<i class="icon-back fa fa-chevron-left" aria-hidden="true" onClick="$('.chat').removeClass('open');"></i>
+		<p class="name"></p>
+		<i class="icon-more fa fa-ellipsis-v clickable" aria-hidden="true"></i>
 	</div>
-	<div class="messages-chat">
-		<div class="message">
-			<div class="received">
-				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-				<p class="text">Hi, how are you ?</p>
-			</div>
-		</div>
-		<div class="message">
-			<div class="received">
-				<p class="text">What are you doing tonight ? Want to go take a drink ?</p>
-			</div>
-			<p class="received-time">14h58</p>
-		</div>
-		<div class="message">
-			<div class="response">
-				<p class="text">Hey Megan ! It's been a while 😃</p>
-			</div>
-		</div>
-		<div class="message">
-			<div class="response">
-				<p class="text">When can we meet ?</p>
-				<p class="response-time time">15h04</p>
-			</div>
-		</div>
-		<div class="message">
-			<div class="received">
-				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-				<p class="text">9 pm at the bar if possible 😳</p>
-			</div>
-			<p class="received-time">15h09</p>
-		</div>
-		<div class="message">
-			<div class="received">
-				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-				<p class="text">Hi, how are you ?</p>
-			</div>
-		</div>
-		<div class="alert">Jesus has left the chat</div>
-		<div class="message">
-			<div class="received">
-				<p class="text">What are you doing tonight ? Want to go take a drink ?</p>
-			</div>
-			<p class="received-time">14h58</p>
-		</div>
-		<div class="message">
-			<div class="response">
-				<p class="text">Hey Megan ! It's been a while 😃</p>
-			</div>
-		</div>
-		<div class="message">
-			<div class="response">
-				<p class="text">When can we meet ?</p>
-				<p class="response-time time">15h04</p>
-			</div>
-		</div>
-		<div class="message">
-			<div class="received">
-				<div class="photo" style="background-image: url(https://via.placeholder.com/45);"><div class="online"></div></div>
-				<p class="text">9 pm at the bar if possible 😳</p>
-			</div>
-			<p class="received-time">15h09</p>
-		</div>
-	</div>
+	<div class="messages-chat"></div>
 	<div class="footer">
 		<div class="emoji"><i class="fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i></div>
-		<input type="text" class="write-message" placeholder="Type your message here"></input>
-		<div class="send"><i class="fa fa-paper-plane-o clickable" aria-hidden="true"></i></div>
+		<input type="text" class="write-message" placeholder="Type your message here" onClick="scrolltobottom('.messages-chat', 'smooth')"onkeydown="if (event.keyCode == 13) { sendChat()}"></input>
+		<div class="send" onClick="sendChat()"><i class="fa fa-paper-plane-o clickable" aria-hidden="true"></i></div>
 	</div>
 </section>

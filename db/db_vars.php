@@ -54,20 +54,20 @@
 			$sql = "SELECT * FROM `users` WHERE `username`='$log_username' AND `password`='$log_password' LIMIT 1";
 			$query = mysqli_query($db_conx, $sql);
 			$row = mysqli_fetch_row($query);
-			$user['uid'] = $row[0];
-			$user['username'] = $row[1];
-			$user['rank'] = $row[2];
-			$user['email'] = $row[3];
-			$user['password'] = $row[4];
-			$user['firstname'] = $row[5];
-			$user['surname'] = $row[6];
-			$user['avatar'] = $row[7];
-			$user['banner'] = $row[8];
-			$user['last_online'] = $row[9];
-			$user['registered'] = $row[10];
-			$user['lang'] = $row[11];
-			$user['change_passkey'] = $row[12];
-			$user['enabled'] = $row[13];
+			$userdata['uid'] = $row[0];
+			$userdata['username'] = $row[1];
+			$userdata['rank'] = $row[2];
+			$userdata['email'] = $row[3];
+			$userdata['password'] = $row[4];
+			$userdata['firstname'] = $row[5];
+			$userdata['surname'] = $row[6];
+			$userdata['avatar'] = $row[7];
+			$userdata['banner'] = $row[8];
+			$userdata['last_online'] = $row[9];
+			$userdata['registered'] = $row[10];
+			$userdata['lang'] = $row[11];
+			$userdata['change_passkey'] = $row[12];
+			$userdata['enabled'] = $row[13];
 		}
 	// ENCRYPTION SETTINGS
 		$sql="SELECT * FROM `var_security`";

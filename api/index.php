@@ -191,7 +191,21 @@
 				} else {
 					$uri_remote = $_POST['uri_remote'];
 				}
-			} else {$uri_remote = NULL;}
+			} else {$uri_remote = NULL;}									#					|
+			if(isset($_GET['u1']) || isset($_POST['u1'])) {					# $u1				|	Page local URI
+				if(isset($_GET['u1'])) {
+					$u1 = $_GET['u1'];
+				} else {
+					$u1 = $_POST['u1'];
+				}
+			} else {$u1 = NULL;}											#					|
+			if(isset($_GET['u2']) || isset($_POST['u2'])) {					# $u2				|	Page remote URI
+				if(isset($_GET['u2'])) {
+					$u2 = $_GET['u2'];
+				} else {
+					$u2 = $_POST['u2'];
+				}
+			} else {$u2 = NULL;}
 		#------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//
 	// GET ERROR CODE INFO
@@ -697,9 +711,31 @@
 			$row = mysqli_fetch_row($query);
 			exit(json_encode($row));
 		}
-	// CHECK FOR MESSAGES					T.B.D
-		#
-	// SEND MESSAGE							T.B.D
-		#
+	// CHECK FOR MESSAGES
+		elseif($api_type == "get_messages") {
+			if(isset($u1) && isset($u2)) {
+				$sql = "SELECT * FROM `var_messages` WHERE `user1`='$u1' AND `user2`='$u2' OR `user1`='$u2' AND `user2`='$u1' ORDER BY `timestamp` ASC";
+				$query = mysqli_query($db_conx, $sql);
+				$result = "";
+				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					$result .= json_encode($row);
+				}
+				$JSONarray = "[".str_replace("}{", "},{", $result)."]";
+				exit($JSONarray);
+			} else {
+				exit();
+			}
+		}
+	// SEND MESSAGE	
+		elseif($api_type == "send_message") {
+			if(isset($u1) && isset($u2) && isset($message)) {
+				$sql = "INSERT INTO `var_messages`(`user1`,`user2`,`message`,`timestamp`) VALUES('$u1', '$u2', '$message', now())";
+				$query = mysqli_query($db_conx, $sql);
+				exit("success");
+			} else {
+				exit("ERR-MSG-1");
+			}
+			exit("ERR-MSG-OTHER");
+		}
 	//
 ?>
