@@ -146,6 +146,9 @@
 				$('.header-user').attr('data-open-panel', panel);
 			}
 		}
+		function setTitle(title) {
+			$(".header-title").text(title)
+		}
 	//--------------------------- Ajax functions ---------------------------//
 		function getreferencedetails(reference) {
 			var output = $.ajax({
@@ -160,6 +163,15 @@
 			var output = $.ajax({
 				url: '<?php echo$mg_dir['root']?>api/index.php',
 				data: '#=search_code&_=key&code='+code,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			})
+			return output;
+		}
+		function getUsername(user) {
+			var output = $.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=search_username&_=key&uid='+user,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			})
@@ -533,7 +545,7 @@
 		}
 	//--------------------------- POPUP CONTROL ---------------------------//
 	//--------------------------- TOAST CONTROL ---------------------------//
-		function toast(type, heading, subheading) {
+		function toast(type, heading, subheading, onClick) {
 			if(type == "success") {
 				var img = "<?php echo$mg_img['multimedia']['checked']['image']?>";
 			} else if(type == "info") {
@@ -542,11 +554,14 @@
 				var img = "<?php echo$mg_img['multimedia']['exclamation']['image']?>";
 			} else if(type == "error") {
 				var img = "<?php echo$mg_img['multimedia']['cancel']['image']?>";
+			} else if(type == "messaging") {
+				var img = "<?php echo$mg_img['multimedia']['cancel']['image']?>";
 			} else {
 			}
 			var parent = $(".notify");
 			var toast = document.createElement('div');
 				toast.setAttribute('class', 'toast '+type);
+				toast.setAttribute('onClick', onClick);
 			var toast_icon = document.createElement('div');
 				toast_icon.setAttribute('class', 'toast-icon');
 			var toast_icon_image = document.createElement('img');
@@ -637,7 +652,7 @@
 					$('#'+pageJSON[0]).toggleClass("child-active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
-
+					setTitle(pageJSON[1]);
 					initGrid('.child-active');
 				}
 			});
@@ -676,6 +691,14 @@
 					$(this).fadeIn(100);
 				}
 			});
+		}
+		function setChatRead(u1, u2) {
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=mark_chat_as_read&_=key&u1='+u1+'&u2='+u2,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			})
 		}
 		function getChat(u2, type = null) {
 			var u1 = $('.header-chat').attr('data-chat-user1');
@@ -729,6 +752,7 @@
 						}
 					});
 				}
+				setChatRead(u1, u2);
 				if(type != "update") {
 					$('.header-chat').attr('data-chat-user2', $('#'+u2+'.discussion').attr('id'));
 					$('.header-chat').children('.name').text($('#'+u2+'.discussion').attr('data-chat-name'));
@@ -769,6 +793,33 @@
 					getChat(u2);
 				} else {
 					toast('error', 'Unable to send', 'We were unable to send your message, Please try again later')
+				}
+			});
+		}
+		function checkForNewChats(type) {
+			var u1 = $('body').attr('data-uid');
+			$.ajax({
+				url: '<?php echo$mg_dir['root']?>api/index.php',
+				data: '#=get_messages_unread&_=key&u1='+u1,
+				contentType: 'application/x-www-form-urlencoded',
+				type: 'POST',
+			}).done(function(msgJSON) {
+				var msgARRAY = jQuery.parseJSON(msgJSON);
+				var msgARRAY = jQuery.parseJSON(msgJSON);
+				if(msgARRAY.length > 0) {
+					msgARRAY.forEach(function(row, i) {
+						if(type == 'initial') {
+								console.log("Working initial update")
+						} else if(type == 'update') {
+							if($('div[data-local-page="Messages"].child-active').length > 0) {
+								console.log("Working with chat enabled and visible")
+							} else {
+								getUsername(row.user1).done(function(data) {
+									toast('message', data, row.message )
+								});
+							}
+						}
+					});
 				}
 			});
 		}

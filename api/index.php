@@ -10,6 +10,13 @@
 					$api_type = $_POST['#'];
 				}
 			} else {$api_type = NULL;}										#					|
+			if(isset($_GET['_']) || isset($_POST['_'])) {					# $api_key			|	API key
+				if(isset($_GET['_'])) {
+					$api_key = $_GET['_'];
+				} else {
+					$api_key = $_POST['_'];
+				}
+			} else {$api_key = NULL;}	
 			if(isset($_GET['e']) || isset($_POST['e'])) {					# $email			|	E-Mail address
 				if(isset($_GET['e'])) {
 					$email = $_GET['e'];
@@ -704,12 +711,21 @@
 			}
 			exit('ERR-PCF-OTHER');
 		}
-	// GET REFERENCE DATA
+	// SEARCH REFERENCE DATA
 		if($api_type == "get_reference_data") {
 			$sql = "SELECT * FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
 			$query = mysqli_query($db_conx, $sql);
 			$row = mysqli_fetch_row($query);
 			exit(json_encode($row));
+		}
+	// SEARCH USERNAME
+		elseif($api_type == "search_username") {
+			if(isset($uid)) {
+				$sql = "SELECT `firstname`, `surname` FROM `users` WHERE `uid`=$uid LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$row = mysqli_fetch_row($query);
+				exit($row[0].' '.$row[1]);
+			}
 		}
 	// CHECK FOR MESSAGES
 		elseif($api_type == "get_messages") {
@@ -726,16 +742,63 @@
 				exit();
 			}
 		}
+	// CHECK FOR UNREAD MESSAGES
+		elseif($api_type == "get_messages_unread") {
+			if(isset($u1)) {
+				$sql = "SELECT * FROM `var_messages`
+							WHERE `user2`='$u1'
+								AND `status`=0
+							ORDER BY `timestamp` ASC";
+				$query = mysqli_query($db_conx, $sql);
+				$result = "";
+				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					$result .= json_encode($row);
+				}
+				$JSONarray = "[".str_replace("}{", "},{", $result)."]";
+				$sql = "UPDATE `var_messages`
+							SET `status`=1
+							WHERE `user2`='$u1'
+								AND `status`=0;";
+				$query = mysqli_query($db_conx, $sql);
+				exit($JSONarray);
+			} else {
+				exit();
+			}
+		}
 	// SEND MESSAGE	
 		elseif($api_type == "send_message") {
 			if(isset($u1) && isset($u2) && isset($message)) {
-				$sql = "INSERT INTO `var_messages`(`user1`,`user2`,`message`,`timestamp`) VALUES('$u1', '$u2', '$message', now())";
+				$sql = "INSERT INTO `var_messages`(`user1`,`user2`,`message`,`timestamp`,`status`) VALUES('$u1', '$u2', '$message', now(), 0)";
 				$query = mysqli_query($db_conx, $sql);
 				exit("success");
 			} else {
 				exit("ERR-MSG-1");
 			}
 			exit("ERR-MSG-OTHER");
+		}
+	// MARK CHATS AS READ
+		elseif($api_type == "mark_chat_as_read") {
+			if(isset($u1) && isset($u2)) {
+				$sql = "UPDATE `var_messages`
+							SET `status`=2
+							WHERE `user1`='$u2'
+								AND `user2`='$u1'
+								AND `status`=0;";
+				$query = mysqli_query($db_conx, $sql);
+
+				$sql = "SELECT *
+							FROM `var_messages`
+							WHERE `user1`='$u2'
+								AND `user2`='$u1'
+								AND `status`=0";
+				$query = mysqli_query($db_conx, $sql);
+				$numrows = mysqli_num_rows($query);
+				if($numrows > 0){
+					exit("error");
+				} else {
+					exit("success");
+				}
+			}
 		}
 	//
 ?>

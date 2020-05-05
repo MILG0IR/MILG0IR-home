@@ -251,11 +251,9 @@
 			border-radius: 12px 12px 12px 0px;
 			padding: 15px; }
 		div[data-local-page="Messages"] .chat .messages-chat .response-time {
-			margin-right: 40px !important;
 			margin-bottom:10px;
-			margin-left: 85px;
 			font-size: 10px;
-			color:lightgrey;
+			color: lightgrey;
 			float: right; }
 		div[data-local-page="Messages"] .chat .messages-chat .response .text {
 			background: var(--chat-user-bubble);
