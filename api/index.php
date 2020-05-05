@@ -10,6 +10,13 @@
 					$api_type = $_POST['#'];
 				}
 			} else {$api_type = NULL;}										#					|
+			if(isset($_GET['_']) || isset($_POST['_'])) {					# $api_key			|	API key
+				if(isset($_GET['_'])) {
+					$api_key = $_GET['_'];
+				} else {
+					$api_key = $_POST['_'];
+				}
+			} else {$api_key = NULL;}	
 			if(isset($_GET['e']) || isset($_POST['e'])) {					# $email			|	E-Mail address
 				if(isset($_GET['e'])) {
 					$email = $_GET['e'];
@@ -191,7 +198,21 @@
 				} else {
 					$uri_remote = $_POST['uri_remote'];
 				}
-			} else {$uri_remote = NULL;}
+			} else {$uri_remote = NULL;}									#					|
+			if(isset($_GET['u1']) || isset($_POST['u1'])) {					# $u1				|	Page local URI
+				if(isset($_GET['u1'])) {
+					$u1 = $_GET['u1'];
+				} else {
+					$u1 = $_POST['u1'];
+				}
+			} else {$u1 = NULL;}											#					|
+			if(isset($_GET['u2']) || isset($_POST['u2'])) {					# $u2				|	Page remote URI
+				if(isset($_GET['u2'])) {
+					$u2 = $_GET['u2'];
+				} else {
+					$u2 = $_POST['u2'];
+				}
+			} else {$u2 = NULL;}
 		#------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//
 	// GET ERROR CODE INFO
@@ -250,7 +271,7 @@
 					$r = $reference;
 					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 				// CHECK IF THE REFERENCE CODE IS VALID
-					if(preg_match("/[^a-z]{2}[1-9]{1}-[1-9]{2}[^a-z]{1}-[^a-z]{3}-[1-9]{3}/",$reference)) {
+					if(preg_match("/[a-zA-Z]{2}[0-9]{1}-[0-9]{2}[a-zA-Z]{1}-[a-zA-Z]{3}-[0-9]{3}/",$reference)) {
 						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
 						$query = mysqli_query($db_conx, $sql);
 						$ref_check = mysqli_num_rows($query);
@@ -285,7 +306,7 @@
 					}
 				// CRATE ROW IN `users` TABLE
 					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `change_passkey`, `enabled`)
-								VALUES('$u', '$e', '$p_hash', '0', '1')";
+								VALUES('$u', '$e', '$p_hash', 0, 1)";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
 				// GET THE USER'S UID
@@ -404,15 +425,15 @@
 					}
 				}
 			// SEARCH FOR AND END THE SESSION
-				$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`='1' LIMIT 1";
+				$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`=1 LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$numrows = mysqli_num_rows($query);
 				if($numrows > 0){
 					$row = mysqli_fetch_row($query);
-					$sql = "UPDATE `user_sessions` SET `end_time`=now(), `active`='0' WHERE `session_id`='$row[0]'";
+					$sql = "UPDATE `user_sessions` SET `end_time`=now(), `active`=0 WHERE `session_id`='$row[0]'";
 					$query = mysqli_query($db_conx, $sql);
 					// confirm the session has been deleted
-					$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`='1' LIMIT 1";
+					$sql = "SELECT `session_id` FROM `user_sessions` WHERE `ip_address`='$ip' AND `active`=1 LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
 					$numrows = mysqli_num_rows($query);
 					if($numrows > 0){
@@ -421,9 +442,46 @@
 				}
 			exit('success');
 		}
-	// RESET PASSWORD
+	// RESET PASSWORD ~ FORGOT PASSWORD
 		elseif($api_type == "forgot_password") {
-			if(isset($email)) {
+			if(isset($email) && isset($password) && isset($reference)) {
+				// SEARCH FOR the user
+					$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$numrows = mysqli_num_rows($query);
+					if($numrows > 0){
+						$row = mysqli_fetch_row($query);
+						$useruid = $row[0];
+						$userstatus = true;
+					} else {
+						exit('ERR-PWR-1');
+					}
+				// Validate the Reference code
+					if(preg_match("/[a-zA-Z]{2}[0-9]{1}-[0-9]{2}[a-zA-Z]{1}-[a-zA-Z]{3}-[0-9]{3}/",$reference)) {
+						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$numrows = mysqli_num_rows($query);
+						if($numrows > 0){
+							$refstatus = true;
+						} else {
+							exit('ERR-PWR-2');
+						}
+					} else {
+						exit('ERR-PWR-3');
+					}
+				// Reset password
+					if($userstatus && $refstatus) {
+						$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
+						$sql = "UPDATE `users` SET `password`='$p_hash' WHERE `uid`='$useruid' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$id = $nid;
+					}
+				//
+			}
+		}
+	// RESET PASSWORD ~ PASSWORD RESET WITHIN PROFILE
+		elseif($api_type == "reset_password") {
+			if(isset($email) && isset($password)) {
 				// SEARCH FOR the user - if user exists send the email.
 					$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
@@ -435,6 +493,7 @@
 						// User does not exist and the email will not be sent
 						exit('ERR-PWR-1');
 					}
+				//
 			}
 		}
 	// CHECK REFERENCE
@@ -527,7 +586,15 @@
 								VALUES(	'$code', '$username', now(), '1')";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
-					exit($code);
+					// Check to see if reference has been 
+					$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$code' AND `active`='1' LIMIT 1";
+					$query = mysqli_query($db_conx, $sql);
+					$numrows = mysqli_num_rows($query);
+					if($numrows > 0){
+						exit($code);
+					} else {
+						exit('ERR-REF-6');
+					}
 				} else {
 					exit("ERR-REF-OTHER");
 				}
@@ -536,16 +603,16 @@
 	// DEACTIVATE USER REFERENCE
 		elseif($api_type == "deactivate_user_reference") {
 			if(isset($id)){
-				$sql = "UPDATE `user_references` SET `active`=NULL WHERE `id`='$id'";
+				$sql = "UPDATE `user_references` SET `active`=0 WHERE `id`='$id' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				// Check to see if reference has been 
-				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`='1' LIMIT 1";
+				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`=0 LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$numrows = mysqli_num_rows($query);
 				if($numrows > 0){
-					exit('ERR-LOU-2');
-				} else {
 					exit("success");
+				} else {
+					exit('ERR-REF-4');
 				}
 			} else {
 				exit("ERR-REF-OTHER");
@@ -557,11 +624,11 @@
 				$sql = "UPDATE `user_references` SET `active`='1' WHERE `id`='$id'";
 				$query = mysqli_query($db_conx, $sql);
 				// Check to see if reference has been 
-				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`=NULL LIMIT 1";
+				$sql = "SELECT `id` FROM `user_references` WHERE `id`='$id' AND `active`=0 LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
 				$numrows = mysqli_num_rows($query);
 				if($numrows > 0){
-					exit('ERR-LOU-2');
+					exit('ERR-REF-5');
 				} else {
 					exit("success");
 				}
@@ -569,7 +636,7 @@
 				exit("ERR-REF-OTHER");
 			}
 		}
-	// UPDATE RANK INFO						T.B.D - Error codes
+	// UPDATE RANK INFO
 		elseif($api_type == "update_rank_info") {
 			if(isset($id) && isset($name)) {
 				// Check for new ID if moved in ranks
@@ -591,13 +658,13 @@
 						if($confirm > 0) {
 							exit("success");
 						} else {
-							exit("ID: ".$id."<br> name: ".$name."<br> desc: ".$desc."<br> icon: ".$icon);
+							exit("ERR-RNK-1");
 						}
 				//
-			exit("-OTHER");
+			exit("ERR-RNK-OTHER");
 			}
 		}
-	// UPDATE PAGE INFO						T.B.D - Error codes
+	// UPDATE PAGE INFO	
 		elseif($api_type == "update_page_info") {
 			if(isset($id) && isset($title)) {
 				// Check for new ID if moved in ranks
@@ -619,15 +686,119 @@
 						if($confirm > 0) {
 							exit("success");
 						} else {
-							exit("ID: ".$id."<br> title: ".$title."<br> desc: ".$desc."<br> icon: ".$icon);
+							exit("ERR-PAG-1");
 						}
 				//
-			exit("-OTHER");
+			exit("ERR-PAG-OTHER");
 			}
 		}
-	// CHECK FOR MESSAGES					T.B.D
-		#
-	// SEND MESSAGE							T.B.D
-		#
+	// UPDATE USER SETTINGS
+	// CONFIRM PASSWORD
+		elseif($api_type == "confirm_password") {
+			if(isset($username) && isset($password)) {
+				$p = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
+				$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `username`='$username' AND `enabled`='1' LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$row = mysqli_fetch_row($query);
+				$db_pass_str = $row[2];
+				if($p == $db_pass_str){
+					exit('success');
+				} else {
+					exit('ERR-PCF-1');
+				}
+			} else {
+				exit('ERR-PCF-2');
+			}
+			exit('ERR-PCF-OTHER');
+		}
+	// SEARCH REFERENCE DATA
+		if($api_type == "get_reference_data") {
+			$sql = "SELECT * FROM `user_references` WHERE `reference_code`='$reference' LIMIT 1";
+			$query = mysqli_query($db_conx, $sql);
+			$row = mysqli_fetch_row($query);
+			exit(json_encode($row));
+		}
+	// SEARCH USERNAME
+		elseif($api_type == "search_username") {
+			if(isset($uid)) {
+				$sql = "SELECT `firstname`, `surname` FROM `users` WHERE `uid`=$uid LIMIT 1";
+				$query = mysqli_query($db_conx, $sql);
+				$row = mysqli_fetch_row($query);
+				exit($row[0].' '.$row[1]);
+			}
+		}
+	// CHECK FOR MESSAGES
+		elseif($api_type == "get_messages") {
+			if(isset($u1) && isset($u2)) {
+				$sql = "SELECT * FROM `var_messages` WHERE `user1`='$u1' AND `user2`='$u2' OR `user1`='$u2' AND `user2`='$u1' ORDER BY `timestamp` ASC";
+				$query = mysqli_query($db_conx, $sql);
+				$result = "";
+				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					$result .= json_encode($row);
+				}
+				$JSONarray = "[".str_replace("}{", "},{", $result)."]";
+				exit($JSONarray);
+			} else {
+				exit();
+			}
+		}
+	// CHECK FOR UNREAD MESSAGES
+		elseif($api_type == "get_messages_unread") {
+			if(isset($u1)) {
+				$sql = "SELECT * FROM `var_messages`
+							WHERE `user2`='$u1'
+								AND `status`=0
+							ORDER BY `timestamp` ASC";
+				$query = mysqli_query($db_conx, $sql);
+				$result = "";
+				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+					$result .= json_encode($row);
+				}
+				$JSONarray = "[".str_replace("}{", "},{", $result)."]";
+				$sql = "UPDATE `var_messages`
+							SET `status`=1
+							WHERE `user2`='$u1'
+								AND `status`=0;";
+				$query = mysqli_query($db_conx, $sql);
+				exit($JSONarray);
+			} else {
+				exit();
+			}
+		}
+	// SEND MESSAGE	
+		elseif($api_type == "send_message") {
+			if(isset($u1) && isset($u2) && isset($message)) {
+				$sql = "INSERT INTO `var_messages`(`user1`,`user2`,`message`,`timestamp`,`status`) VALUES('$u1', '$u2', '$message', now(), 0)";
+				$query = mysqli_query($db_conx, $sql);
+				exit("success");
+			} else {
+				exit("ERR-MSG-1");
+			}
+			exit("ERR-MSG-OTHER");
+		}
+	// MARK CHATS AS READ
+		elseif($api_type == "mark_chat_as_read") {
+			if(isset($u1) && isset($u2)) {
+				$sql = "UPDATE `var_messages`
+							SET `status`=2
+							WHERE `user1`='$u2'
+								AND `user2`='$u1'
+								AND `status`=0;";
+				$query = mysqli_query($db_conx, $sql);
+
+				$sql = "SELECT *
+							FROM `var_messages`
+							WHERE `user1`='$u2'
+								AND `user2`='$u1'
+								AND `status`=0";
+				$query = mysqli_query($db_conx, $sql);
+				$numrows = mysqli_num_rows($query);
+				if($numrows > 0){
+					exit("error");
+				} else {
+					exit("success");
+				}
+			}
+		}
 	//
 ?>

@@ -1,0 +1,62 @@
+:root {
+	--main-background: rgba(29, 29, 44, 1);
+	--main-text: rgb(255, 255, 255);
+	--main-accent: rgba(225, 78, 202, 1);
+	--main-accent-shade: rgba(225, 78, 202, 1);
+	--main-panel-background: rgba(39, 41, 61, 1);
+	--main-panel-accent: rgba(43, 53, 83, 1);
+	--main-input-border: rgba(173, 216, 230, 1);
+	--main-input-border-active: rgba(0, 0, 255, 1);
+	--main-shadow: rgba(0, 0, 0, 0.3);
+	/* ICONS / IMAGES */
+		--invert-icons: 1;
+		--image-placeholder: rgba(230,231,237, 1);
+	/* STATUS */
+		--status-success: rgba(0, 128, 0, 1);
+		--status-info: rgba(0, 0, 255, 1);
+		--status-error: rgba(255, 0, 0, 1);
+	/* TOAST */
+		--toast-success: rgba(43, 222, 63, 1);
+		--toast-info: rgba(29, 114, 243, 1);
+		--toast-warning: rgba(255, 192, 7, 1);
+		--toast-error: rgba(255, 0, 0, 1);
+	/* WHATS NEW */
+		--whatsnew-note: rgba(128, 128, 128, 1);
+		--whatsnew-addition: rgba(114, 238, 114, 1);
+		--whatsnew-removal: rgba(238, 114, 114, 1);
+		--whatsnew-change: rgba(173, 216, 230, 1);
+	/* CHAT*/
+		--discussions-header-background: rgba(43, 53, 83, 1);
+		--discussions-header-search-background: rgba(255, 255, 255, 1);
+		--discussions-header-search-border: rgba(238, 238, 238, 1) ;
+		--discussions-header-search-color: rgba(41, 41, 41, 1);
+		--discussions-header-search-placeholder-color: rgba(224, 224, 224, 1);
+		--discussions-background: rgba(39, 41, 61, 1);
+		--discussions-border: rgba(43, 53, 83, 1);
+		--discussions-online: rgba(139,195,74, 1);
+		--discussions-active: blue;
+		--chat-welcome-title: rgba(186, 84, 245, 1);
+		--chat-welcome-subtitle: rgba(225, 78, 202, 1);
+		--chat-welcome-tile-background: rgba(239, 239, 239, 1);
+		--chat-welcome-tile-title: rgba(102, 153, 204, 1);
+		--chat-welcome-tile-subtitle: rgba(57, 115, 172, 1);
+		--chat-header-background: rgba(43, 53, 83, 1);
+		--chat-background: rgba(39, 41, 61, 1);
+		--chat-user-bubble: rgba(227, 239, 253, 1);
+		--chat-user-text: rgba(51, 51, 51, 1);
+		--chat-other-bubble: rgba(246, 246, 246, 1);
+		--chat-other-text: rgba(51, 51, 51, 1);
+		--chat-border: rgba(43, 53, 83, 1);
+		--chat-input-color: rgba(240, 248, 255, 1);
+		--chat-emoji-icon-background: transparent;
+		--chat-emoji-icon-color: rgba(192, 192, 192, 1);
+		--chat-send-icon-background: rgba(79, 110, 189, 1);
+		--chat-send-icon-color: rgba(192, 192, 192, 1);
+		--chat-alert-background: rgba(45, 45, 65, 1);
+		--chat-alert-border: rgba(60, 70, 105, 1);
+		--chat-alert-color: rgba(60, 70, 105, 1);
+		--chat-notify-color: rgba(60, 70, 105, 1);
+		--chat-notify-stripe: rgba(60, 70, 105, 1);
+		--chat-notify-background: rgba(39, 41, 61, 1);
+
+}

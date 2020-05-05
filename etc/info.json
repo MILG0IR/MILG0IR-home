@@ -1,7 +1,9 @@
 {
-    "Version":"v0.1.1",
-    "Copyright": "Copyright © MILG0IR 2020",
+    "Version": "v0.1.1",
+    "Copyright": "Copyright \u00a9 MILG0IR 2020",
     "Creators": [
         "RSmith"
-    ]
+    ],
+    "Branch": "instant",
+    "Device": "web"
 }

@@ -1,34 +1,72 @@
 <?php
-    include_once("./db/db_conx.php");
-    if(!$user_ok) {
+	include_once("./db/db_conx.php");
+	if(!$user_ok) {
 		header("location: ".$mg_dir['root']."login.php");
 		exit();
-    }
-?>
-<?php
-	$sql = "SELECT `id` FROM `var_pages` WHERE `title`='Homepage' LIMIT 1";
-	$query = mysqli_query($db_conx, $sql);
-	$row = mysqli_fetch_row($query);
+	}
 ?>
 <!DOCTYPE html>
-	<html>
+	<html lang="en">
 		<head>
-			<meta charset="UTF-8">
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<title>Homepage | <?php echo$mg_branding['slogan']['value']?></title>
-			<link rel="icon" href="<?php echo$mg_branding['favicon']['value']?>" type="image/x-icon">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link type="image/x-icon" rel="icon" href="<?php echo$mg_branding['favicon']['value']?>">
+			<?php include_once($mg_dir['assets']."header") ?>
+			<?php include_once($mg_dir['js']."functions") ?>
 			<?php include_once($mg_dir['css']."css.php");	?>
+			<link rel="stylesheet" type="text/css" theme-type="navbar" href="<?php print($mg_dir['themes'])?>1.theme-nav.css">
+			<link rel="stylesheet" type="text/css" theme-type="main" href="<?php print_r($mg_dir['themes'])?>dark.theme-main.css">
 		</head>
-		<body Onload="openpage(<?php echo $row[0]; ?>)">
-			<!-- PRELOADER -->
-				<div class="preloader">
-					<?php include_once($mg_dir['templates']."preloader.php")		?>
+		<body data-nav-theme="1" data-main-theme="dark" data-uid="<?php print($userdata['uid'])?>" onLoad="openpage('0', '0'); checkForNewChats('initial'); checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>);">
+			<script name="PRE">
+				changetheme('main', $("body").data("main-theme"));
+				changetheme('nav', $("body").data("nav-theme"));
+			</script>
+			<div class="main-content">
+				<?php include_once($mg_dir['fragments']."preloader") ?>
+				<?php include_once($mg_dir['fragments']."header") ?>
+				<?php include_once($mg_dir['fragments']."navbar") ?>
+				<div id="parent" class="pages-content"  onclick="userPanel(null)">
+					<div class="preloader">
+						<div class="sk-fading-circle">
+							<div class="sk-circle1 sk-circle"></div>
+							<div class="sk-circle2 sk-circle"></div>
+							<div class="sk-circle3 sk-circle"></div>
+							<div class="sk-circle4 sk-circle"></div>
+							<div class="sk-circle5 sk-circle"></div>
+							<div class="sk-circle6 sk-circle"></div>
+							<div class="sk-circle7 sk-circle"></div>
+							<div class="sk-circle8 sk-circle"></div>
+							<div class="sk-circle9 sk-circle"></div>
+							<div class="sk-circle10 sk-circle"></div>
+							<div class="sk-circle11 sk-circle"></div>
+							<div class="sk-circle12 sk-circle"></div>
+						</div>
+					</div>
 				</div>
-			<!-- HEADER -->
-				<?php include_once($mg_dir['templates']."header.php")	?>
-			<!-- CONTENT -->
-				<div id="parent" class="content nav-inset"></div>
-			<!-- JS -->
-				<?php include_once($mg_dir['js']."js.php"); ?>
+			</div>
+			<div class="popup"></div>
+			<div class="notify"></div>
+			<script name="POST">
+				PullToRefresh.init({
+					mainElement: '.main-content',
+					triggerElement: '.header',
+					onRefresh: function (done) {
+						setTimeout(function () {
+							window.location.reload(false);
+							done();
+						}, 0);
+					}
+				});
+				$(document).ready(function() {
+					$(".preloader-wrapper").hide();
+					date_time('header-time', false, true, true);
+
+					setInterval(function(){
+						checkForNewChats("update");
+					}, 1500);
+				});
+			</script>
 		</body>
 	</html>

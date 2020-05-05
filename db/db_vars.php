@@ -1,11 +1,4 @@
-<?php
-	// find root
-		$toroot = "";
-		$i = count(explode('/',$_SERVER['DOCUMENT_URI'])) -2;
-		while($i >= 1) {
-			$toroot .= "../";
-			$i--;
-		}
+<?php		# VARIABLES
 	// SET USERS IP
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -61,33 +54,27 @@
 			$sql = "SELECT * FROM `users` WHERE `username`='$log_username' AND `password`='$log_password' LIMIT 1";
 			$query = mysqli_query($db_conx, $sql);
 			$row = mysqli_fetch_row($query);
-			$user['uid'] = $row[0];
-			$user['username'] = $row[1];
-			$user['email'] = $row[2];
-			$user['password'] = $row[3];
-			$user['change_passkey'] = $row[4];
-			$user['enabled'] = $row[5];
-
-			$sql = "SELECT * FROM `user_data` WHERE `uid`='$row[0]' LIMIT 1";
-			$query = mysqli_query($db_conx, $sql);
-			$row = mysqli_fetch_row($query);
-			$user['rank'] = $row[0];
-			$user['firstname'] = $row[1];
-			$user['surname'] = $row[2];
-			$user['avatar'] = $row[3];
-			$user['banner'] = $row[4];
-			$user['registered'] = $row[5];
-
-			$sql = "SELECT * FROM `user_preferences` WHERE `uid`='$row[0]' LIMIT 1";
-			$query = mysqli_query($db_conx, $sql);
-			$row = mysqli_fetch_row($query);
-			$user['lang'] = $row[0];
+			$userdata['uid'] = $row[0];
+			$userdata['username'] = $row[1];
+			$userdata['rank'] = $row[2];
+			$userdata['email'] = $row[3];
+			$userdata['password'] = $row[4];
+			$userdata['firstname'] = $row[5];
+			$userdata['surname'] = $row[6];
+			$userdata['avatar'] = $row[7];
+			$userdata['banner'] = $row[8];
+			$userdata['last_online'] = $row[9];
+			$userdata['registered'] = $row[10];
+			$userdata['lang'] = $row[11];
+			$userdata['change_passkey'] = $row[12];
+			$userdata['enabled'] = $row[13];
 		}
 	// ENCRYPTION SETTINGS
-		$mg_security = array(
-			"hash"	=>	"sha512",
-			"salt"	=>	"hVxAuijVqBRC7HtaOq4Bb5QbF2pZ9dETjqEUIt7jzhejRRuLjQJ3w5rDsRYTEjyf4TY2S9naLea5wUCHOMqpkAP9HCq9cGt7OwD3uvAuFvndoH9QibYyZL3wbfI6kplA"
-		);
+		$sql="SELECT * FROM `var_security`";
+		$query = mysqli_query($db_conx, $sql);
+		while($row = mysqli_fetch_array($query)) {
+			$mg_security[$row['title']] = $row['value'];
+		}
 	// SET THE IMAGE VARIABLES FROM THE DB
 		$sql="SELECT * FROM `var_images`";
 		$query = mysqli_query($db_conx, $sql);
@@ -125,18 +112,38 @@
 			"pages"			=>	$toroot."pages/",				// Relative path to `pages` dir
 			"userdata"		=>	$toroot."userdata/",			// Relative path to `userdata` dir
 
-			"js"			=>	$toroot."inc/js/",				// Relative path to `js` dir
-			"css"			=>	$toroot."inc/css/",				// Relative path to `css` dir
+			"js"			=>	$toroot."assets/js/",			// Relative path to `js` dir
+			"css"			=>	$toroot."assets/css/",			// Relative path to `css` dir
 			"forms"			=>	$toroot."inc/forms/",			// Relative path to `forms` dir
-			"fonts"			=>	$toroot."inc/fonts/",			// Relative path to `fonts` dir
-			"templates"		=>	$toroot."inc/page_templates/",		// Relative path to `templates` dir
+			"fragments"		=>	$toroot."inc/fragments/",	// Relative path to `fragments` dir
+			"main_themes"	=>	$toroot."themes/",				// Relative path to `themes` dir
 			
 			"error"			=>	$toroot."error/",				// Relative path to `error` file
 		); 
+	// REDIRECTION LOCATIONS
+		$mg_rdir = array(
+			"login" => $toroot."login.php",
+			"forgot_pass" => $toroot."forgot_password.php",
+			"home" => $toroot."home.php"
+		);
 	// FILE INFO
 		$mg_file = array(
 			"name"		=> $_SERVER['DOCUMENT_URI'],
 			"location"	=> $_SERVER['SCRIPT_FILENAME']
 		);
+	// GET FULL URL
+		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+			$mg['complete_uri'] = "https://";   
+		else  
+			$mg['complete_uri'] = "http://";   
+		$mg['complete_uri'].= $_SERVER['HTTP_HOST'];    
+		$mg['complete_uri'].= $_SERVER['REQUEST_URI'];    
 	//
+?>
+<?php		# FUNCTIONS
+	function getTitle($url) {
+		$data = file_get_contents($url);
+		$title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
+		return $title;
+	}
 ?>

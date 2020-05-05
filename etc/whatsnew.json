@@ -4,10 +4,11 @@
 			"Type": "Patch",
 			"Version": "v0.1.2",
 			"Date": "Unreleased",
-			"Title": "",
+			"Title": "The UI update",
 			"Description": "This update is all about the ease of use. We have added a few new features and changed a few pre-existing ones to make the application easire to use.",
 			"Changelog-notes": [],
 			"Changelog-changes": [
+				"Major UI changes making it easier to look at and simpler to use.",
 				"Minor bug fixes and improvements.",
 				"Side navigation has custom images and names - No longer placeholders.",
 				"Ability to open, close and reload pages at will"
