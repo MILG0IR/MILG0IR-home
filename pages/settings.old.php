@@ -718,7 +718,7 @@
 								}
 								echo "</select>";
 							?>
-							<button class="waves-light waves-effect waves-light" onClick="alert('T.B.D')">Save and reload</button>
+							<button class="waves-light waves-effect waves-light" onClick="alert('**TODO**')">Save and reload</button>
 						 </div>
 						<div class="panel database">
 							<h3>Database configuration</h3>
@@ -726,7 +726,7 @@
 							<input type="text" placeholder="DB Username:" value="<?php echo $db['db_user'];?>">
 							<input type="password" placeholder="DB Password:" value="<?php echo $db['db_pass'];?>">
 							<input type="text" disabled value="DB Schema: <?php echo $db['db_name'];?>">
-							<button class="waves-light waves-effect waves-light" onClick="alert('T.B.D')">Update and reload</button>
+							<button class="waves-light waves-effect waves-light" onClick="alert('**TODO**')">Update and reload</button>
 						 </div>
 						<div class="panel security">
 							<div class="divlock">
@@ -742,7 +742,7 @@
 								?>
 								</select>
 							<input type="text" placeholder="DB Username:" value="<?php echo $mg_security['salt'];?>" class="waves-light waves-effect waves-light">
-							<button class="waves-light waves-effect waves-light" onClick="alert('T.B.D')">Update and reload</button>
+							<button class="waves-light waves-effect waves-light" onClick="alert('**TODO**')">Update and reload</button>
 						 </div>
 					</div>
 					<div class="settings-page" id="customization">
@@ -905,7 +905,7 @@
 												$rank_actions_image = $mg_img['UI']['more']['image'];
 												$rank_actions = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
 												$rank_permissions_image = $mg_img['UI']['levels']['image'];
-												$rank_permissions = "alert(\"tbd\")";
+												$rank_permissions = "alert(\"**TODO**\")";
 											};
 											echo "<tr id=\"".$rank['name']."\" class=\"".$rank_class."\">";
 											echo "	<td>".$rank['id']."</td>";

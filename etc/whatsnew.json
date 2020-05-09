@@ -9,6 +9,7 @@
 			"Changelog-notes": [],
 			"Changelog-changes": [
 				"Major UI changes making it easier to look at and simpler to use.",
+				"Added broadcast channel for creator and **TODO** seperate one for server admin.",
 				"Minor bug fixes and improvements.",
 				"Side navigation has custom images and names - No longer placeholders.",
 				"Ability to open, close and reload pages at will"

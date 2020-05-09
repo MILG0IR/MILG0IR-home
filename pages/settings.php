@@ -380,7 +380,7 @@
 								$rank_actions_image = $mg_img['UI']['more']['image'];
 								$rank_actions = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
 								$rank_permissions_image = $mg_img['UI']['levels']['image'];
-								$rank_permissions = "alert(\"tbd\")";
+								$rank_permissions = "alert(\"**TODO**\")";
 							};
 						// PRINT ALL RANKS
 							echo "<div class=\"tr\" id=\"".$rank['name']."\">";
