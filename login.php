@@ -177,7 +177,8 @@
 						text-align: <?php print($data['paragraph_h_align'])?>;
 						color: <?php print($data['paragraph_colour'])?>; }
 					div[data-local-page="Login"] .panel section.broadcast a {
-						padding: 1rem; }
+						padding: 1rem;
+						text-decoration: none }
 					div[data-local-page="Login"] .panel section.broadcast a.primary,
 					div[data-local-page="Login"] .panel section.broadcast a.primary:visited {
 						position: absolute;
