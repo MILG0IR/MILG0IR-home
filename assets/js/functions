@@ -151,6 +151,55 @@
 		function setTitle(title) {
 			$(".header-title").text(title)
 		}
+	//--------------------------- POPUP CONTROL ---------------------------//
+	//--------------------------- TOAST CONTROL ---------------------------//
+		function toast(type, heading, subheading, onClick) {
+			if(type == "success") {
+				var img = "<?php echo$mg_img['UI']['checked']['image']?>";
+			} else if(type == "info") {
+				var img = "<?php echo$mg_img['UI']['info']['image']?>";
+			} else if(type == "warn") {
+				var img = "<?php echo$mg_img['UI']['exclamation']['image']?>";
+			} else if(type == "error") {
+				var img = "<?php echo$mg_img['UI']['cancel']['image']?>";
+			} else if(type == "messaging") {
+				var img = "<?php echo$mg_img['UI']['cancel']['image']?>";
+			} else {
+				var img = "";
+			}
+			var parent = $(".notify");
+			var toast = document.createElement('div');
+				toast.setAttribute('class', 'toast '+type);
+				toast.setAttribute('onClick', onClick);
+			var toast_icon = document.createElement('div');
+				toast_icon.setAttribute('class', 'toast-icon');
+			var toast_icon_image = document.createElement('img');
+				toast_icon_image.setAttribute('src', img);
+
+			var toast_content = document.createElement('div');
+				toast_content.setAttribute('class', 'toast-content');
+			var toast_content_title = document.createElement('p');
+				toast_content_title.setAttribute('class', 'toast-type');
+				toast_content_title.textContent = heading;
+			var toast_content_messagge = document.createElement('p');
+				toast_content_messagge.setAttribute('class', 'toast-message');
+				toast_content_messagge.textContent = subheading;
+				
+			var toast_close = document.createElement('div');
+				toast_close.setAttribute('class', 'toast-close');
+				toast_close.setAttribute('onClick', 'parent = $(this).parent().fadeOut("slow", function() {$(this).remove();})');
+			var toast_close_image = document.createElement('img');
+				toast_close_image.setAttribute('src', '<?php print($mg_img['UI']['close']['image']) ?>');
+
+			parent.append(toast);
+			toast.append(toast_icon);
+			toast_icon.append(toast_icon_image);
+			toast.append(toast_content);
+			toast_content.append(toast_content_title);
+			toast_content.append(toast_content_messagge);
+			toast.append(toast_close);
+			toast_close.append(toast_close_image);
+		}
 	//--------------------------- Ajax functions ---------------------------//
 		function getreferencedetails(reference) {
 			var output = $.ajax({
@@ -180,52 +229,60 @@
 			return output;
 		}
 		function checkusername() {
-			var u		= $("#sup-username").val();
-			var status	= $("#sup-usernamestatus");
-			$.ajax({
-				url: toRoot+'api/index.php',
-				data: '#=check_username&_='+api_key+'+&u='+u,
-				contentType: 'application/x-www-form-urlencoded',
-				type: 'POST',
-			}).done(function(data) {
-				checkresponse(data).done(function(codeARRAY) {
-					var codeJSON = jQuery.parseJSON(codeARRAY);
-					if(data == "INF-UNC-1") {
-						status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					} else if(data == "INF-UNC-2") {
-						status.html('<span class="tooltip status info"><svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					} else {
-						status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					}
+			var u		= $("#signup.username").val();
+			var status	= $("#signup.status-username");
+			if(u != null && u != '') {
+				$.ajax({
+					url: toRoot+'api/index.php',
+					data: '#=check_username&_='+api_key+'+&u='+u,
+					contentType: 'application/x-www-form-urlencoded',
+					type: 'POST',
+				}).done(function(data) {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						if(data == "INF-UNC-1") {
+							status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						} else if(data == "INF-UNC-2") {
+							status.html('<span class="tooltip status info"><svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						} else {
+							status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						}
+					});
 				});
-			});
+			} else {
+				status.html('');
+			}
 		}
 		function checkemail() {
-			var e		= $("#sup-email").val();
-			var status	= $("#sup-emailstatus");
-			$.ajax({
-				url: toRoot+'api/index.php',
-				data: '#=check_email&_='+api_key+'+&e='+e,
-				contentType: 'application/x-www-form-urlencoded',
-				type: 'POST',
-			}).done(function(data) {
-				checkresponse(data).done(function(codeARRAY) {
-					var codeJSON = jQuery.parseJSON(codeARRAY);
-					if(data == "INF-EMC-1") {
-						status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					} else if(data == "INF-EMC-2") {
-						status.html('<span class="tooltip status info"><svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					} else {
-						status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					}
+			var e		= $("#signup.email").val();
+			var status	= $("#signup.status-email");
+			if(e != null && e != '') {
+				$.ajax({
+					url: toRoot+'api/index.php',
+					data: '#=check_email&_='+api_key+'+&e='+e,
+					contentType: 'application/x-www-form-urlencoded',
+					type: 'POST',
+				}).done(function(data) {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						if(data == "INF-EMC-1") {
+							status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						} else if(data == "INF-EMC-2") {
+							status.html('<span class="tooltip status info"><svg class="bi bi-x-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						} else {
+							status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						}
+					});
 				});
-			});
+			} else {
+				status.html('');
+			}
 		}
 		function checkpassword() {
-			var p1		= $("#sup-pass1").val();
-			var p2		= $("#sup-pass2").val();
-			var pass1	= $("#sup-pass1status");
-			var pass2	= $("#sup-pass2status");
+			var p1		= $("#signup.password").val();
+			var p2		= $("#signup.password-confirm").val();
+			var pass1	= $("#signup.status-password");
+			var pass2	= $("#signup.status-password-confirm");
 			if(p1 != "" && p2 == "") {			// PASSWORD 1 IS SET // PASSWORD 2 IS NOT
 				// PASSWORD 1
 				var p1_status = validatepassword(p1);
@@ -272,23 +329,27 @@
 			}
 		}
 		function checkreference() {
-			var reference = $("#sup-reference").val();
-			var status = $("#sup-referencestatus");
-			$.ajax({
-				url: toRoot+'api/index.php',
-				data: '#=check_reference&_='+api_key+'+&ref='+reference,
-				contentType: 'application/x-www-form-urlencoded',
-				type: 'POST',
-			}).done(function(data) {
-				checkresponse(data).done(function(codeARRAY) {
-					var codeJSON = jQuery.parseJSON(codeARRAY);
-					if(data == "INF-REF-1") {
-						status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					} else {
-						status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
-					}
+			var reference = $("#signup.reference").val();
+			var status = $("#signup.status-reference");
+			if(reference != null && reference != '') {
+				$.ajax({
+					url: toRoot+'api/index.php',
+					data: '#=check_reference&_='+api_key+'+&ref='+reference,
+					contentType: 'application/x-www-form-urlencoded',
+					type: 'POST',
+				}).done(function(data) {
+					checkresponse(data).done(function(codeARRAY) {
+						var codeJSON = jQuery.parseJSON(codeARRAY);
+						if(data == "INF-REF-1") {
+							status.html('<span class="tooltip status success"><svg class="bi bi-check-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L8 9.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1013.5 8a.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 008 2.5z" clip-rule="evenodd"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						} else {
+							status.html('<span class="tooltip status error"><svg class="bi bi-exclamation-circle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 108 0a8 8 0 000 16z" clip-rule="evenodd"/><path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/></svg><span class="tooltiptext">' + codeJSON[2] + '</span></span>');
+						}
+					});
 				});
-			});
+			} else {
+				status.html('');
+			}
 		}
 		function checkforupdate(version, device, branch) {
 			var status		= $("#updatestatus");
@@ -303,10 +364,8 @@
 					var codeJSON = jQuery.parseJSON(codeARRAY);
 					status.html(codeJSON[2]);
 					if(data != 'INF-UPD-1') {
-						updateBTN.html("Download & install update")
-					} else (
-						updateBTN.html("Force reinstall")
-					)
+						toast(update, 'Update available', 'There is an update available click here to update your system')
+					}
 				});
 			});
 		}
@@ -332,16 +391,18 @@
 		}
 	//--------------------------- API CALLOUT FUNCTIONS ---------------------------//
 		function signup() {
-			var u = $('#sup-username').val();
-			var e = $('#sup-email').val();
-			var p1 = $('#sup-pass1').val();
-			var p2 = $('#sup-pass2').val();
-			var ref = $('#sup-reference').val();
-			var status = $('#sup-status');
+			var u = $('#signup.username').val();
+			var e = $('#signup.email').val();
+			var p1 = $('#signup.password').val();
+			var p2 = $('#signup.password-confirm').val();
+			var fn = $('#signup.firstname').val();
+			var sn = $('#signup.surname').val();
+			var ref = $('#signup.reference').val();
+			var status = $('#signup.status');
 			if(p1 == p2) {
 				$.ajax({
 					url: toRoot+'api/index.php',
-					data: '#=signup&_='+api_key+'+&u='+u+'&e='+e+'&p='+p1+'&ref='+ref,
+					data: '#=signup&_='+api_key+'+&u='+u+'&e='+e+'&p='+p1+'&fn='+fn+'&sn='+sn+'&ref='+ref,
 					contentType: 'application/x-www-form-urlencoded',
 					type: 'POST',
 				}).done(function(data) {
@@ -358,15 +419,15 @@
 		}
 		function login(e=null, p=null) {
 			if(e == null) {
-				var e = $('#lin-email').val();
+				var e = $('#login.email').val();
 			}
 			if(p == null) {
-				var p = $('#lin-password').val();
+				var p = $('#login.password').val();
 			}
 			if(e == 'Guest') {
 				var p = '';
 			}
-			var status = $("#lin-status");
+			var status = $("#login.status");
 			$.ajax({
 				url: toRoot+'api/index.php',
 				data: '#=login&_='+api_key+'+&e='+e+'&p='+p,
@@ -544,55 +605,6 @@
 					checkresponse(data);
 				}
 			});
-		}
-	//--------------------------- POPUP CONTROL ---------------------------//
-	//--------------------------- TOAST CONTROL ---------------------------//
-		function toast(type, heading, subheading, onClick) {
-			if(type == "success") {
-				var img = "<?php echo$mg_img['UI']['checked']['image']?>";
-			} else if(type == "info") {
-				var img = "<?php echo$mg_img['UI']['info']['image']?>";
-			} else if(type == "warn") {
-				var img = "<?php echo$mg_img['UI']['exclamation']['image']?>";
-			} else if(type == "error") {
-				var img = "<?php echo$mg_img['UI']['cancel']['image']?>";
-			} else if(type == "messaging") {
-				var img = "<?php echo$mg_img['UI']['cancel']['image']?>";
-			} else {
-				var img = "";
-			}
-			var parent = $(".notify");
-			var toast = document.createElement('div');
-				toast.setAttribute('class', 'toast '+type);
-				toast.setAttribute('onClick', onClick);
-			var toast_icon = document.createElement('div');
-				toast_icon.setAttribute('class', 'toast-icon');
-			var toast_icon_image = document.createElement('img');
-				toast_icon_image.setAttribute('src', img);
-
-			var toast_content = document.createElement('div');
-				toast_content.setAttribute('class', 'toast-content');
-			var toast_content_title = document.createElement('p');
-				toast_content_title.setAttribute('class', 'toast-type');
-				toast_content_title.textContent = heading;
-			var toast_content_messagge = document.createElement('p');
-				toast_content_messagge.setAttribute('class', 'toast-message');
-				toast_content_messagge.textContent = subheading;
-				
-			var toast_close = document.createElement('div');
-				toast_close.setAttribute('class', 'toast-close');
-				toast_close.setAttribute('onClick', 'parent = $(this).parent().fadeOut("slow", function() {$(this).remove();})');
-			var toast_close_image = document.createElement('img');
-				toast_close_image.setAttribute('src', '<?php print($mg_img['UI']['close']['image']) ?>');
-
-			parent.append(toast);
-			toast.append(toast_icon);
-			toast_icon.append(toast_icon_image);
-			toast.append(toast_content);
-			toast_content.append(toast_content_title);
-			toast_content.append(toast_content_messagge);
-			toast.append(toast_close);
-			toast_close.append(toast_close_image);
 		}
 	//--------------------------- THEME CONTROL FUNCTIONS ---------------------------//
 		function changetheme(type, theme) {

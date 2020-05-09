@@ -1,51 +1,6 @@
-
-<div class="pages-content-full" data-local-page="Login">
-	<div class="panel login">
-		<form id="loginform" onsubmit="return false;">
-			<header>
-				<h2>Login</h2>
-				<p>you need to write your email and passward</p>
-				<p id="lin-status"></p>
-			 </header>
-			<input onfocus="emptyElement('lin-status')" type="text" id="lin-email" placeholder="Email Address:" autocomplete="username">
-			<input onfocus="emptyElement('lin-status')" type="password" id="lin-password" placeholder="Password:" autocomplete="current-password">
-			<input type="button" value="Login" onclick="login()">
-			<a href="<?php echo$mg_rdir['forgot_pass']?>">Forgot Your Password?</a>
-		</form>
-		<?
-			$p_hash = hash($mg_security['hash'], $mg_security['salt'].$mg_security['salt']);
-			$sql = "SELECT * FROM `users` where `password`='$p_hash' ";
-			$query = mysqli_query($db_conx, $sql);
-			($query != null) ? $ulist = true : $ulist = false;
-			(!$ulist) ?: print('<span>Or continue as..</span>');
-			(!$ulist) ?: print('<div class="users">');
-			foreach($query as $row) {
-				echo '<div onClick="login(\''.$row['username'].'\')" ><atarget="_blank">GUEST</a></div>';
-			}
-			(!$ulist) ?: print('</div>');
-		?>
-	<a class="scroll-wrapper signup" href="javascript:void(0)" onClick="scrollto('.panel.signup')"><i class="fa fa-plus scroll-icon" aria-hidden="true"></i></a>
-	 </div>
-	<span class="seperator"></span>
-	<div class="panel signup">
-		<form id="signupform" class="signup" onsubmit="return false;">
-			<header>
-				<h2>Sign up now</h2>
-				<p>fill in this form below to have an account </p>
-				<p id="sup-status"></p>
-			 </header>
-			<input onfocus="emptyElement('sup-status')" onblur="checkusername()" onkeyup="restrict('sup-username')" type="text" id="sup-username" maxlength="16" placeholder="Username:" autocomplete="username">
-			<p class="output" id="sup-usernamestatus"></p>
-			<input onfocus="emptyElement('sup-status')" onblur="checkemail()" onkeyup="restrict('sup-email')" type="text" id="sup-email" maxlength="88" placeholder="Email Address:" autocomplete="email">
-			<p class="output" id="sup-emailstatus"></p>
-			<input onfocus="emptyElement('sup-status')" onblur="checkpassword()" type="password" id="sup-pass1" maxlength="32" placeholder="Password:" autocomplete="new-password">
-			<p class="output" id="sup-pass1status"></p>
-			<input onfocus="emptyElement('sup-status')" onblur="checkpassword()" type="password" id="sup-pass2" maxlength="32" placeholder="Confirm Password:" autocomplete="new-password">
-			<p class="output" id="sup-pass2status"></p>
-			<input onfocus="emptyElement('sup-status')" onblur="checkreference()" onkeyup="restrict('sup-reference')" type="text" id="sup-reference" maxlength="15" placeholder="reference code:" autocomplete="">
-			<p class="output" id="sup-referencestatus"></p>
-			<input type="button" class="button-primary" onclick="signup()" value="Signup">
-		</form>
-		<a class="scroll-wrapper login" href="javascript:void(0)" onClick="scrollto('.panel.login')"><i class="fa fa-unlock-alt scroll-icon" aria-hidden="true"></i></a>
-	 </div>
-</div>
+<h2 class="welcome">Welcome back!</h2>
+<h4 class="welcome">Please sign in below</h4>
+<input id="login" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Username:" class="email">
+<input id="login" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="password" placeholder="Password:" class="password">
+<span id="login" class="status"></span>
+<input id="login" type="button" value="Login" onClick="login()">

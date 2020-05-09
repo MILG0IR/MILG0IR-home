@@ -277,6 +277,27 @@
 			bottom: 0; }
 		div[data-local-page="Messages"] .chat .footer .emoji {
 			display: none; }
+		.emoji-menu {
+			display: none; }
+		.emoji-menu.open {
+			box-shadow: 0px 2px 11px 0px var(--main-shadow);
+			transform: translatey(-125%);
+			position: absolute;
+			border-radius: 3px;
+			background: white;
+			display: block;
+			height: 20rem;
+			width: 25rem; }
+		.emoji-menu::after {
+			transform: rotate(45deg);
+			border-radius: 3px;
+			position: absolute;
+			background: white;
+			bottom: -5px;
+			height: 2rem;
+			width: 2rem;
+			content: "";
+			left: 5px; }
 		div[data-local-page="Messages"] .chat .footer .write-message {
 			color: var(--chat-input-color);
 			border-bottom: solid 1px #ccc;
@@ -446,7 +467,10 @@
 	</div>
 	<div class="messages-chat"></div>
 	<div class="footer">
-		<div class="emoji"><i class="fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i></div>
+		<div class="emoji">
+			<i class="fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true" onClick="$(this).parent().children('.emoji-menu').toggleClass('open')"></i>
+			<?php include_once($mg_dir['fragments'].'emojiGrid')?>
+		</div>
 		<input type="text" class="write-message" placeholder="Type your message here" onClick="scrolltobottom('.messages-chat', 'smooth')"onkeydown="if (event.keyCode == 13) { sendChat()}"></input>
 		<div class="send" onClick="sendChat()"><i class="fa fa-paper-plane-o clickable" aria-hidden="true"></i></div>
 	</div>
