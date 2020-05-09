@@ -8,6 +8,12 @@
 		function sleep(ms) {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		}
+		function filtervars(x){
+			if(typeof(x) === 'undefined'){
+				return '';
+			}
+			return x;
+		};
 		function redirect(uri) {
 			window.location = uri;
 		}
@@ -37,6 +43,9 @@
 		}
 		function elemscrollby(elem, x, y) {
 			elem.scrollBy({ top: x, left: y, behavior: 'smooth' });
+		}
+		function elemscrolltop(elem, y) {
+			elem.scrollTop += y
 		}
 		function scrolltobottom(elem, behaviour) {
 			document.querySelector(elem).scroll({ top: document.querySelector(elem).scrollHeight, left: 0, behavior: behaviour });
@@ -184,7 +193,7 @@
 			var toast_content_messagge = document.createElement('p');
 				toast_content_messagge.setAttribute('class', 'toast-message');
 				toast_content_messagge.textContent = subheading;
-				
+
 			var toast_close = document.createElement('div');
 				toast_close.setAttribute('class', 'toast-close');
 				toast_close.setAttribute('onClick', 'parent = $(this).parent().fadeOut("slow", function() {$(this).remove();})');
@@ -391,13 +400,13 @@
 		}
 	//--------------------------- API CALLOUT FUNCTIONS ---------------------------//
 		function signup() {
-			var u = $('#signup.username').val();
-			var e = $('#signup.email').val();
-			var p1 = $('#signup.password').val();
-			var p2 = $('#signup.password-confirm').val();
-			var fn = $('#signup.firstname').val();
-			var sn = $('#signup.surname').val();
-			var ref = $('#signup.reference').val();
+			var u = filtervars($('#signup.username').val());
+			var e = filtervars($('#signup.email').val());
+			var p1 = filtervars($('#signup.password').val());
+			var p2 = filtervars($('#signup.password-confirm').val());
+			var fn = filtervars($('#signup.firstname').val());
+			var sn = filtervars($('#signup.surname').val());
+			var ref = filtervars($('#signup.reference').val());
 			var status = $('#signup.status');
 			if(p1 == p2) {
 				$.ajax({
@@ -417,15 +426,12 @@
 				});
 			}
 		}
-		function login(e=null, p=null) {
-			if(e == null) {
-				var e = $('#login.email').val();
-			}
-			if(p == null) {
-				var p = $('#login.password').val();
-			}
+		function login(e=null) {
 			if(e == 'Guest') {
 				var p = '';
+			} else {
+				var e = filtervars($('#login.email').val());
+				var p = filtervars($('#login.password').val());
 			}
 			var status = $("#login.status");
 			$.ajax({
@@ -670,7 +676,7 @@
 					$('#'+pageJSON[0]).toggleClass("child-active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
 					$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
-					setTimeout(() => { 
+					setTimeout(() => {
 						initGrid('[data-includes-grid="true"]');
 					}, 1000);
 				}

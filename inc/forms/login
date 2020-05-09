@@ -1,6 +1,9 @@
 <h2 class="welcome">Welcome back!</h2>
 <h4 class="welcome">Please sign in below</h4>
-<input id="login" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Username:" class="email">
-<input id="login" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="password" placeholder="Password:" class="password">
-<span id="login" class="status"></span>
+<form>
+	<input autocomplete="username" id="login username" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Username:" class="email">
+	<input autocomplete="password" id="login password" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="password" placeholder="Password:" class="password">
+</form>
 <input id="login" type="button" value="Login" onClick="login()">
+<span id="login" class="status"></span>
+<div class="formScroller" onClick="formScroll()"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>

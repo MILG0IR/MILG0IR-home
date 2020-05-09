@@ -1,6 +1,6 @@
 :root {
 	--main-background: rgba(29, 29, 44, 1);
-	--main-text: rgb(255, 255, 255);
+	--main-text: rgba(255, 255, 255, 1);
 	--main-accent: rgba(225, 78, 202, 1);
 	--main-accent-shade: rgba(225, 78, 202, 1);
 	--main-panel-background: rgba(39, 41, 61, 1);
@@ -25,6 +25,8 @@
 		--whatsnew-addition: rgba(114, 238, 114, 1);
 		--whatsnew-removal: rgba(238, 114, 114, 1);
 		--whatsnew-change: rgba(173, 216, 230, 1);
+	/* LOGIN */
+		--login-accent: rgba(67, 67, 123, 1);
 	/* CHAT*/
 		--discussions-header-background: rgba(43, 53, 83, 1);
 		--discussions-header-search-background: rgba(255, 255, 255, 1);

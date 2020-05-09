@@ -1,19 +1,21 @@
 <h2 class="welcome">Welcome newcomer!</h2>
 <h4 class="welcome">Please sign up below</h4>
-<input id="signup" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkusername()" type="text" placeholder="Username:" class="username">
-<span id="signup" class="status-username"></span>
-<input id="signup" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkemail()" type="text" placeholder="Email:" class="email">
-<span id="signup" class="status-email"></span>
-<input id="signup" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkpassword()" type="password" placeholder="Password:" class="password">
-<span id="signup" class="status-password"></span>
-<input id="signup" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkpassword()" type="password" placeholder="Password:" class="password-confirm">
-<span id="signup" class="status-password-confirm"></span>
-<input id="signup" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Firstname:" class="firstname">
-<span id="signup" class="status-firstname"></span>
-<input id="signup" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Surname:" class="surname">
-<span id="signup" class="status-surname"></span>
-<input id="signup" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkreference()" type="text" placeholder="Reference:" class="reference">
-<span id="signup" class="status-reference"></span>
-
-<span id="signup" class="status"></span>
+<form>
+	<input autocomplete="username" id="signup username" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkusername()" type="text" placeholder="Username:" class="username">
+	<span id="signup" class="status-username"></span>
+	<input autocomplete="email" id="signup email" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkemail()" type="text" placeholder="Email:" class="email">
+	<span id="signup" class="status-email"></span>
+	<input autocomplete="password" id="signup password" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkpassword()" type="password" placeholder="Password:" class="password">
+	<span id="signup" class="status-password"></span>
+	<input autocomplete="off" id="signup password-confirmation" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkpassword()" type="password" placeholder="Password:" class="password-confirm">
+	<span id="signup" class="status-password-confirm"></span>
+	<input autocomplete="firstname" id="signup firstname" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Firstname:" class="firstname">
+	<span id="signup" class="status-firstname"></span>
+	<input autocomplete="surname" id="signup surname" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Surname:" class="surname">
+	<span id="signup" class="status-surname"></span>
+	<input autocomplete="off" id="signup reference" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" onKeyup="checkreference()" type="text" placeholder="Reference:" class="reference">
+	<span id="signup" class="status-reference"></span>
+</form>
 <input id="signup" type="button" value="Signup" onClick="signup()">
+<span id="signup" class="status"></span>
+<div class="formScroller" onClick="formScroll()"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>

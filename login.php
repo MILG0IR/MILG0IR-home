@@ -52,11 +52,26 @@
 				div[data-local-page="Login"] .panel section.login .tabs .tab.active h4 {
 					filter: invert(var(--invert-icons)); }
 				div[data-local-page="Login"] .panel section.login .forms {
-					height: 80%;
+					height: 90%;
 					width: 100%; }
+				div[data-local-page="Login"] .panel section.login .forms .formScroller {
+					margin: 0px 0px 0rem calc(100% - (2rem + 4rem));
+					box-shadow: 0 0 8px 1px var(--login-accent)
+					border-radius: 3px;
+					background: var(--login-accent)
+					position: sticky;
+					cursor: pointer;
+					bottom: 2rem;
+					right: 2rem;
+					height: 4rem;
+					width: 4rem; }
+				div[data-local-page="Login"] .panel section.login .forms .formScroller i{
+					color: var(--main-panel-background);
+				    padding: 2px 0px 0px 5px;
+					font-size: 3rem; }
 				div[data-local-page="Login"] .panel section.login .forms .form {
 					scrollbar-width: none;
-					margin-top: 2rem;
+					padding-top: 2rem;
 					display: none;
 					height: 10%;
 					width: 100%; }
@@ -74,19 +89,36 @@
 					display: block;
 					margin: 4rem auto 0 auto;
 					height: 3rem;
-					width: 50%; }
+					width: 80%; }
+				div[data-local-page="Login"] .panel section.login .forms .form input[type="text"],
+				div[data-local-page="Login"] .panel section.login .forms .form input[type="password"] {
+					background: transparent;
+					border: none;
+					border-bottom: 1px solid var(--login-accent) }
+				div[data-local-page="Login"] .panel section.login .forms .form input[type="button"] {
+					height:5rem; }
+				div[data-local-page="Login"] .panel section.login .forms .form > .status {
+					margin: 3rem 0 0 10%;
+					text-align: center;
+					display: block;
+					width: 80%; }
+		div[data-local-page="Login"] .panel section.login {
+			width: calc(100% - 0.5px);
+			height: 100%; }
+		div[data-local-page="Login"] .panel .login .tabs {
+			height: 5%; }
+		div[data-local-page="Login"] .panel section .forms {
+			height: 90%; }
 				@media(min-width: 512px) {
-					div[data-local-page="Login"] .panel section.login {
-						width: calc(100% - 0.5px);
-						height: 100%; }
-					div[data-local-page="Login"] .panel .login .tabs {
-						height: 5%; }
-					div[data-local-page="Login"] .panel section .forms {
-						height: 90%; }
 				}
 				@media(min-width: 740px) {
 					div[data-local-page="Login"] .panel {
 						display: flex; }
+					div[data-local-page="Login"] .panel section.login .forms .form input {
+						width: 70% }
+					div[data-local-page="Login"] .panel section.login .forms .form > .status {
+						margin: 3rem 0 0 15%;
+						width: 70%; }
 				}
 				@media(min-width: 1200px) {
 					div[data-local-page="Login"] .panel {
@@ -96,8 +128,12 @@
 						width: 60%;
 						top: 12.5%;
 						left: 20%; }
+					div[data-local-page="Login"] .panel section.login .forms .form input {
+						width: 60%; }
+					div[data-local-page="Login"] .panel section.login .forms .form > .status {
+						margin: 3rem 0 0 20%;
+						width: 60%; }
 				}
-
 				<?php
 					if($data['enabled']) {
 						if($data['background_image_name'] != "") {
@@ -213,7 +249,7 @@
 				?>
 			</style>
 		 </head>
-		<body data-nav-theme="1" data-main-theme="dark">
+		<body data-nav-theme="1" data-main-theme="dark" onresize="formScroller()">
 			<script name="PRE">
 				changetheme('main', $("body").data("main-theme"));
 				changetheme('nav', $("body").data("nav-theme"));
@@ -279,12 +315,27 @@
 						}
 					});
 				});
+				function formScroll(form) {
+					$('.form.active').animate({
+						scrollTop: $('.form.active').scrollTop() + 100
+					});
+				}
+				function formScroller() {
+					var sHeight = $('.form.active').prop("scrollHeight") - 25;
+					var iHeight = $('.form.active').height();
+					if(sHeight > iHeight) {
+						$('.formScroller').show()
+					} else {
+						$('.formScroller').hide()
+					}
+				}
 				function changeForm(form) {
 					setTitle(form.charAt(0).toUpperCase() + form.slice(1));
 					$('.tabs').children().removeClass('active')
 					$('.tabs').children('.tab-'+form).addClass('active')
 					$('.forms').children().removeClass('active')
 					$('.forms').children('.form-'+form).addClass('active')
+					formScroller();
 				}
 				function toggleBroadcast(x) {
 					if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
