@@ -15,7 +15,6 @@
 			<link type="image/x-icon" rel="icon" href="<?php echo$mg_branding['favicon']['value']?>">
 			<?php include_once($mg_dir['assets']."header") ?>
 			<?php include_once($mg_dir['js']."functions") ?>
-			<?php include_once($mg_dir['css']."css.php");	?>
 			<link rel="stylesheet" type="text/css" theme-type="navbar" href="<?php print($mg_dir['themes'])?>1.theme-nav.css">
 			<link rel="stylesheet" type="text/css" theme-type="main" href="<?php print_r($mg_dir['themes'])?>dark.theme-main.css">
 			<style>
@@ -102,15 +101,13 @@
 					text-align: center;
 					display: block;
 					width: 80%; }
-		div[data-local-page="Login"] .panel section.login {
-			width: calc(100% - 0.5px);
-			height: 100%; }
-		div[data-local-page="Login"] .panel .login .tabs {
-			height: 5%; }
-		div[data-local-page="Login"] .panel section .forms {
-			height: 90%; }
-				@media(min-width: 512px) {
-				}
+				div[data-local-page="Login"] .panel section.login {
+					width: calc(100% - 0.5px);
+					height: 100%; }
+				div[data-local-page="Login"] .panel .login .tabs {
+					height: 5%; }
+				div[data-local-page="Login"] .panel section .forms {
+					height: 90%; }
 				@media(min-width: 740px) {
 					div[data-local-page="Login"] .panel {
 						display: flex; }
@@ -262,8 +259,8 @@
 					<div class="panel">
 						<section class="login">
 							<div class="tabs">
-								<div class="tab tab-login" onClick="changeForm('login')"><h4>LOGIN</h4></div>
-								<div class="tab tab-signup" onClick="changeForm('signup')"><h4>SIGNUP</h4></div>
+								<div class="tab tab-login" onClick="changeForm('login', '<?php print($lang['LOGIN']['login'])?>')"><h4><?php print($lang['LOGIN']['login'])?></h4></div>
+								<div class="tab tab-signup" onClick="changeForm('signup','<?php print($lang['LOGIN']['signup'])?>')"><h4><?php print($lang['LOGIN']['signup'])?></h4></div>
 							</div>
 							<div class="forms">
 								<div class="form form-login">
@@ -302,7 +299,7 @@
 			 </div>
 			<script name="POST">
 				$(document).ready(function() {
-					changeForm('login')
+					changeForm('login','<?php print($lang['LOGIN']['login'])?>')
 					date_time('header-time', false, true, true);
 
 					PullToRefresh.init({
@@ -330,8 +327,8 @@
 						$('.formScroller').hide()
 					}
 				}
-				function changeForm(form) {
-					setTitle(form.charAt(0).toUpperCase() + form.slice(1));
+				function changeForm(form, title) {
+					setTitle(title);
 					$('.tabs').children().removeClass('active')
 					$('.tabs').children('.tab-'+form).addClass('active')
 					$('.forms').children().removeClass('active')

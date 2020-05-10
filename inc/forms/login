@@ -1,9 +1,9 @@
-<h2 class="welcome">Welcome back!</h2>
-<h4 class="welcome">Please sign in below</h4>
+<h2 class="welcome"><?php print($lang['LOGIN']['login'])?></h2>
+<h4 class="welcome"><?php print($lang['LOGIN']['please sign in below'])?></h4>
 <form>
-	<input autocomplete="username" id="login username" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="Username:" class="email">
-	<input autocomplete="password" id="login password" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="password" placeholder="Password:" class="password">
+	<input autocomplete="username" id="login username" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="text" placeholder="<?php print($lang['LOGIN']['username'])?>:" class="email">
+	<input autocomplete="password" id="login password" onFocus="toggleBroadcast('hide')" onBlur="toggleBroadcast('show')" type="password" placeholder="<?php print($lang['LOGIN']['password'])?>:" class="password">
 </form>
-<input id="login" type="button" value="Login" onClick="login()">
+<input id="login" type="button" value="<?php print($lang['LOGIN']['login'])?>" onClick="login()">
 <span id="login" class="status"></span>
 <div class="formScroller" onClick="formScroll()"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
