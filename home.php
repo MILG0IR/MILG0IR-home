@@ -13,7 +13,6 @@
 			<title>Homepage | <?php echo$mg_branding['slogan']['value']?></title>
 			<link type="image/x-icon" rel="icon" href="<?php echo$mg_branding['favicon']['value']?>">
 			<?php include_once($mg_dir['assets']."header") ?>
-			<?php include_once($mg_dir['js']."functions") ?>
 			<link rel="stylesheet" type="text/css" theme-type="navbar" href="<?php print($mg_dir['themes'])?>1.theme-nav.css">
 			<link rel="stylesheet" type="text/css" theme-type="main" href="<?php print_r($mg_dir['themes'])?>dark.theme-main.css">
 		</head>
