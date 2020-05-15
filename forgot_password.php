@@ -37,6 +37,7 @@
 						}, 0);
 					}
 				});
+				
 				$(document).ready(function() {
 					$(".preloader-wrapper").hide();
 					date_time('header-time', false, true, true);

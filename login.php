@@ -54,9 +54,9 @@
 					width: 100%; }
 				div[data-local-page="Login"] .panel section.login .forms .formScroller {
 					margin: 0px 0px 0rem calc(100% - (2rem + 4rem));
-					box-shadow: 0 0 8px 1px var(--login-accent)
+					box-shadow: 0 0 8px 1px var(--login-accent);
 					border-radius: 3px;
-					background: var(--login-accent)
+					background: var(--login-accent);
 					position: sticky;
 					cursor: pointer;
 					bottom: 2rem;
@@ -247,6 +247,7 @@
 			</style>
 		 </head>
 		<body data-nav-theme="1" data-main-theme="dark" onresize="formScroller()">
+			<unsupported> Your browser is currently unsuported. Please upgrade to a newer version. </unsupported>
 			<script name="PRE">
 				changetheme('main', $("body").data("main-theme"));
 				changetheme('nav', $("body").data("nav-theme"));
@@ -258,12 +259,15 @@
 					<div class="panel">
 						<section class="login">
 							<div class="tabs">
-								<div class="tab tab-login" onClick="changeForm('login', '<?php print($lang['LOGIN']['login'])?>')"><h4><?php print($lang['LOGIN']['login'])?></h4></div>
-								<div class="tab tab-signup" onClick="changeForm('signup','<?php print($lang['LOGIN']['signup'])?>')"><h4><?php print($lang['LOGIN']['signup'])?></h4></div>
+								<div class="tab tab-login" onClick="changeForm('login', '<?php print($lang['LOGIN']['login'])?>')"><h4><translate data-trans-login>Login</translate></h4></div>
+								<div class="tab tab-signup" onClick="changeForm('signup','<?php print($lang['LOGIN']['signup'])?>')"><h4><translate data-trans-signup>Signup</translate></h4></div>
 							</div>
 							<div class="forms">
 								<div class="form form-login">
 									<?php include_once($mg_dir['forms']."login") ?>
+									<select id="langs">
+										<option value="en_GB">English</option>
+									</select>
 								</div>
 								<div class="form form-signup">
 									<?php include_once($mg_dir['forms']."signup") ?>
@@ -314,7 +318,7 @@
 				});
 				function formScroll(form) {
 					$('.form.active').animate({
-						scrollTop: $('.form.active').scrollTop() + 100
+						scrollTop: $('.form.active').scrollTop() + 200
 					});
 				}
 				function formScroller() {

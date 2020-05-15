@@ -17,6 +17,7 @@
 	div[data-local-page="Homepage"] {
 		background: var(--main-background);
 		position: relative;
+		padding-top: 2rem;
 		height: 100%;
 		width: 100%; }
 	div[data-local-page="Homepage"] .title {
@@ -24,12 +25,13 @@
 		text-align: center;
 		position: relative; }
 	div[data-local-page="Homepage"] .title h1 {
-		font-size: 3rem;
-		margin-top: 2rem; }
+		font-size: 3rem; }
 	div[data-local-page="Homepage"] .grid {
 		position: relative;
 		overflow: hidden;
 		margin: 4rem; }
+	div[data-local-page="Homepage"] .grid * {
+		transition: unset; }
 	div[data-local-page="Homepage"] .grid .item {	
 		position: absolute;
 		min-height: 100px;

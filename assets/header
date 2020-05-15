@@ -1,8 +1,8 @@
 <link rel="stylesheet" type="text/css" href="<?php print($mg_dir['css'])?>font-awesome-4.7.0.css" />
 <link rel="stylesheet" type="text/css" href="<?php print($mg_dir['css'])?>style.css" />
 
-
 <script src="<?php print($mg_dir['js'])?>scripts/jquery.min.js"></script>
+<script src="<?php print($mg_dir['js'])?>scripts/jquery.cookie.min.js"></script>
 <script src="<?php print($mg_dir['js'])?>scripts/translate.min.js"></script>
 <script src="<?php print($mg_dir['js'])?>scripts/smoothscroll.min.js"></script>
 <script src="<?php print($mg_dir['js'])?>scripts/pulltorefresh.min.js"></script>
@@ -10,3 +10,4 @@
 <script src="<?php print($mg_dir['js'])?>scripts/web-animations.min.js"></script>
 <script src="<?php print($mg_dir['js'])?>scripts/muuri.min.js"></script>
 <script src="<?php print($mg_dir['js'])?>functions.js"></script>
+<script src="<?php print($mg_dir['js'])?>lang.js"></script>

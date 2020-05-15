@@ -672,8 +672,8 @@ var api_key = "key";
 				$('.active').toggleClass("active");
 				$('.child-active').toggleClass("child-active");
 				$('#'+pageJSON[0]).toggleClass("child-active");
-				$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("active");
-				$('#'+pageJSON[1]+'-'+pageJSON[0]).toggleClass("enabled");
+				$('#'+pageJSON[1]+'-'+pageJSON[0]).addClass("active");
+				$('#'+pageJSON[1]+'-'+pageJSON[0]).addClass("enabled");
 				setTimeout(() => {
 					initGrid('[data-includes-grid="true"]');
 				}, 1000);
@@ -695,14 +695,14 @@ var api_key = "key";
 	}
 	function closepage() {
 		var elem = $(".child-active");
+		var tab = $("#" + elem.attr('name') + "-" + elem.attr('id'));
 		if($(elem).is("div")) {
 			elem.remove();
 		} else {
-			var tab = $("#" + elem.attr('name') + "-" + elem.attr('id'));
-			tab.removeClass("enabled");
 			elem.remove();
 		}
-		openpage(0, false);
+		tab.removeClass("enabled");
+		openpage(0);
 	}
 //--------------------------- Chat functions ----------------------------//
 	function searchfriends() {
@@ -751,7 +751,7 @@ var api_key = "key";
 							text.textContent = row.message;
 						var timestamp = document.createElement('p');
 							timestamp.setAttribute('class', "response-time");
-							timestamp.textContent = row.timestamp;
+							timestamp.textContent = row.timestamp.substring(11,16);
 
 						parent.append(message);
 						message.append(response);
@@ -767,7 +767,7 @@ var api_key = "key";
 							text.textContent = row.message;
 						var timestamp = document.createElement('p');
 							timestamp.setAttribute('class', "received-time");
-							timestamp.textContent = row.timestamp;
+							timestamp.textContent = row.timestamp.substring(11,16);
 
 						parent.append(message);
 						message.append(received);
@@ -783,8 +783,8 @@ var api_key = "key";
 				$('.chat').addClass('open');
 				$('.chat').show();
 				$('.welcome').hide();
+				scrolltobottom('.messages-chat');
 			}
-			scrolltobottom('.messages-chat');
 			if ($('.discussions-header').attr('data-chats-status') != "updating") {
 				$('.discussions-header').attr("data-chats-status", "updating")
 					updateChats()

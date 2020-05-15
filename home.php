@@ -16,7 +16,8 @@
 			<link rel="stylesheet" type="text/css" theme-type="navbar" href="<?php print($mg_dir['themes'])?>1.theme-nav.css">
 			<link rel="stylesheet" type="text/css" theme-type="main" href="<?php print_r($mg_dir['themes'])?>dark.theme-main.css">
 		</head>
-		<body data-nav-theme="1" data-main-theme="dark" data-uid="<?php print($userdata['uid'])?>" onLoad="openpage('0', '0'); checkForNewChats('initial'); checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>);">
+		<body data-nav-theme="1" data-main-theme="dark" data-uid="<?php print($userdata['uid'])?>" onLoad="checkForNewChats('initial'); checkforupdate(<?php echo "'".$app_info['Version']."', '".$app_info['Device']."', '".$app_info['Branch']."'" ?>);">
+			<unsupported> Your browser is currently unsuported. Please upgrade to a newer version. </unsupported>
 			<script name="PRE">
 				changetheme('main', $("body").data("main-theme"));
 				changetheme('nav', $("body").data("nav-theme"));
@@ -58,6 +59,7 @@
 					}
 				});
 				$(document).ready(function() {
+					openpage(0)
 					$(".preloader-wrapper").hide();
 					date_time('header-time', false, true, true);
 

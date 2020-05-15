@@ -16,11 +16,11 @@
 <style>
 	div[data-local-page="Settings"] {
 		background: var(--main-background);
-		position: relative;
-	}
+		position: relative; }
 	div[data-local-page="Settings"] .nav::before {
 		background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-accent) 1%, var(--main-panel-accent) 99%, var(--main-background) 100%);
 		box-shadow: 0 -3px 10px 2px var(--main-shadow);
+		display: flex;
 		content: "";
 		height: 1px;
 		width: 100%; }
@@ -39,6 +39,7 @@
 	div[data-local-page="Settings"] .nav::after {
 		background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-accent) 1%, var(--main-panel-accent) 99%, var(--main-background) 100%);
 		box-shadow: 0 3px 10px 2px var(--main-shadow);
+		display: flex;
 		content: "";
 		height: 1px;
 		width: 100%; }
@@ -267,7 +268,6 @@
 				<div class="tr">
 					<div class="th">ID</div>
 					<div class="th">Avatar</div>
-					<div class="th">Banner</div>
 					<div class="th">Username</div>
 					<div class="th">E-Mail</div>
 					<div class="th">First name</div>
@@ -281,66 +281,42 @@
 			<div class="tbody">
 				<?php
 					// FIND ALL USERS
-						$i = 0;
-						$disabled_users = array("ADMINISTRATOR", "Guest");
 						$sql = "SELECT * FROM `users` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
 						$query = mysqli_query($db_conx, $sql);
-						foreach($query as $usr) {
-							if(in_array($usr['username'],$disabled_users)) {
-								$usr_class[$i] = "disabled";
-								$usr_image[$i] = $mg_img['UI']['cancel']['image'];
-								$usr_click[$i] = "";
+						foreach($query as $user) {
+							$disabled_users = array("Admin", "Guest");
+							if(in_array($user['username'],$disabled_users)) {
+								$user_sortable = "unsortable";
+								$user_class = "disabled";
+								$user_actions_image = $mg_img['UI']['cancel']['image'];
+								$user_actions = "";
+								$user_permissions_image = $mg_img['UI']['cancel']['image'];
+								$user_permissions = "";
 							} else {
-								$usr_class[$i] = "enabled";
-								$usr_image[$i] = $mg_img['UI']['more']['image'];
-								$usr_click[$i] = "editPopup(\"user\", \"".str_replace("\"", "\\\"", json_encode($usr))."\")";
-							}
-							$usr_uid[$i] = $usr['uid'];
-							$usr_username[$i] = $usr['username'];
-							$usr_email[$i] = $usr['email'];
-							$usr_pass_change[$i] = $usr['change_passkey'];
-							$usr_enabled[$i] = $usr['enabled'];
-							$i++;
-						}
-						$i = 0;
-						$sql = "SELECT * FROM `user_preferences` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
-						$query = mysqli_query($db_conx, $sql);
-						foreach($query as $usr) {
-							$usr_lang[$i] = $usr['lang'];
-							$i++;
-						}
-						$i = 0;
-						$sql = "SELECT * FROM `user_data` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
-						$query = mysqli_query($db_conx, $sql);
-						foreach($query as $usr) {
-							$usr_rank[$i] = $usr['rank'];
-							$usr_firstname[$i] = $usr['firstname'];
-							$usr_surname[$i] = $usr['surname'];
-							$usr_avatar[$i] = $usr['avatar'];
-							$usr_banner[$i] = $usr['banner'];
-							$usr_registered[$i] = $usr['registered'];
-							$i++;
-						}
-					// PRINT ALL USERS
-						$x = 0;
-						while($x < $i) {
-							echo "<div class=\"tr\" id=\"".$usr_uid[$x]."\">";
-							echo "	<div class=\"td\">".$usr_uid[$x]."</div>";
-							echo "	<div class=\"td\"><img src=\"".$usr_avatar[$x]."\"></div>";
-							echo "	<div class=\"td\"><img src=\"".$usr_banner[$x]."\"></div>";
-							echo "	<div class=\"td\">".$usr_username[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_email[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_firstname[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_surname[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_pass_change[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_enabled[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_registered[$x]."</div>";
-							echo "	<div class=\"td\"><img src=\"".$usr_image[$x]."\" onClick='".$usr_click[$x]."' class=\"action ".$usr_class[$x]."\"></div>";
+								$user_sortable = "sortable";
+								$user_class = "";
+								$user_actions_image = $mg_img['UI']['more']['image'];
+								$user_actions = "editPopup(\"user\", \"".str_replace("\"", "\\\"", json_encode($user))."\")";
+								$user_permissions_image = $mg_img['UI']['levels']['image'];
+								$user_permissions = "alert(\"**TODO**\")";
+							};
+						// PRINT ALL USERS
+							echo "<div class=\"tr\" id=\"".$user['uid']."\">";
+							echo "	<div class=\"td\">".$user['uid']."</div>";
+							echo "	<div class=\"td\"><img src=\"".$user['avatar']."\"></div>";
+							echo "	<div class=\"td\">".$user['username']."</div>";
+							echo "	<div class=\"td\">".$user['email']."</div>";
+							echo "	<div class=\"td\">".$user['firstname']."</div>";
+							echo "	<div class=\"td\">".$user['surname']."</div>";
+							echo "	<div class=\"td\">".$user['change_passkey']."</div>";
+							echo "	<div class=\"td\">".$user['enabled']."</div>";
+							echo "	<div class=\"td\">".$user['registered']."</div>";
+							echo "	<div class=\"td\">";
+							echo "		<img src=\"".$user_actions_image."\" onClick='".$user_actions."' class=\"action ".$user_class."\">";
+							echo "		<img src=\"".$user_permissions_image."\" onClick='".$user_permissions."' class=\"action ".$user_class."\">";
+							echo "	</div>";
 							echo "</div>";
-							$x++;
-						}
-					unset($i);
-					unset($x);
+					}
 				?>
 			</div>
 		</div>
