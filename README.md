@@ -7,7 +7,7 @@ DO NOT DOWNLOAD. Follow our simple installation tutorial [HERE](#installation).
 Hi! Here at MILG0IR we are working to create the best media organizer around! With a simple and easy to use user interface it is unbeatable!
 
 ## installation
-To install MILG0IR home make sure you meet the requirements as stated below, then download out PHP file, place it onto your server and follow the instructions on screen! Installing could not be simpler. Use the commands below, within the website folder,  to get the install file!
+To install MILG0IR home make sure you meet the requirements as stated below, then download out PHP file, place it onto your server and follow the instructions on screen! Installing could not be simpler. Use the commands below, within the website folder, to get the install file!
 
 Wget:
 ```sh
