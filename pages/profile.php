@@ -35,8 +35,8 @@
 		width: 0%;
 		display: block; }
 	div[data-local-page="Profile"] .about-me .avatar {
-		max-height: 7rem;
-		max-width: 7rem;
+		height: 7rem;
+		width: 7rem;
 		display: block;
 		margin: 1rem 1rem 1rem 3rem;
 		border: solid 2px var(--main-panel-background);
@@ -65,13 +65,13 @@
 			width: 30%;
 			left: 0; }
 		div[data-local-page="Profile"] .about-me .banner {
-			max-height: 25rem;
+			height: 16rem;
 			width: 100%;
 			display: block; }
 		div[data-local-page="Profile"] .about-me .avatar {
 			transform: translatey(-50%);
-			max-height: 10rem;
-			max-width: 10rem;
+			height: 10rem;
+			width: 10rem;
 			margin: 0 auto; }
 		div[data-local-page="Profile"] .about-me .name {
 			left: unset;
@@ -85,6 +85,7 @@
 			bottom: unset;
 			top: 26rem; }
 		div[data-local-page="Profile"] .main {
+			background: var(--main-panel-background);
 			height: 100%;
 			width: 70%;
 			right: 0;

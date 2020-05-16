@@ -12,6 +12,35 @@
 	#}
 ?><?php
 	include_once("../db/db_conx.php");
+?><?php
+	$log = array();
+	$errors = NULL;
+	if(isset($_GET['log']) && isset($_GET['errors'])) {
+		$log = json_decode($_GET['log'], true);
+		$errors = $_GET['errors'];
+	}
+	if(isset($_GET['page'])){
+		$page = $_GET['page'];
+	} else {
+		$page = "DEFAULT";
+	}
+
+	$update_uri = "https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/info.json";
+	$update_info = json_decode(file_get_contents($update_uri), true);
+
+	if($app_info['Version'] == $update_info['Version']) {
+		$version_title = "Current update is installed";
+		$version_btn = "Force update";
+		$version_info = "You already have the latest update installed. You can force an update if you would like by clicking the button above. To change the branch you have selected you can change that from the panel below.";
+	} elseif($app_info['Version'] > $update_info['Version']  || $app_info['Version'] < $update_info['Version']) {
+		$version_title = "Update available";
+		$version_btn = "Update";
+		$version_info = "There is an update available, Please click the update button above to install the update. \n When installing the update, DO NOT CLODE this tab. Leave the update run in the background.";
+	} else {
+		$version_title = "ERR-UPD-OTHER";
+		$version_btn = "Error";
+		$version_info = "An error has occurred, Please use BACKEND to search this error code. and rectify the fault";
+	}
 ?>
 <style>
 	div[data-local-page="Settings"] {
@@ -52,6 +81,7 @@
 		width: 100%;
 		margin: 0; }
 	div[data-local-page="Settings"] .menu .menu-item {
+		cursor: pointer;
 		padding: 1em; }
 	div[data-local-page="Settings"] .menu .menu-item a {
 		color: var(--main-text);
@@ -85,6 +115,8 @@
 		margin: 0px;
 		float: left; }
 	div[data-local-page="Settings"] .content .panel header input {
+		height: 4.5rem;
+		min-width: 4.5rem;
 		float: right; }
 	div[data-local-page="Settings"] .content .panel#whats-new .update {
 		padding: 1rem;
@@ -198,22 +230,20 @@
 </style>
 <div class="nav">
 	<input class="title-check" type="checkbox" id="navTitleCheck"/>
-	<label class="title" for="navTitleCheck">menu
-		<div class="title-icon"> </div>
-	</label>
+	<label class="title" for="navTitleCheck">Settings<div class="title-icon"> </div></label>
 	<ul class="menu">
-		<li class="menu-item"><a onClick="scrollto('#pages')">Pages and Categories</a></li>
-		<li class="menu-item"><a onClick="scrollto('#users')">Users & Groups</a></li>
-		<li class="menu-item"><a onClick="scrollto('#customization')">Customization</a></li>
-		<li class="menu-item"><a onClick="scrollto('#update')">Update and Security</a></li>
-		<li class="menu-item"><a onClick="scrollto('#whats-new')">Whats new</a></li>
+		<li class="menu-item" onClick="scrollto('#pages')">Pages & Categories</li>
+		<li class="menu-item" onClick="scrollto('#users')">Users & Groups</li>
+		<li class="menu-item" onClick="scrollto('#update')">Update</li>
+		<li class="menu-item" onClick="scrollto('#security')">Security & Database</li>
+		<li class="menu-item" onClick="scrollto('#whats-new')">Whats new</li>
 	</ul>
 </div>
 <div class="content">
 	<div class="panel" id="pages">
 		<header>
 			<h1>Pages!</h1>
-			<input type="button" value="New page">
+			<input type="button" value="＋">
 		</header>
 		<div class="table">
 			<div class="thead">
@@ -255,13 +285,40 @@
 	<div class="panel" id="categories">
 		<header>
             <h1>Categories!</h1>
-			<input type="button" value="New Category">
+			<input type="button" value="＋">
 		</header>
+		<div class="table">
+			<div class="thead">
+				<div class="tr">
+					<div class="th">ID</div>
+					<div class="th">Name</div>
+					<div class="th">description</div>
+					<div class="th">Actions</div>
+				</div>
+			</div>
+			<div class="tbody">
+				<?php
+					$sql = "SELECT * FROM `var_page_categories` ORDER BY CHAR_LENGTH(`id`), `id` asc;";
+					$query = mysqli_query($db_conx, $sql);
+					foreach($query as $category) {
+						$category_image = $mg_img['UI']['cancel']['image'];
+						$category_click = "toast('warn', 'warning', 'You are not able to edit core pages.')";
+
+						echo "<div class=\"tr\" id=\"".$category['name']."\">";
+						echo "	<div class=\"td\">".$category['id']."</div>";
+						echo "	<div class=\"td\">".$category['name']."</div>";
+						echo "	<div class=\"td\">".$category['description']."</div>";
+						echo "	<div class=\"td\"><img src=\"".$category_image."\" onClick=\"".$category_click."\" class=\"action\"></div>";
+						echo "</div>";
+					}
+				?>
+			</div>
+		</div>
 	</div>
 	<div class="panel" id="users">
 		<header>
             <h1>Users!</h1>
-			<input type="button" value="New User">
+			<input type="button" value="＋">
 		</header>
 		<div class="table">
 			<div class="thead">
@@ -324,7 +381,7 @@
 	<div class="panel" id="groups">
 		<header>
             <h1>Ranks!</h1>
-			<input type="button" value="New Rank">
+			<input type="button" value="＋">
 		</header>
 		<div class="table">
 			<div class="thead">
@@ -374,24 +431,47 @@
 			</div>
 		</div>
 	</div>
-	<div class="panel" id="customization">
-		<header>
-            <h1>Customization!</h1>
-		</header>
-	</div>
 	<div class="panel" id="update">
 		<header>
             <h1>Update!</h1>
+			<input type="button" onClick="redirect('../update.php?download')" value="<? print($version_btn)?>">
+		</header>
+		<h5><? print($version_title)?></h5>
+		<p><? print($version_info)?></p>
+		<div class="log">
+			<?php
+				if($errors != NULL){
+					$log[] .= "";
+					$log[] .= "<span class='error'>This installation has been complete with " . $errors . " errors.</span>";
+				}
+				$arrlength = count($log)-1;
+				if($arrlength > 0) {
+					echo "";
+						echo "<pre>";
+						echo "<h4 class='title'>LOG:</h4>";
+						echo "</br>";
+						for($x = 0; $x < $arrlength; $x++) {
+							if($x < 10) {
+								echo "0" . $x . " - " . $log[$x];
+								echo "<br>";
+							} else {
+								echo $x . " - " . $log[$x];
+								echo "<br>";
+							}
+						}
+						echo "</pre>";
+				}
+			?>
+		</div>
+	</div>
+	<div class="panel" id="security">
+		<header>
+            <h1>Security!</h1>
 		</header>
 	</div>
 	<div class="panel" id="database">
 		<header>
             <h1>Database!</h1>
-		</header>
-	</div>
-	<div class="panel" id="security">
-		<header>
-            <h1>Security!</h1>
 		</header>
 	</div>
 	<div class="panel" id="whats-new">
