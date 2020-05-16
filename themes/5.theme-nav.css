@@ -1,4 +1,8 @@
 :root {
 	--menu-colour:rgba(0, 152, 240, 1);
 	--menu-accent:rgba(0, 242, 195, 1);
+	--menu-active:rgba(240, 48, 0, 0.5);
+	--menu-shadow:rgba(0, 0, 0, 0.2);
+	--menu-spacing: 0.5rem;
+	--submenu-indent: 1rem;
 }
