@@ -261,56 +261,66 @@
 		}
 	// CREATE ACCOUNT
 		elseif($api_type == "signup") {
-			if(!isset($username) || !isset($email) || !isset($password) || !isset($reference)) {
-				exit("ERR-SUP-1");
-			} else {
+			if(isset($username) && isset($email) && isset($password) && isset($firstname) && isset($surname) && isset($reference)
+			&& strlen($username) > 0 && strlen($email) > 0 && strlen($password) > 0 && strlen($firstname) > 0 && strlen($reference) > 0 && strlen() > 0) {
 				// SET THE VARIABLES
-					$e = $email;
-					$u = $username;
-					$p = $password;
-					$r = $reference;
 					$p_hash = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
+				// CHECK USERNAME USERNAME
+					// CHECK USERNAME VALID
+						if(is_numeric($username[0])) {
+							exit("ERR-SUP-6");
+						} elseif(strlen($username) < 3) {
+							exit("ERR-SUP-5");
+						}
+					// CHCEK USERNAME IS AVAIALBLE
+						$sql = "SELECT `uid` FROM `users` WHERE `username`='$username' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql); 
+						$u_check = mysqli_num_rows($query);
+						if($u_check > 0) { 
+							exit("ERR-SUP-3");
+						}
+				// CHECK FOR EXISTING EMAIL ADDRESS
+					if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
+						$query = mysqli_query($db_conx, $sql);
+						$e_check = mysqli_num_rows($query);
+						if($e_check > 0) { 
+							exit("ERR-SUP-4");
+						}
+					} else {
+						exit('ERR-SUP-7');
+					}
+				// CHECK IF NAME IS VALID (Not empty)
+					if($firstname == '' && $surname == ''){
+						// name is invalid
+						exit('ERR-SUP-9');
+					}
+					if($firstname == ''){
+						// firstname is invalid
+						exit('ERR-SUP-10');
+					}
+					if($surname == ''){
+						// surname is invalid
+						exit('ERR-SUP-11');
+					}
 				// CHECK IF THE REFERENCE CODE IS VALID
 					if(preg_match("/[a-zA-Z]{2}[0-9]{1}-[0-9]{2}[a-zA-Z]{1}-[a-zA-Z]{3}-[0-9]{3}/",$reference)) {
 						$sql = "SELECT `id` FROM `user_references` WHERE `reference_code`='$reference' AND `active`='1' LIMIT 1";
 						$query = mysqli_query($db_conx, $sql);
 						$ref_check = mysqli_num_rows($query);
+						if($ref_check == 0) { 
+							exit("ERR-SUP-2");
+						}
 					} else {
 						exit('ERR-SUP-8');
 					}
-				// CHECK FOR EXISTING USERNAME
-					if(strlen($u) < 3 || strlen($u) > 16) {
-						exit("ERR-SUP-5"); 
-					} else {
-						$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' LIMIT 1";
-						$query = mysqli_query($db_conx, $sql); 
-						$u_check = mysqli_num_rows($query);
-					}
-				// CHECK FOR EXISTING EMAIL ADDRESS
-					if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-						$sql = "SELECT `uid` FROM `users` WHERE `email`='$e' LIMIT 1";
-						$query = mysqli_query($db_conx, $sql);
-						$e_check = mysqli_num_rows($query);
-					} else {
-						exit('ERR-SUP-7');
-					}
-				// DO BASIC CHECKS
-					if($ref_check == 0) { 
-						exit("ERR-SUP-2");
-					} elseif($u_check > 0) { 
-						exit("ERR-SUP-3");
-					} elseif($e_check > 0) { 
-						exit("ERR-SUP-4");
-					} elseif(is_numeric($u[0])) {
-						exit("ERR-SUP-6");
-					}
 				// CRATE ROW IN `users` TABLE
-					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `change_passkey`, `enabled`)
-								VALUES('$u', '$e', '$p_hash', 0, 1)";
+					$sql = "INSERT INTO `users` (`username`, `email`, `password`, `firstname`, `surname`, `reference`, `change_passkey`, `enabled`)
+								VALUES('$username', '$email', '$p_hash', '$firstname', '$surname', '$reference', 0, 1)";
 					$query = mysqli_query($db_conx, $sql); 
 					$uid = mysqli_insert_id($db_conx);
 				// GET THE USER'S UID
-					$sql = "SELECT `uid` FROM `users` WHERE `username`='$u' AND `email`='$e' AND `password`='$p_hash' LIMIT 1";
+					$sql = "SELECT `uid` FROM `users` WHERE `username`='$username' AND `email`='$email' AND `password`='$p_hash' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql); 
 					$row = mysqli_fetch_row($query);
 					$uid = $row[0];
@@ -327,13 +337,11 @@
 				// CLOSE THE REFERENCE
 					$sql = "UPDATE `user_references` SET `active`=0 WHERE `reference_code`='$reference' LIMIT 1";
 					$query = mysqli_query($db_conx, $sql);
-				// CREATE USER FOLDER
-					if (!file_exists("user/$u")) {
-						mkdir("user/$u", 0755);
-					}
 				// RESPOND
 					exit("success");
 				//
+			} else {
+				exit("ERR-SUP-1");
 			}
 			exit("ERR-SUP-OTHER");
 		}

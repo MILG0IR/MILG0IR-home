@@ -138,12 +138,11 @@
 			$mg['complete_uri'] = "http://";   
 		$mg['complete_uri'].= $_SERVER['HTTP_HOST'];    
 		$mg['complete_uri'].= $_SERVER['REQUEST_URI'];    
+	// GET LANG
+		$lang = array();
+			if(!isset($userdata['lang'])) {
+				$userdata['lang'] = 'en_GB';
+			}
+		$lang = json_decode(file_get_contents($mg_dir['root'].'inc/lang/'.$userdata['lang'].'.lang'), true);
 	//
-?>
-<?php		# FUNCTIONS
-	function getTitle($url) {
-		$data = file_get_contents($url);
-		$title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
-		return $title;
-	}
 ?>

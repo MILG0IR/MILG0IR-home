@@ -1,0 +1,33 @@
+{
+	"**lang": "english",
+	"**lang_iso": "eng",
+	"**lang_key": "en_GB",
+	"**lang_area": "Great britan",
+
+	"LOGIN": {
+		"welcome": "Welcome!",
+		"login": "Login",
+		"signup": "Signup",
+		"username": "Username",
+		"email": "Email",
+		"password": "Password",
+		"confirm password": "Confirm Password",
+		"firstname": "Firstname",
+		"surname": "Surname",
+		"reference": "Reference",
+		"please sign in below": "Please sign in below",
+		"please sign up below": "Please sign up below"
+	},
+	"HOME": {
+		
+	},
+	"MESSAGES": {
+		
+	},
+	"PROFILE": {
+		
+	},
+	"SETTINGS": {
+		
+	}
+}

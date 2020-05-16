@@ -13,8 +13,6 @@
 			<title>Homepage | <?php echo$mg_branding['slogan']['value']?></title>
 			<link type="image/x-icon" rel="icon" href="<?php echo$mg_branding['favicon']['value']?>">
 			<?php include_once($mg_dir['assets']."header") ?>
-			<?php include_once($mg_dir['js']."functions") ?>
-			<?php include_once($mg_dir['css']."css.php");	?>
 			<link rel="stylesheet" type="text/css" theme-type="navbar" href="<?php print($mg_dir['themes'])?>1.theme-nav.css">
 			<link rel="stylesheet" type="text/css" theme-type="main" href="<?php print_r($mg_dir['themes'])?>dark.theme-main.css">
 		 </head>
@@ -39,6 +37,7 @@
 						}, 0);
 					}
 				});
+				
 				$(document).ready(function() {
 					$(".preloader-wrapper").hide();
 					date_time('header-time', false, true, true);

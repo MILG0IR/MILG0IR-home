@@ -17,5 +17,98 @@
 	div[data-local-page="Profile"] {
 		background: var(--main-background);
 		position: relative;
+		width: 100%;
+		height: 100%; }
+	div[data-local-page="Profile"] .about-me {
+		background: var(--main-panel-accent);
+		box-shadow: 0 -3px 10px 2px var(--main-shadow);
+		position: absolute;
+		display: block;
+		height: 9rem;
+		width: 100%;
+		z-index: 1; }
+	div[data-local-page="Profile"] .container {
+		position: relative;
+		height: 100%; }
+	div[data-local-page="Profile"] .about-me .banner {
+		height: auto;
+		width: 0%;
+		display: block; }
+	div[data-local-page="Profile"] .about-me .avatar {
+		height: 7rem;
+		width: 7rem;
+		display: block;
+		margin: 1rem 1rem 1rem 3rem;
+		border: solid 2px var(--main-panel-background);
+		border-radius: 50px; }
+	div[data-local-page="Profile"] .about-me .name {
+		transform: translate(0, -50%);
+		position: absolute;
+		left: 12rem;
+		top: 35%; }
+	div[data-local-page="Profile"] .about-me .username {
+		transform: translate(0, -50%);
+		position: absolute;
+		left: 12rem;
+		bottom: 10%; }
+	div[data-local-page="Profile"] .main {
+		position: absolute;
+		display: block;
+		min-height: 75%;
+		height: 500%;
+		width: 100%;
+		top: 9rem;
+	}
+	@media(min-width: 768px) { /* Large moile or tablet */
+		div[data-local-page="Profile"] .about-me {
+			height: 100%;
+			width: 30%;
+			left: 0; }
+		div[data-local-page="Profile"] .about-me .banner {
+			height: 16rem;
+			width: 100%;
+			display: block; }
+		div[data-local-page="Profile"] .about-me .avatar {
+			transform: translatey(-50%);
+			height: 10rem;
+			width: 10rem;
+			margin: 0 auto; }
+		div[data-local-page="Profile"] .about-me .name {
+			left: unset;
+			top: 23rem;
+			width: 100%;
+			text-align: center; }
+		div[data-local-page="Profile"] .about-me .username {
+			left: unset;
+			width: 100%;
+			text-align: center;
+			bottom: unset;
+			top: 26rem; }
+		div[data-local-page="Profile"] .main {
+			background: var(--main-panel-background);
+			height: 100%;
+			width: 70%;
+			right: 0;
+			top: unset;
+		}
+	}
+	@media(min-width: 1200px) { /* Desktop */
+		div[data-local-page="Profile"] .about-me {
+			width: 25%;
+		}
+		div[data-local-page="Profile"] .main {
+			width: 75%;
+		}
 	}
 </style>
+<div class="container">
+	<section class="about-me">
+		<img class="banner" src="<?php ($userdata['banner'] != null)? print($userdata['banner']) : print('https://via.placeholder.com/500x250') ?>"></img>
+		<img class="avatar" src="<?php ($userdata['avatar'] != null)? print($userdata['avatar']) : print('https://via.placeholder.com/100x100') ?>"></img>
+		<h3 class="name"><?php print($userdata['firstname'].' '. $userdata['surname'])?></h3>
+		<h5 class="username"><?php print($userdata['username'])?></h5>
+	</section>
+	<section class="main">
+
+	</section>
+</div>

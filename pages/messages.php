@@ -140,7 +140,7 @@
 			color: var(--main-text);
 			text-align: center;
 			font-weight: bold;
-			margin-top: 10rem; }
+			margin-top: 9rem; }
 		div[data-local-page="Messages"] .welcome > .subtitle {
 			color: var(--chat-welcome-subtitle);
 			margin-top: 4rem;
@@ -251,9 +251,6 @@
 			border-radius: 12px 12px 12px 0px;
 			padding: 15px; }
 		div[data-local-page="Messages"] .chat .messages-chat .response-time {
-			margin-bottom:10px;
-			font-size: 10px;
-			color: lightgrey;
 			float: right; }
 		div[data-local-page="Messages"] .chat .messages-chat .response .text {
 			background: var(--chat-user-bubble);
@@ -261,9 +258,14 @@
 			border-radius: 12px 12px 0px 12px;
 			padding: 15px; }
 		div[data-local-page="Messages"] .chat .messages-chat .received-time {
-			margin-bottom:10px;
+			float: left; }
+		div[data-local-page="Messages"] .chat .messages-chat .received-time,
+		div[data-local-page="Messages"] .chat .messages-chat .response-time {
+			top: 0.5rem;
+			position: relative;
 			font-size: 10px;
-			color:lightgrey; }
+			color:lightgrey;
+		}
 	/* --------------- CHAT FOOTER --------------- */
 		div[data-local-page="Messages"] .chat .footer {
 			box-shadow: 0px -3px 2px var(--main-shadow);
@@ -277,21 +279,53 @@
 			bottom: 0; }
 		div[data-local-page="Messages"] .chat .footer .emoji {
 			display: none; }
+		.emoji-menu {
+			display: none; }
+		.emoji-menu.open {
+			box-shadow: 0px 2px 11px 0px var(--main-shadow);
+			transform: translatey(-125%);
+			position: absolute;
+			border-radius: 3px;
+			background: white;
+			display: block;
+			height: 20rem;
+			width: 25rem; }
+		.emoji-menu::after {
+			transform: rotate(45deg);
+			border-radius: 3px;
+			position: absolute;
+			background: white;
+			bottom: -5px;
+			height: 2rem;
+			width: 2rem;
+			content: "";
+			left: 5px; }
 		div[data-local-page="Messages"] .chat .footer .write-message {
 			color: var(--chat-input-color);
 			border-bottom: solid 1px #ccc;
 			background: transparent;
 			position: absolute;
-			margin-left: 5%;
-			padding: 10px;
+			margin-left: 2%;
+			padding: 5px;
 			height: 5rem;
 			border: none;
-			width: 90%; }
+			width: 85%; }
 		div[data-local-page="Messages"] .chat .footer .write-message:focus {
 			border-bottom: 1px solid #4285F4;
 			box-shadow: 0 1px 0 0 #4285F4; }
 		div[data-local-page="Messages"] .chat .footer .send {
-			display: none; }
+			background: var(--chat-send-icon-background);
+			color: var(--chat-send-icon-color);
+			padding: 15px;
+			transform: translate(50%);
+			border-radius: 25px;
+			text-align: center;
+			position: absolute;
+			font-size: 14pt;
+			display: block;
+			height: 50px;
+			width: 50px;
+			right: 8%; }
 		div[data-local-page="Messages"] .chat .footer-chat input *::-webkit-input-placeholder,
 		div[data-local-page="Messages"] .chat .footer-chat input *:-ms-input-placeholder,
 		div[data-local-page="Messages"] .chat .footer-chat input *::-moz-placeholder,
@@ -302,7 +336,7 @@
 	}
 	@media screen and (min-width: 512px) {
 	}
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 740px) {
 		div[data-local-page="Messages"] .header-chat {
 			height: 4.5rem; }
 		div[data-local-page="Messages"] .chat .header-chat .icon-more {
@@ -310,9 +344,6 @@
 		div[data-local-page="Messages"] .chat .messages-chat {
 			padding: 1rem 3rem 1rem 3rem;
 			height: calc(100% - (4.5rem + 8rem)); }
-		div[data-local-page="Messages"] .chat .footer .write-message {
-			margin-left: 10%;
-			width: 80%; }
 		div[data-local-page="Messages"] .chat .footer-chat input *::-webkit-input-placeholder,
 		div[data-local-page="Messages"] .chat .footer-chat input *:-ms-input-placeholder,
 		div[data-local-page="Messages"] .chat .footer-chat input *::-moz-placeholder,
@@ -323,16 +354,17 @@
 	@media screen and (min-width: 1200px) {
 		div[data-local-page="Messages"] .welcome {
 			background: var(--main-panel-background);
+			overflow: hidden scroll;
 			position: absolute;
 			display: block;
 			height: 100%;
-			width: 75%;
-			left: 25%;
+			width: 70%;
+			left: 30%;
 			top: 0px; }
 		div[data-local-page="Messages"] .chat .header-chat .icon-back {
 			display: none; }
 		div[data-local-page="Messages"] .discussions {
-			width: 25%;
+			width: 30%;
 			left: unset; }
 		div[data-local-page="Messages"] .header-chat {
 			height: 9rem }
@@ -342,33 +374,22 @@
 			height: calc(100% - (9rem + 8rem)); }
 		div[data-local-page="Messages"] .chat {
 			display: none;
-			width: 75%;
-			left: 25%; }
+			width: 70%; }
 		div[data-local-page="Messages"] .chat.open {
 			display: block;
-			left: 25%; }
+			left: 30%; }
 		div[data-local-page="Messages"] .chat .footer .emoji {
 			display: block;
 			color: var(--chat-emoji-icon-color);
 			transform: translate(-50%);
 			margin-left: 5%;
 			font-size: 14pt; }
-		div[data-local-page="Messages"] .chat .footer .send {
-			background: var(--chat-send-icon-background);
-			color: var(--chat-send-icon-color);
-			padding: 12px 12px 12px 12px;
-			transform: translate(50%);
-			border-radius: 25px;
-			text-align: center;
-			position: absolute;
-			font-size: 14pt;
-			display: block;
-			height: 50px;
-			width: 50px;
-			right: 5%; }
+		div[data-local-page="Messages"] .chat .footer .write-message {
+			margin-left: 10%;
+			width: 80%; }
 	}
 </style>
-<section class="discussions">
+<section class="discussions no-select">
 	<div class="discussions-header">
 		<div class="searchbar">
 			<i class="fa fa-search" aria-hidden="true"></i>
@@ -417,7 +438,7 @@
 		}
 	?>
 </section>
-<section class="welcome">
+<section class="welcome no-select">
     <h1 class="title">Welcome</h1>
 	<h4 class="subtitle">To start, tap a user you would like to talk to on the left.</h4>
 	<div class="grid">
@@ -439,15 +460,15 @@
 	</div>
 </section>
 <section class="chat">
-	<div class="header-chat" data-chat-user1="<?php print($userdata['uid'])?>">
+	<div class="header-chat no-select" data-chat-user1="<?php print($userdata['uid'])?>">
 		<i class="icon-back fa fa-chevron-left" aria-hidden="true" onClick="$('.chat').removeClass('open');"></i>
 		<p class="name"></p>
 		<i class="icon-more fa fa-ellipsis-v clickable" aria-hidden="true"></i>
 	</div>
 	<div class="messages-chat"></div>
-	<div class="footer">
-		<div class="emoji"><i class="fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i></div>
-		<input type="text" class="write-message" placeholder="Type your message here" onClick="scrolltobottom('.messages-chat', 'smooth')"onkeydown="if (event.keyCode == 13) { sendChat()}"></input>
+	<div class="footer no-select">
+		<div class="emoji"><i class="fa fa-smile-o clickable emoji-picker" style="font-size:25pt;" aria-hidden="true"></i></div>
+		<input type="text" class="write-message emoji-input" placeholder="Type your message here" onClick="scrolltobottom('.messages-chat', 'smooth')"onkeydown="if (event.keyCode == 13) { sendChat()}"></input>
 		<div class="send" onClick="sendChat()"><i class="fa fa-paper-plane-o clickable" aria-hidden="true"></i></div>
 	</div>
 </section>

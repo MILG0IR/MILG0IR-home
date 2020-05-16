@@ -12,20 +12,51 @@
 	#}
 ?><?php
 	include_once("../db/db_conx.php");
+?><?php
+	$log = array();
+	$errors = NULL;
+	if(isset($_GET['log']) && isset($_GET['errors'])) {
+		$log = json_decode($_GET['log'], true);
+		$errors = $_GET['errors'];
+	}
+	if(isset($_GET['page'])){
+		$page = $_GET['page'];
+	} else {
+		$page = "DEFAULT";
+	}
+
+	$update_uri = "https://raw.githubusercontent.com/MILG0IR/MILG0IR-home-".$app_info['Device']."/".$app_info['Branch']."/etc/info.json";
+	$update_info = json_decode(file_get_contents($update_uri), true);
+
+	if($app_info['Version'] == $update_info['Version']) {
+		$version_title = "Current update is installed";
+		$version_btn = "Force update";
+		$version_info = "You already have the latest update installed. You can force an update if you would like by clicking the button above. To change the branch you have selected you can change that from the panel below.";
+	} elseif($app_info['Version'] > $update_info['Version']  || $app_info['Version'] < $update_info['Version']) {
+		$version_title = "Update available";
+		$version_btn = "Update";
+		$version_info = "There is an update available, Please click the update button above to install the update. \n When installing the update, DO NOT CLODE this tab. Leave the update run in the background.";
+	} else {
+		$version_title = "ERR-UPD-OTHER";
+		$version_btn = "Error";
+		$version_info = "An error has occurred, Please use BACKEND to search this error code. and rectify the fault";
+	}
 ?>
 <style>
 	div[data-local-page="Settings"] {
 		background: var(--main-background);
-		position: relative;
-	}
+		position: relative; }
 	div[data-local-page="Settings"] .nav::before {
 		background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-accent) 1%, var(--main-panel-accent) 99%, var(--main-background) 100%);
 		box-shadow: 0 -3px 10px 2px var(--main-shadow);
+		display: flex;
 		content: "";
 		height: 1px;
 		width: 100%; }
 	div[data-local-page="Settings"] .nav {
 		text-align: center;
+		display: flow-root;
+		font-size: 1.5rem;
 		position: sticky;
 		margin: auto;
 		padding: 1em;
@@ -37,6 +68,7 @@
 	div[data-local-page="Settings"] .nav::after {
 		background: linear-gradient(90deg, var(--main-background) 0%, var(--main-panel-accent) 1%, var(--main-panel-accent) 99%, var(--main-background) 100%);
 		box-shadow: 0 3px 10px 2px var(--main-shadow);
+		display: flex;
 		content: "";
 		height: 1px;
 		width: 100%; }
@@ -49,6 +81,7 @@
 		width: 100%;
 		margin: 0; }
 	div[data-local-page="Settings"] .menu .menu-item {
+		cursor: pointer;
 		padding: 1em; }
 	div[data-local-page="Settings"] .menu .menu-item a {
 		color: var(--main-text);
@@ -67,11 +100,12 @@
 		box-shadow: 0 0 6px 2px var(--main-shadow);
 		color: var(--main-text);
 		position: relative;
-		border: none;
 		min-height: 10rem;
+		margin-bottom: 2rem;
+		padding: 1rem;
+		border: none;
 		width: 90%;
-		left: 5%;
-		padding: 1rem; }
+		left: 5%; }
 	div[data-local-page="Settings"] .content .panel header {
 		margin: 1rem;
 		text-align: left;
@@ -81,6 +115,8 @@
 		margin: 0px;
 		float: left; }
 	div[data-local-page="Settings"] .content .panel header input {
+		height: 4.5rem;
+		min-width: 4.5rem;
 		float: right; }
 	div[data-local-page="Settings"] .content .panel#whats-new .update {
 		padding: 1rem;
@@ -175,7 +211,7 @@
 	}
 	@media screen and (min-width: 512px) {
 	}
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 740px) {
 		div[data-local-page="Settings"] .content .panel {
 			width: 78%;
 			left: 11%; }
@@ -194,22 +230,20 @@
 </style>
 <div class="nav">
 	<input class="title-check" type="checkbox" id="navTitleCheck"/>
-	<label class="title" for="navTitleCheck">menu
-		<div class="title-icon"> </div>
-	</label>
+	<label class="title" for="navTitleCheck">Settings<div class="title-icon"> </div></label>
 	<ul class="menu">
-		<li class="menu-item"><a onClick="scrollto('#pages')">Pages and Categories</a></li>
-		<li class="menu-item"><a onClick="scrollto('#users')">Users & Groups</a></li>
-		<li class="menu-item"><a onClick="scrollto('#customization')">Customization</a></li>
-		<li class="menu-item"><a onClick="scrollto('#update')">Update and Security</a></li>
-		<li class="menu-item"><a onClick="scrollto('#whats-new')">Whats new</a></li>
+		<li class="menu-item" onClick="scrollto('#pages')">Pages & Categories</li>
+		<li class="menu-item" onClick="scrollto('#users')">Users & Groups</li>
+		<li class="menu-item" onClick="scrollto('#update')">Update</li>
+		<li class="menu-item" onClick="scrollto('#security')">Security & Database</li>
+		<li class="menu-item" onClick="scrollto('#whats-new')">Whats new</li>
 	</ul>
 </div>
 <div class="content">
 	<div class="panel" id="pages">
 		<header>
 			<h1>Pages!</h1>
-			<input type="button" value="New page">
+			<input type="button" value="＋">
 		</header>
 		<div class="table">
 			<div class="thead">
@@ -229,11 +263,11 @@
 						$disabled_pages = array("Homepage", "Messages", "Profile", "Settings");
 						if(in_array($page['title'],$disabled_pages)) {
 							$page_class = "row-disabled";
-							$page_image = $mg_img['multimedia']['cancel']['image'];
+							$page_image = $mg_img['UI']['cancel']['image'];
 							$page_click = "toast('warn', 'warning', 'You are not able to edit core pages.')";
 						} else {
 							$page_class = "row-enabled";
-							$page_image = $mg_img['multimedia']['info']['image'];
+							$page_image = $mg_img['UI']['info']['image'];
 							$page_click = "editPopup('page', '".str_replace("'", "\\'", json_encode($page))."')";
 						};
 						echo "<div class=\"tr\" id=\"".$page['title']."\">";
@@ -251,20 +285,46 @@
 	<div class="panel" id="categories">
 		<header>
             <h1>Categories!</h1>
-			<input type="button" value="New Category">
+			<input type="button" value="＋">
 		</header>
+		<div class="table">
+			<div class="thead">
+				<div class="tr">
+					<div class="th">ID</div>
+					<div class="th">Name</div>
+					<div class="th">description</div>
+					<div class="th">Actions</div>
+				</div>
+			</div>
+			<div class="tbody">
+				<?php
+					$sql = "SELECT * FROM `var_page_categories` ORDER BY CHAR_LENGTH(`id`), `id` asc;";
+					$query = mysqli_query($db_conx, $sql);
+					foreach($query as $category) {
+						$category_image = $mg_img['UI']['cancel']['image'];
+						$category_click = "toast('warn', 'warning', 'You are not able to edit core pages.')";
+
+						echo "<div class=\"tr\" id=\"".$category['name']."\">";
+						echo "	<div class=\"td\">".$category['id']."</div>";
+						echo "	<div class=\"td\">".$category['name']."</div>";
+						echo "	<div class=\"td\">".$category['description']."</div>";
+						echo "	<div class=\"td\"><img src=\"".$category_image."\" onClick=\"".$category_click."\" class=\"action\"></div>";
+						echo "</div>";
+					}
+				?>
+			</div>
+		</div>
 	</div>
 	<div class="panel" id="users">
 		<header>
             <h1>Users!</h1>
-			<input type="button" value="New User">
+			<input type="button" value="＋">
 		</header>
 		<div class="table">
 			<div class="thead">
 				<div class="tr">
 					<div class="th">ID</div>
 					<div class="th">Avatar</div>
-					<div class="th">Banner</div>
 					<div class="th">Username</div>
 					<div class="th">E-Mail</div>
 					<div class="th">First name</div>
@@ -278,66 +338,42 @@
 			<div class="tbody">
 				<?php
 					// FIND ALL USERS
-						$i = 0;
-						$disabled_users = array("ADMINISTRATOR", "Guest");
 						$sql = "SELECT * FROM `users` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
 						$query = mysqli_query($db_conx, $sql);
-						foreach($query as $usr) {
-							if(in_array($usr['username'],$disabled_users)) {
-								$usr_class[$i] = "disabled";
-								$usr_image[$i] = $mg_img['multimedia']['cancel']['image'];
-								$usr_click[$i] = "";
+						foreach($query as $user) {
+							$disabled_users = array("Admin", "Guest");
+							if(in_array($user['username'],$disabled_users)) {
+								$user_sortable = "unsortable";
+								$user_class = "disabled";
+								$user_actions_image = $mg_img['UI']['cancel']['image'];
+								$user_actions = "";
+								$user_permissions_image = $mg_img['UI']['cancel']['image'];
+								$user_permissions = "";
 							} else {
-								$usr_class[$i] = "enabled";
-								$usr_image[$i] = $mg_img['multimedia']['more']['image'];
-								$usr_click[$i] = "editPopup(\"user\", \"".str_replace("\"", "\\\"", json_encode($usr))."\")";
-							}
-							$usr_uid[$i] = $usr['uid'];
-							$usr_username[$i] = $usr['username'];
-							$usr_email[$i] = $usr['email'];
-							$usr_pass_change[$i] = $usr['change_passkey'];
-							$usr_enabled[$i] = $usr['enabled'];
-							$i++;
-						}
-						$i = 0;
-						$sql = "SELECT * FROM `user_preferences` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
-						$query = mysqli_query($db_conx, $sql);
-						foreach($query as $usr) {
-							$usr_lang[$i] = $usr['lang'];
-							$i++;
-						}
-						$i = 0;
-						$sql = "SELECT * FROM `user_data` ORDER BY CHAR_LENGTH(`uid`), `uid` asc;";
-						$query = mysqli_query($db_conx, $sql);
-						foreach($query as $usr) {
-							$usr_rank[$i] = $usr['rank'];
-							$usr_firstname[$i] = $usr['firstname'];
-							$usr_surname[$i] = $usr['surname'];
-							$usr_avatar[$i] = $usr['avatar'];
-							$usr_banner[$i] = $usr['banner'];
-							$usr_registered[$i] = $usr['registered'];
-							$i++;
-						}
-					// PRINT ALL USERS
-						$x = 0;
-						while($x < $i) {
-							echo "<div class=\"tr\" id=\"".$usr_uid[$x]."\">";
-							echo "	<div class=\"td\">".$usr_uid[$x]."</div>";
-							echo "	<div class=\"td\"><img src=\"".$usr_avatar[$x]."\"></div>";
-							echo "	<div class=\"td\"><img src=\"".$usr_banner[$x]."\"></div>";
-							echo "	<div class=\"td\">".$usr_username[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_email[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_firstname[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_surname[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_pass_change[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_enabled[$x]."</div>";
-							echo "	<div class=\"td\">".$usr_registered[$x]."</div>";
-							echo "	<div class=\"td\"><img src=\"".$usr_image[$x]."\" onClick='".$usr_click[$x]."' class=\"action ".$usr_class[$x]."\"></div>";
+								$user_sortable = "sortable";
+								$user_class = "";
+								$user_actions_image = $mg_img['UI']['more']['image'];
+								$user_actions = "editPopup(\"user\", \"".str_replace("\"", "\\\"", json_encode($user))."\")";
+								$user_permissions_image = $mg_img['UI']['levels']['image'];
+								$user_permissions = "alert(\"**TODO**\")";
+							};
+						// PRINT ALL USERS
+							echo "<div class=\"tr\" id=\"".$user['uid']."\">";
+							echo "	<div class=\"td\">".$user['uid']."</div>";
+							echo "	<div class=\"td\"><img src=\"".$user['avatar']."\"></div>";
+							echo "	<div class=\"td\">".$user['username']."</div>";
+							echo "	<div class=\"td\">".$user['email']."</div>";
+							echo "	<div class=\"td\">".$user['firstname']."</div>";
+							echo "	<div class=\"td\">".$user['surname']."</div>";
+							echo "	<div class=\"td\">".$user['change_passkey']."</div>";
+							echo "	<div class=\"td\">".$user['enabled']."</div>";
+							echo "	<div class=\"td\">".$user['registered']."</div>";
+							echo "	<div class=\"td\">";
+							echo "		<img src=\"".$user_actions_image."\" onClick='".$user_actions."' class=\"action ".$user_class."\">";
+							echo "		<img src=\"".$user_permissions_image."\" onClick='".$user_permissions."' class=\"action ".$user_class."\">";
+							echo "	</div>";
 							echo "</div>";
-							$x++;
-						}
-					unset($i);
-					unset($x);
+					}
 				?>
 			</div>
 		</div>
@@ -345,7 +381,7 @@
 	<div class="panel" id="groups">
 		<header>
             <h1>Ranks!</h1>
-			<input type="button" value="New Rank">
+			<input type="button" value="＋">
 		</header>
 		<div class="table">
 			<div class="thead">
@@ -367,17 +403,17 @@
 							if(in_array($rank['name'],$disabled_ranks)) {
 								$rank_sortable = "unsortable";
 								$rank_class = "disabled";
-								$rank_actions_image = $mg_img['multimedia']['cancel']['image'];
+								$rank_actions_image = $mg_img['UI']['cancel']['image'];
 								$rank_actions = "";
-								$rank_permissions_image = $mg_img['multimedia']['cancel']['image'];
+								$rank_permissions_image = $mg_img['UI']['cancel']['image'];
 								$rank_permissions = "";
 							} else {
 								$rank_sortable = "sortable";
 								$rank_class = "enabled";
-								$rank_actions_image = $mg_img['multimedia']['more']['image'];
+								$rank_actions_image = $mg_img['UI']['more']['image'];
 								$rank_actions = "editPopup(\"rank\", \"".str_replace("\"", "\\\"", json_encode($rank))."\")";
-								$rank_permissions_image = $mg_img['multimedia']['levels']['image'];
-								$rank_permissions = "alert(\"tbd\")";
+								$rank_permissions_image = $mg_img['UI']['levels']['image'];
+								$rank_permissions = "alert(\"**TODO**\")";
 							};
 						// PRINT ALL RANKS
 							echo "<div class=\"tr\" id=\"".$rank['name']."\">";
@@ -395,24 +431,47 @@
 			</div>
 		</div>
 	</div>
-	<div class="panel" id="customization">
-		<header>
-            <h1>Customization!</h1>
-		</header>
-	</div>
 	<div class="panel" id="update">
 		<header>
             <h1>Update!</h1>
+			<input type="button" onClick="redirect('../update.php?download')" value="<? print($version_btn)?>">
+		</header>
+		<h5><? print($version_title)?></h5>
+		<p><? print($version_info)?></p>
+		<div class="log">
+			<?php
+				if($errors != NULL){
+					$log[] .= "";
+					$log[] .= "<span class='error'>This installation has been complete with " . $errors . " errors.</span>";
+				}
+				$arrlength = count($log)-1;
+				if($arrlength > 0) {
+					echo "";
+						echo "<pre>";
+						echo "<h4 class='title'>LOG:</h4>";
+						echo "</br>";
+						for($x = 0; $x < $arrlength; $x++) {
+							if($x < 10) {
+								echo "0" . $x . " - " . $log[$x];
+								echo "<br>";
+							} else {
+								echo $x . " - " . $log[$x];
+								echo "<br>";
+							}
+						}
+						echo "</pre>";
+				}
+			?>
+		</div>
+	</div>
+	<div class="panel" id="security">
+		<header>
+            <h1>Security!</h1>
 		</header>
 	</div>
 	<div class="panel" id="database">
 		<header>
             <h1>Database!</h1>
-		</header>
-	</div>
-	<div class="panel" id="security">
-		<header>
-            <h1>Security!</h1>
 		</header>
 	</div>
 	<div class="panel" id="whats-new">
