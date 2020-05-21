@@ -211,7 +211,7 @@ var api_key = "key";
 	function getreferencedetails(reference) {
 		var output = $.ajax({
 			url: 'api/index.php',
-			data: '#=get_reference_data&_='+api_key+'+&ref='+reference,
+			data: '$=get_reference_data&_='+api_key+'+&ref='+reference,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST'
 		})
@@ -220,7 +220,7 @@ var api_key = "key";
 	function checkresponse(code) {
 		var output = $.ajax({
 			url: 'api/index.php',
-			data: '#=search_code&_='+api_key+'+&code='+code,
+			data: '$=search_code&_='+api_key+'+&code='+code,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		})
@@ -229,7 +229,7 @@ var api_key = "key";
 	function getUsername(user) {
 		var output = $.ajax({
 			url: 'api/index.php',
-			data: '#=search_username&_='+api_key+'+&uid='+user,
+			data: '$=search_username&_='+api_key+'+&uid='+user,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		})
@@ -241,7 +241,7 @@ var api_key = "key";
 		if(u != null && u != '') {
 			$.ajax({
 				url: 'api/index.php',
-				data: '#=check_username&_='+api_key+'+&u='+u,
+				data: '$=check_username&_='+api_key+'+&u='+u,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -266,7 +266,7 @@ var api_key = "key";
 		if(e != null && e != '') {
 			$.ajax({
 				url: 'api/index.php',
-				data: '#=check_email&_='+api_key+'+&e='+e,
+				data: '$=check_email&_='+api_key+'+&e='+e,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -341,7 +341,7 @@ var api_key = "key";
 		if(reference != null && reference != '') {
 			$.ajax({
 				url: 'api/index.php',
-				data: '#=check_reference&_='+api_key+'+&ref='+reference,
+				data: '$=check_reference&_='+api_key+'+&ref='+reference,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -363,7 +363,7 @@ var api_key = "key";
 		var updateBTN	= $(".update-button");
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=check_for_update&_='+api_key+'+&version='+version+'&device='+device+'&branch='+branch,
+			data: '$=check_for_update&_='+api_key+'+&version='+version+'&device='+device+'&branch='+branch,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -381,7 +381,7 @@ var api_key = "key";
 		var status = $(".form-status");
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=confirm_password&_='+api_key+'+&u='+username+'&p='+password,
+			data: '$=confirm_password&_='+api_key+'+&u='+username+'&p='+password,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -409,7 +409,7 @@ var api_key = "key";
 		if(p1 == p2) {
 			$.ajax({
 				url: 'api/index.php',
-				data: '#=signup&_='+api_key+'+&u='+u+'&e='+e+'&p='+p1+'&fn='+fn+'&sn='+sn+'&ref='+ref,
+				data: '$=signup&_='+api_key+'+&u='+u+'&e='+e+'&p='+p1+'&fn='+fn+'&sn='+sn+'&ref='+ref,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -434,7 +434,7 @@ var api_key = "key";
 		var status = $("#login.status");
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=login&_='+api_key+'+&e='+e+'&p='+p,
+			data: '$=login&_='+api_key+'+&e='+e+'&p='+p,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -452,7 +452,7 @@ var api_key = "key";
 		var status = _("refstatus");
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=create_user_reference&_='+api_key+'+&u='+user,
+			data: '$=create_user_reference&_='+api_key+'+&u='+user,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -497,7 +497,7 @@ var api_key = "key";
 	function deactivatereference(id) {
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=deactivate_user_reference&_='+api_key+'+&id='+id,
+			data: '$=deactivate_user_reference&_='+api_key+'+&id='+id,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -514,7 +514,7 @@ var api_key = "key";
 	function reactivatereference(id) {
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=reactivate_user_reference&_='+api_key+'+&id='+id,
+			data: '$=reactivate_user_reference&_='+api_key+'+&id='+id,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -534,7 +534,7 @@ var api_key = "key";
 		var icon = $(".form-change-icon").attr("src");
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=update_rank_info&_='+api_key+'+&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
+			data: '$=update_rank_info&_='+api_key+'+&id='+id+'&name='+name+'&desc='+desc+'&icon='+icon,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -556,7 +556,7 @@ var api_key = "key";
 		var uri_remote = $(".form-change-uri_remote").val();
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=update_page_info&_='+api_key+'+&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
+			data: '$=update_page_info&_='+api_key+'+&id='+id+'&title='+title+'&desc='+desc+'&icon='+icon+'&uri_local='+uri_local+'&uri_remote='+uri_remote,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -579,7 +579,7 @@ var api_key = "key";
 		if(p1 == p2) {
 			$.ajax({
 				url: 'api/index.php',
-				data: '#=forgot_password&_='+api_key+'+&e='+e+'&p'+p1+'&ref'+ref,
+				data: '$=forgot_password&_='+api_key+'+&e='+e+'&p'+p1+'&ref'+ref,
 				contentType: 'application/x-www-form-urlencoded',
 				type: 'POST',
 			}).done(function(data) {
@@ -599,7 +599,7 @@ var api_key = "key";
 	function logout() {
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=logout&_='+api_key+'+',
+			data: '$=logout&_='+api_key+'+',
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -627,7 +627,7 @@ var api_key = "key";
 
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=get_page_data&_='+api_key+'+&id='+pid,
+			data: '$=get_page_data&_='+api_key+'+&id='+pid,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -719,7 +719,7 @@ var api_key = "key";
 	function setChatRead(u1, u2) {
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=mark_chat_as_read&_='+api_key+'+&u1='+u1+'&u2='+u2,
+			data: '$=mark_chat_as_read&_='+api_key+'+&u1='+u1+'&u2='+u2,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		})
@@ -728,7 +728,7 @@ var api_key = "key";
 		var u1 = $('.header-chat').attr('data-chat-user1');
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=get_messages&_='+api_key+'+&u1='+u1+'&u2='+u2,
+			data: '$=get_messages&_='+api_key+'+&u1='+u1+'&u2='+u2,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(msgJSON) {
@@ -808,7 +808,7 @@ var api_key = "key";
 		var msgBox = $('.write-message');
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=send_message&_='+api_key+'+&u1='+u1+'&u2='+u2+'&msg='+msg,
+			data: '$=send_message&_='+api_key+'+&u1='+u1+'&u2='+u2+'&msg='+msg,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(data) {
@@ -824,7 +824,7 @@ var api_key = "key";
 		var u1 = $('body').attr('data-uid');
 		$.ajax({
 			url: 'api/index.php',
-			data: '#=get_messages_unread&_='+api_key+'+&u1='+u1,
+			data: '$=get_messages_unread&_='+api_key+'+&u1='+u1,
 			contentType: 'application/x-www-form-urlencoded',
 			type: 'POST',
 		}).done(function(msgJSON) {

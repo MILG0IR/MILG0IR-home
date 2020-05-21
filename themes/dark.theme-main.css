@@ -25,7 +25,7 @@
 		--whatsnew-removal: rgba(238, 114, 114, 1);
 		--whatsnew-change: rgba(173, 216, 230, 1);
 	/* LOGIN */
-		--login-accent: rgba(67, 67, 123, 1);
+		--login-accent: rgb(63, 63, 92);
 	/* CHAT*/
 		--discussions-header-background: rgba(43, 53, 83, 1);
 		--discussions-header-search-background: rgba(255, 255, 255, 1);

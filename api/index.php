@@ -3,11 +3,11 @@
 	// SET THE VARIABLES IF AVAILABLE
 		#																	# Variable			|	Description
 		#------------------------------------------------------------------------------------------------------------------------------------------------------------------
-			if(isset($_GET['#']) || isset($_POST['#'])) {					# $api_type			|	API type
-				if(isset($_GET['#'])) {
-					$api_type = $_GET['#'];
+			if(isset($_GET['$']) || isset($_POST['$'])) {					# $api_type			|	API type
+				if(isset($_GET['$'])) {
+					$api_type = $_GET['$'];
 				} else {
-					$api_type = $_POST['#'];
+					$api_type = $_POST['$'];
 				}
 			} else {$api_type = NULL;}										#					|
 			if(isset($_GET['_']) || isset($_POST['_'])) {					# $api_key			|	API key
@@ -16,7 +16,7 @@
 				} else {
 					$api_key = $_POST['_'];
 				}
-			} else {$api_key = NULL;}	
+			} else {$api_key = NULL;}										#					|
 			if(isset($_GET['e']) || isset($_POST['e'])) {					# $email			|	E-Mail address
 				if(isset($_GET['e'])) {
 					$email = $_GET['e'];
@@ -214,9 +214,14 @@
 				}
 			} else {$u2 = NULL;}
 		#------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	//
+	// CHECK API KEY
+		if($api_type == "confirm_api_key") {
+			if(isset($api_key)){
+				exit("success");
+			}
+		}
 	// GET ERROR CODE INFO
-		if($api_type == "search_code") {
+		else if($api_type == "search_code") {
 			if(isset($code)) {
 				$sql = "SELECT `code`, `reason`, `user_error` FROM `var_response_codes` WHERE `code`='$code' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
@@ -225,7 +230,7 @@
 			}
 		}
     // CHECK USERNAME AVAILABILITY
-		elseif($api_type == "check_username"){
+		else if($api_type == "check_username"){
 			if(isset($username)){
 				$sql = "SELECT `uid` FROM `users` WHERE `username`='$username' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql); 
@@ -244,7 +249,7 @@
 			}
 		}
     // CHECK EMAIL AVAILABILITY
-		elseif($api_type == "check_email"){
+		else if($api_type == "check_email"){
 			if(isset($email)){
 				$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql); 
@@ -260,7 +265,7 @@
 			}
 		}
 	// CREATE ACCOUNT
-		elseif($api_type == "signup") {
+		else if($api_type == "signup") {
 			if(isset($username) && isset($email) && isset($password) && isset($firstname) && isset($surname) && isset($reference)
 			&& strlen($username) > 0 && strlen($email) > 0 && strlen($password) > 0 && strlen($firstname) > 0 && strlen($reference) > 0 && strlen() > 0) {
 				// SET THE VARIABLES
@@ -269,7 +274,7 @@
 					// CHECK USERNAME VALID
 						if(is_numeric($username[0])) {
 							exit("ERR-SUP-6");
-						} elseif(strlen($username) < 3) {
+						} else if(strlen($username) < 3) {
 							exit("ERR-SUP-5");
 						}
 					// CHCEK USERNAME IS AVAIALBLE
@@ -346,7 +351,7 @@
 			exit("ERR-SUP-OTHER");
 		}
 	// LOGIN
-		elseif($api_type == "login") {
+		else if($api_type == "login") {
 			$success = NULL;
 			if($email == "") {
 				exit("ERR-LIN-2");
@@ -416,7 +421,7 @@
 			exit("ERR-LIN-OTHER");
 		}
 	// LOGOUT
-		elseif($api_type == "logout") {
+		else if($api_type == "logout") {
 			// SEARCH FOR AND REMOVE THE COOKIES
 				if(isset($_COOKIE["user_id"]) && isset($_COOKIE["session_id"]) && isset($_COOKIE["username"]) && isset($_COOKIE["password"])) {
 					unset($_COOKIE['user_id']);
@@ -451,7 +456,7 @@
 			exit('success');
 		}
 	// RESET PASSWORD ~ FORGOT PASSWORD
-		elseif($api_type == "forgot_password") {
+		else if($api_type == "forgot_password") {
 			if(isset($email) && isset($password) && isset($reference)) {
 				// SEARCH FOR the user
 					$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
@@ -488,7 +493,7 @@
 			}
 		}
 	// RESET PASSWORD ~ PASSWORD RESET WITHIN PROFILE
-		elseif($api_type == "reset_password") {
+		else if($api_type == "reset_password") {
 			if(isset($email) && isset($password)) {
 				// SEARCH FOR the user - if user exists send the email.
 					$sql = "SELECT `uid` FROM `users` WHERE `email`='$email' LIMIT 1";
@@ -505,7 +510,7 @@
 			}
 		}
 	// CHECK REFERENCE
-		elseif($api_type == "check_reference") {
+		else if($api_type == "check_reference") {
 			if(!isset($reference)) {
 				exit('ERR-REF-1');
 			} else {
@@ -524,7 +529,7 @@
 			}
 		}
 	// GET PAGE INFO
-		elseif($api_type == "get_page_data") {
+		else if($api_type == "get_page_data") {
 			if(isset($id)) {
 				$sql = "SELECT * FROM `var_pages` WHERE `id`='$id' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
@@ -533,7 +538,7 @@
 			}
 		}
 	// CHECK FOR AN UPDATE
-		elseif($api_type == "check_for_update") {
+		else if($api_type == "check_for_update") {
 			if(isset($branch)) {
 				if(isset($ver)) {
 					if(isset($device)) {
@@ -543,10 +548,10 @@
 						if($app_info['Version'] == $update_info['Version']) {
 							exit("INF-UPD-1");
 							// Latest version is currently installed
-						} elseif($app_info['Version'] > $update_info['Version']) {
+						} else if($app_info['Version'] > $update_info['Version']) {
 							exit("INF-UPD-2");
 							// Update is available
-						} elseif($app_info['Version'] < $update_info['Version']) {
+						} else if($app_info['Version'] < $update_info['Version']) {
 							exit("INF-UPD-3");
 							// Current version is larger than the latest
 						} else {
@@ -566,7 +571,7 @@
 			}
 		}
 	// GET TABLE DATA
-		elseif($api_type == "get_sql_data") {
+		else if($api_type == "get_sql_data") {
 			if(isset($table)) {
 				$sql = "SELECT * FROM `".$table."`";
 				$query = mysqli_query($db_conx, $sql);
@@ -579,7 +584,7 @@
 			}
 		}
 	// CREATE USER REFERENCE CODE
-		elseif($api_type == "create_user_reference") {
+		else if($api_type == "create_user_reference") {
 			if(isset($username)) {
 				$letters = str_split('abcdefghijklmnopqrstuvwxyz'.'ABCDEFGHIJKLMNOPQRSTUVWXYZ'); shuffle($letters);
 				$numbers = str_split('0123456789'); shuffle($numbers);
@@ -609,7 +614,7 @@
 			}
 		}
 	// DEACTIVATE USER REFERENCE
-		elseif($api_type == "deactivate_user_reference") {
+		else if($api_type == "deactivate_user_reference") {
 			if(isset($id)){
 				$sql = "UPDATE `user_references` SET `active`=0 WHERE `id`='$id' LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
@@ -627,7 +632,7 @@
 			}
 		}
 	// REACTIVATE USER REFERENCE
-		elseif($api_type == "reactivate_user_reference") {
+		else if($api_type == "reactivate_user_reference") {
 			if(isset($id)){
 				$sql = "UPDATE `user_references` SET `active`='1' WHERE `id`='$id'";
 				$query = mysqli_query($db_conx, $sql);
@@ -645,7 +650,7 @@
 			}
 		}
 	// UPDATE RANK INFO
-		elseif($api_type == "update_rank_info") {
+		else if($api_type == "update_rank_info") {
 			if(isset($id) && isset($name)) {
 				// Check for new ID if moved in ranks
 					if(isset($nid)) {
@@ -673,7 +678,7 @@
 			}
 		}
 	// UPDATE PAGE INFO	
-		elseif($api_type == "update_page_info") {
+		else if($api_type == "update_page_info") {
 			if(isset($id) && isset($title)) {
 				// Check for new ID if moved in ranks
 					if(isset($nid)) {
@@ -702,7 +707,7 @@
 		}
 	// UPDATE USER SETTINGS
 	// CONFIRM PASSWORD
-		elseif($api_type == "confirm_password") {
+		else if($api_type == "confirm_password") {
 			if(isset($username) && isset($password)) {
 				$p = hash($mg_security['hash'], $mg_security['salt'].$password.$mg_security['salt']);
 				$sql = "SELECT `uid`, `username`, `password` FROM `users` WHERE `username`='$username' AND `enabled`='1' LIMIT 1";
@@ -727,7 +732,7 @@
 			exit(json_encode($row));
 		}
 	// SEARCH USERNAME
-		elseif($api_type == "search_username") {
+		else if($api_type == "search_username") {
 			if(isset($uid)) {
 				$sql = "SELECT `firstname`, `surname` FROM `users` WHERE `uid`=$uid LIMIT 1";
 				$query = mysqli_query($db_conx, $sql);
@@ -736,7 +741,7 @@
 			}
 		}
 	// CHECK FOR MESSAGES
-		elseif($api_type == "get_messages") {
+		else if($api_type == "get_messages") {
 			if(isset($u1) && isset($u2)) {
 				$sql = "SELECT * FROM `var_messages` WHERE `user1`='$u1' AND `user2`='$u2' OR `user1`='$u2' AND `user2`='$u1' ORDER BY `timestamp` ASC";
 				$query = mysqli_query($db_conx, $sql);
@@ -751,7 +756,7 @@
 			}
 		}
 	// CHECK FOR UNREAD MESSAGES
-		elseif($api_type == "get_messages_unread") {
+		else if($api_type == "get_messages_unread") {
 			if(isset($u1)) {
 				$sql = "SELECT * FROM `var_messages`
 							WHERE `user2`='$u1'
@@ -774,7 +779,7 @@
 			}
 		}
 	// SEND MESSAGE	
-		elseif($api_type == "send_message") {
+		else if($api_type == "send_message") {
 			if(isset($u1) && isset($u2) && isset($message)) {
 				$sql = "INSERT INTO `var_messages`(`user1`,`user2`,`message`,`timestamp`,`status`) VALUES('$u1', '$u2', '$message', now(), 0)";
 				$query = mysqli_query($db_conx, $sql);
@@ -785,7 +790,7 @@
 			exit("ERR-MSG-OTHER");
 		}
 	// MARK CHATS AS READ
-		elseif($api_type == "mark_chat_as_read") {
+		else if($api_type == "mark_chat_as_read") {
 			if(isset($u1) && isset($u2)) {
 				$sql = "UPDATE `var_messages`
 							SET `status`=2
