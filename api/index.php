@@ -143,20 +143,6 @@
 					$code = $_POST['code'];
 				}
 			} else {$code = NULL;}											#					|
-			if(isset($_GET['table']) || isset($_POST['table'])) {			# $table			|	Database table
-				if(isset($_GET['table'])) {
-					$table = $_GET['table'];
-				} else {
-					$table = $_POST['table'];
-				}
-			} else {$table = NULL;}											#					|
-			if(isset($_GET['data']) || isset($_POST['data'])) {				# $data				|	data
-				if(isset($_GET['data'])) {
-					$data = $_GET['data'];
-				} else {
-					$data = $_POST['data'];
-				}
-			} else {$data = NULL;}											#					|
 			if(isset($_GET['name']) || isset($_POST['name'])) {				# $name				|	name
 				if(isset($_GET['name'])) {
 					$name = $_GET['name'];
@@ -218,6 +204,20 @@
 		if($api_type == "confirm_api_key") {
 			if(isset($api_key)){
 				exit("success");
+			} else {
+				exit("ERR-KEY-1");		// T.B.D. the user has nt entered an API_KEY
+			}
+		}
+	// LIST ALL PAGES
+		else if($api_type == "list_pages") {
+			if(checkKey()){
+				$sql = "SELECT * FROM `var_pages`";
+				$query = mysqli_query($db_conx, $sql);
+				$rows = array();
+				while($r = mysqli_fetch_assoc($query)) {
+					$rows[] = $r;
+				}
+				exit(json_encode($rows));
 			}
 		}
 	// GET ERROR CODE INFO
@@ -399,7 +399,7 @@
 						$db_pass_str = $row[2];
 						#--------------------------------#
 						if($p != $db_pass_str){
-							exit("ERR-LIN-6");
+							exit("ERR-LIN-6 -".$password."- ".$p." - ".$db_pass_str);
 						} else {
 							// create the session in the database
 							$sql = "INSERT INTO `user_sessions` (`uid`, `ip_address`, `start_time`, `active`) VALUES ('$user_id', '$ip', now(), '1')";
@@ -568,19 +568,6 @@
 			} else {
 				exit("ERR-UPD-3");
 				// BRANCH IS NOT SET
-			}
-		}
-	// GET TABLE DATA
-		else if($api_type == "get_sql_data") {
-			if(isset($table)) {
-				$sql = "SELECT * FROM `".$table."`";
-				$query = mysqli_query($db_conx, $sql);
-				$result = "";
-				while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-					$result .= json_encode($row);
-				}
-				$JSONarray = "[".str_replace("}{", "},{", $result)."]";
-				exit($JSONarray);
 			}
 		}
 	// CREATE USER REFERENCE CODE
@@ -814,4 +801,10 @@
 			}
 		}
 	//
+?>
+
+<?php
+	function checkKey() {
+		return true;
+	}
 ?>
